@@ -1,0 +1,8 @@
+**Version 1.0**
+Initial release.
+
+**Version 1.1**
+- Added methods that enable creating new pools in runtime (Useful for situations like card games, where you want to load pools only for cards in the players' decks).
+- Added methods to check the existence of pools by their tag name, to work along with the aforementioned new feature.
+- Added a new exception for the case that a new pool for the tag that you're trying to create already exists.
+- Pooled objects are now childed to the pool that created them to keep the scene less messy.
