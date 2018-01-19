@@ -14,6 +14,7 @@ public class GeneralCogPropagationStrategy : PropagationStrategy
         //This is the start of a propogation first cog should check surroundings
         if (i_RequestingCog == null)
         {
+            OnCreateUpdateSpin();
             BFSUpdateDriven(i_StopUnaffected);
 
             return null;
@@ -40,20 +41,41 @@ public class GeneralCogPropagationStrategy : PropagationStrategy
         }
     }
 
+    private void OnCreateUpdateSpin()
+    {
+        foreach(BaseCog populatedNeighbor in Cog.HolderTile.PopulatedNeighbors)
+        {
+            if (populatedNeighbor.Spin != 0f) {
+                Cog.Rpc_UpdateSpin(Cog.Spin = populatedNeighbor.PropagationStrategy.ShouldSpin(Cog));
+                break;
+            }
+            //Cog.Rpc_UpdateSpin(Cog.Spin = Cog.HolderTile.PopulatedNeighbors.First().PropagationStrategy.ShouldSpin(Cog));
+        }
+    }
+
     public override float ShouldSpin(BaseCog i_AskingCog)
     {
         IEnumerable<BaseCog> conflictingNeighbors = Cog.IntersectingNeighborsFor(i_AskingCog);
-
-        if (conflictingNeighbors.Count() > 0)
+        if (i_AskingCog.Spin == 0f)
         {
-            i_AskingCog.MakeConflicted();
-            Cog.MakeConflicted();
-            foreach (BaseCog conflictingcog in conflictingNeighbors)
+            if (conflictingNeighbors.Count() > 0 && Cog.Spin != 0f)
             {
-                conflictingcog.MakeConflicted();
+                i_AskingCog.MakeConflicted();
+                Cog.MakeConflicted();
+                foreach (BaseCog conflictingcog in conflictingNeighbors)
+                {
+                    conflictingcog.MakeConflicted();
+                }
             }
-        }
 
-        return -Cog.Spin;
+            return -Cog.Spin;
+        }
+        else {
+            if (i_AskingCog.Spin != - Cog.Spin && Cog.Spin != 0f) {
+                i_AskingCog.MakeConflicted();
+                Cog.MakeConflicted();
+            }
+            return i_AskingCog.Spin;
+        }
     }
 }
