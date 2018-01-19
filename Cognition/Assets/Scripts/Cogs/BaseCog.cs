@@ -10,7 +10,7 @@ public abstract class BaseCog : NetworkBehaviour
     /// <summary>
     /// The strategy this cog takes when dealing with propagating the spin of the machine.
     /// </summary>
-    public IPropagationStrategy PropagationStrategy { get; private set; }
+    public PropagationStrategy PropagationStrategy { get; private set; }
 
     /// <summary>
     /// The players that are powering this cog.
@@ -67,7 +67,7 @@ public abstract class BaseCog : NetworkBehaviour
         }
     }
 
-    public IEnumerable<BaseCog> Neighbors //Could cache this for performance sake if tile are static through out the game
+    public List<BaseCog> Neighbors //Could cache this for performance sake if tile are static through out the game
     {
         get
         {
@@ -75,11 +75,11 @@ public abstract class BaseCog : NetworkBehaviour
         }
     }
 
-    public Func<BaseCog, IEnumerable<BaseCog>> IntersectingNeighborsFor
+    public Func<BaseCog, List<BaseCog>> IntersectingNeighborsFor
     {
         get
         {
-            return ((cog) => cog.Neighbors.Intersect(Neighbors));
+            return ((cog) => cog.Neighbors.Intersect(Neighbors).ToList());
         }
     }
 
@@ -128,8 +128,7 @@ public abstract class BaseCog : NetworkBehaviour
     {
         Animator = GetComponent<Animator>();
         m_Renderer = GetComponentInChildren<Renderer>();
-        PropagationStrategy = GetComponent<IPropagationStrategy>();
-        PropagationStrategy?.SetCog(this);
+        PropagationStrategy = GetComponent<PropagationStrategy>();
     }
 
     //Spin control
@@ -139,39 +138,18 @@ public abstract class BaseCog : NetworkBehaviour
     {
         UpdateSpin(i_SpinAmount);
     }
-
-    [ClientRpc]
-    public void Rpc_UpdateSpinInitial(float i_SpinAmount)
-    {
-        UpdateSpin(i_SpinAmount);
-    }
-
+    
     public void UpdateSpin(float spin)
-    {
-        //if (gameObject.name.Contains("4")) { Debug.Log(" 4 was spun " + spin); }
-        StartCoroutine(updateSpin(spin));
-    }
-
-    private IEnumerator updateSpin(float spin)
     {
         m_spin = spin;
 
-        Animator animator = null;
-        do
-        {
-            yield return null;
-            animator = Animator;//Will this not run forever on an empty tile?
-        } while (animator == null);
-
-        animator.SetFloat("Spin", m_spin);
+        Animator.SetFloat("Spin", m_spin);
     }
-
+    
     public void MakeConflicted()
     {
         if (!m_conflicted)
         {
-            //ResidentCog.transform.Translate(Vector3.up * 0.5f);
-            //Debug.Log("making conflicted");
             m_conflicted = true;
             transform.localScale = Vector3.one + Vector3.right * 0.2f; //Conflict placeholder
             StartCoroutine(DealConflictDamage());
@@ -180,7 +158,6 @@ public abstract class BaseCog : NetworkBehaviour
     
     public void StopConflicted()
     {
-        //ResidentCog.transform.Translate(Vector3.up * 0.5f);
         m_conflicted = false;
         transform.localScale = Vector3.one; //StopConflict placeholder
     }

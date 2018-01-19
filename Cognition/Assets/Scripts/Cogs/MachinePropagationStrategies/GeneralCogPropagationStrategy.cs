@@ -4,34 +4,34 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class GeneralCogPropagationStrategy : MonoBehaviour, IPropagationStrategy
+[RequireComponent(typeof(BaseCog))]
+public class GeneralCogPropagationStrategy : PropagationStrategy
 {
-    BaseCog Cog;
-    public List<Tuple<BaseCog, BaseCog>> Propogate(NetworkPlayer i_Player, BaseCog i_RequestingCog, bool StopUnaffected = false)
+    public override List<Tuple<BaseCog, BaseCog>> Propogate(NetworkPlayer i_Player, BaseCog i_RequestingCog, bool i_StopUnaffected = false)
     {
         float prevSpin = Cog.Spin;
 
+        //This is the start of a propogation first cog should check surroundings
         if (i_RequestingCog == null)
-        {//This is the start of a propogation first cog should check surroundings
-            OnCreateUpdateSpin();
-            BFSUpdateDriven(StopUnaffected);
+        {
+            BFSUpdateDriven(i_StopUnaffected);
+
             return null;
         }
         else
         {
-
             Cog.Rpc_UpdateSpin(Cog.Spin = i_RequestingCog.PropagationStrategy.ShouldSpin(Cog));
             List<Tuple<BaseCog, BaseCog>> propogationPairs = new List<Tuple<BaseCog, BaseCog>>();
-            i_Player?.updatedCogs.Add(Cog);
+            i_Player?.UpdatedCogs.Add(Cog);
 
-            if (prevSpin != Cog.Spin || StopUnaffected)
+            if (prevSpin != Cog.Spin || i_StopUnaffected)
             {
                 foreach (BaseCog neighbor in Cog.HolderTile.PopulatedNeighbors)
                 {
-                    if (!i_Player.updatedCogs.Contains(neighbor))
+                    if (!i_Player.UpdatedCogs.Contains(neighbor))
                     {
-                        //neighbor.PropagationStrategy.Propogate(i_Player, Cog);
-                        propogationPairs.Add(new Tuple<BaseCog, BaseCog>(neighbor, Cog)); //Add this pair of propogation target and requester to the BFS targets
+                        //Add this pair of propogation target and requester to the BFS targets
+                        propogationPairs.Add(new Tuple<BaseCog, BaseCog>(neighbor, Cog)); 
                     }
                 }
             }
@@ -40,82 +40,20 @@ public class GeneralCogPropagationStrategy : MonoBehaviour, IPropagationStrategy
         }
     }
 
-    private void OnCreateUpdateSpin() {
-        if (Cog.HolderTile.PopulatedNeighbors.Count() > 0) {
-            Cog.Rpc_UpdateSpin(Cog.Spin = Cog.HolderTile.PopulatedNeighbors.First().PropagationStrategy.ShouldSpin(Cog));
-        }
-    }
-
-    public float ShouldSpin(BaseCog i_AskingCog)
+    public override float ShouldSpin(BaseCog i_AskingCog)
     {
         IEnumerable<BaseCog> conflictingNeighbors = Cog.IntersectingNeighborsFor(i_AskingCog);
-        if (conflictingNeighbors.Count() > 0) {
+
+        if (conflictingNeighbors.Count() > 0)
+        {
             i_AskingCog.MakeConflicted();
             Cog.MakeConflicted();
-            foreach (BaseCog conflictingcog in conflictingNeighbors) {
+            foreach (BaseCog conflictingcog in conflictingNeighbors)
+            {
                 conflictingcog.MakeConflicted();
             }
         }
-        return - Cog.Spin;
-    }
 
-    void ActivateBFSUpdateDriven(bool delayedReaction = true, HexTile neighbor = null)
-    {
-        //StartCoroutine(BFSUpdateDriven());// Cog, delayedReaction, neighbor));
-    }
-
-    public void BFSUpdateDriven(bool StopUnaffected = false)//NetworkPlayer i_OriginPlayer, bool delayedReaction = true, HexTile i_HexTile = null)
-    {
-        //while (s_BFSsRunning > 0)
-        //{
-        //    yield return null;
-        //}
-        //s_BFSsRunning++;
-        Cog.OwningPlayer.updatedCogs.Clear();
-        Tuple<BaseCog, BaseCog> current;
-        Queue frontier = new Queue();
-        //List<BaseCog> visited = new List<BaseCog>();
-
-
-        Cog.OwningPlayer.updatedCogs.Add(Cog);
-
-        foreach (BaseCog neighbor in Cog.HolderTile.PopulatedNeighbors)
-        {
-            frontier.Enqueue(new Tuple<BaseCog, BaseCog>(neighbor, Cog));
-        }
-        //visited.Add(Cog);
-
-        while (frontier.Count > 0) //BFS loop
-        {
-            current = (Tuple<BaseCog, BaseCog>)frontier.Dequeue();
-
-            //visited.Add(current.Item1);
-            Cog.OwningPlayer.updatedCogs.Add(Cog);
-
-            List<Tuple<BaseCog, BaseCog>> nextLayer = current.Item1.PropagationStrategy.Propogate(Cog.OwningPlayer, current.Item2, StopUnaffected);
-
-            foreach (Tuple<BaseCog, BaseCog> propogationPair in nextLayer)
-            {
-                frontier.Enqueue(propogationPair);
-            }
-        }
-
-        if (StopUnaffected)
-        {
-            IEnumerable<BaseCog> StoppedCogs = Cog.OwningPlayer.OwnedCogs.Except(Cog.OwningPlayer.updatedCogs);
-            //BaseCog[] sctest = StoppedCogs.ToArray();
-            foreach (BaseCog cogToStop in StoppedCogs)
-            {
-                cogToStop.Rpc_UpdateSpin(0f);
-            }
-        }
-
-        Cog.OwningPlayer.updatedCogs.Clear();
-        //s_BFSsRunning--;
-    }
-
-    public void SetCog(BaseCog cog)
-    {
-        Cog = cog;
+        return -Cog.Spin;
     }
 }

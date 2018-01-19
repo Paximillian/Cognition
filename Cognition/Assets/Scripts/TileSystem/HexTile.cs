@@ -88,12 +88,13 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         }
     }
 
-    public IEnumerable<BaseCog> PopulatedNeighbors //Could cache this for performance sake if tile are static through out the game
+    public List<BaseCog> PopulatedNeighbors //Could cache this for performance sake if tile are static through out the game
     {
         get
         {
             return Neighbors.Where((neighbor) => neighbor.ResidentCog != null)
-                            .Select((tile) => tile.ResidentCog);
+                            .Select((tile) => tile.ResidentCog)
+                            .ToList();
         }
     }
 
@@ -157,7 +158,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
             }
         }
         if (m_DrivingCog) {
-            cog.Rpc_UpdateSpinInitial(cog.Spin = 1f);//TODO make this place a value in accordance to spin wanted
+            cog.Rpc_UpdateSpin(cog.Spin = 1f);//TODO make this place a value in accordance to spin wanted
         }
         //Rpc_UpdateSpin(IsDriven());
 

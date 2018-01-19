@@ -39,7 +39,7 @@ public class NetworkPlayer : NetworkBehaviour
     public BaseCog PlayerBaseCog { get; set; }
 
 
-    public HashSet<BaseCog> updatedCogs = new HashSet<BaseCog>();
+    public HashSet<BaseCog> UpdatedCogs { get; private set; } = new HashSet<BaseCog>();
 
 
 
