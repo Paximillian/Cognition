@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UniversalCog : BaseCog
+public class UniversalCog : PlayableCog
 {
 
 }

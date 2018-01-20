@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ResourceCog : BaseCog
+public class ResourceCog : NeutralCog
 {
     /// <summary>
     /// Amount of seconds between generation of resources.
@@ -43,13 +43,13 @@ public class ResourceCog : BaseCog
         {
             yield return new WaitForSeconds(m_GenerationInterval - m_DelayBetweenPlayers * OccupyingPlayers.Count);
 
-            foreach(NetworkPlayer player in OccupyingPlayers)
+            foreach (NetworkPlayer player in OccupyingPlayers)
             {
                 player.Resources += m_ResourcesPerGeneration / OccupyingPlayers.Count;
 
-		yield return new WaitForSeconds(m_DelayBetweenPlayers);
-		
-		Rpc_ShowFloatingText(player.PlayerId, (m_ResourcesPerGeneration / OccupyingPlayers.Count).ToString());
+                yield return new WaitForSeconds(m_DelayBetweenPlayers);
+
+                Rpc_ShowFloatingText(player.PlayerId, (m_ResourcesPerGeneration / OccupyingPlayers.Count).ToString());
             }
         }
     }
@@ -57,9 +57,9 @@ public class ResourceCog : BaseCog
     [ClientRpc]
     private void Rpc_ShowFloatingText(int i_PlayerId, string i_Text)
     {
-	FloatingMessage message = ObjectPoolManager.PullObject("ResourceGain").GetComponent<FloatingMessage>();
-	message.SetInvokingPlayerId(i_PlayerId);
-	message.transform.position = transform.position;
-	message.Text.text = i_Text;
+        FloatingMessage message = ObjectPoolManager.PullObject("ResourceGain").GetComponent<FloatingMessage>();
+        message.SetInvokingPlayerId(i_PlayerId);
+        message.transform.position = transform.position;
+        message.Text.text = i_Text;
     }
 }

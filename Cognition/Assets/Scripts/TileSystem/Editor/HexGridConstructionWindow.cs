@@ -409,7 +409,7 @@ public class HexGridConstructionWindow : EditorWindow
                 {
                     if (GUI.Button(new Rect(i_Position - new Vector3(1, 1, 0) * k_HexagonRadius / 2, Vector2.one * k_HexagonRadius), " +", EditorStyles.boldLabel))
                     {
-                        BaseCog cogToBuild = null;
+                        Cog cogToBuild = null;
 
                         switch (m_CurrentPlacementType)
                         {
@@ -424,7 +424,7 @@ public class HexGridConstructionWindow : EditorWindow
                                 break;
                         }
 
-                        BaseCog cog = i_Tile.Editor_BuildCog(cogToBuild);
+                        Cog cog = Editor_BuildCog(i_Tile, cogToBuild);
                         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
                     }
                 }
@@ -434,7 +434,7 @@ public class HexGridConstructionWindow : EditorWindow
             {
                 if (GUI.Button(new Rect(i_Position - new Vector3(1, 1, 0) * k_HexagonRadius / 2, Vector2.one * k_HexagonRadius), " -", EditorStyles.boldLabel))
                 {
-                    i_Tile.Editor_DestroyCog();
+                    Editor_DestroyCog(i_Tile);
                     EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
                 }
             }
@@ -584,5 +584,32 @@ public class HexGridConstructionWindow : EditorWindow
         checkForCloseWindowConditions();
     }
     #endregion UnityMethods
+
+    #region EditorMethods
+#if UNITY_EDITOR
+    public static Cog Editor_BuildCog(HexTile i_Tile, Cog i_CogPrefab)
+    {
+        Cog cog = null;
+        if (i_Tile.ResidentCog == null)
+        {
+            cog = (UnityEditor.PrefabUtility.InstantiatePrefab(i_CogPrefab.gameObject) as GameObject).GetComponent<Cog>();
+            cog.transform.position = i_Tile.transform.position;
+            cog.HoldingTile = i_Tile;
+
+            UnityEditor.Undo.RecordObject(i_Tile, "Updated resident cog");
+            i_Tile.ResidentCog = cog;
+
+            cog.transform.position += Vector3.up * (i_Tile.transform.Find("tile_cog_connection").position.y - cog.transform.Find("tile_cog_connection").position.y);
+        }
+        return cog;
+    }
+
+    public static void Editor_DestroyCog(HexTile i_Tile)
+    {
+        DestroyImmediate(i_Tile.ResidentCog.gameObject);
+        i_Tile.ResidentCog = null;
+    }
+#endif
+    #endregion EditorMethods
 }
 #endif

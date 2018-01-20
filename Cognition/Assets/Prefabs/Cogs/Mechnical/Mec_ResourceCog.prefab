@@ -852,16 +852,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fd88bcb7b1f2841a0d35b7ed89f61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Player1Material: {fileID: 0}
-  m_Player2Material: {fileID: 0}
   m_Cost: 5
-  m_HolderTile: {fileID: 0}
+  m_HoldingTile: {fileID: 0}
   m_initialhp: 10
   m_hp: 10
   m_Sprite: {fileID: 0}
   m_spin: 0
   m_GenerationInterval: 5
-  m_DelayBetweenPlayers: 0.01
+  m_DelayBetweenPlayers: 0.25
   m_ResourcesPerGeneration: 10
 --- !u!114 &114433849722423466
 MonoBehaviour:

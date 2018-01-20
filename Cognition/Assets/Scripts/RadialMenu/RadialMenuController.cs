@@ -14,7 +14,7 @@ public class RadialMenuController : MonoBehaviour
     /// The items to choose from in the radial menu
     /// </summary>
     [SerializeField]
-    private BaseCog[] m_Items;
+    private Cog[] m_Items;
 
     [Tooltip("How much empty space will be between each segment")]
     [SerializeField]
@@ -56,7 +56,7 @@ public class RadialMenuController : MonoBehaviour
     private int m_numOfItems;
     private float[] m_cutAngles;
     private Vector2[] m_segmentStartEndAngles;
-    private BaseCog m_CurrentlySelectedCog;
+    private Cog m_CurrentlySelectedCog;
     #endregion Variables
 
     #region UnityMethods
@@ -171,7 +171,7 @@ public class RadialMenuController : MonoBehaviour
 
         if(m_CurrentlySelectedCog)
         {
-            i_SelectedTile.BuildCog(m_CurrentlySelectedCog);
+            NetworkPlayer.LocalPlayer.BuildCog(i_SelectedTile, m_CurrentlySelectedCog);
         }
     }
 

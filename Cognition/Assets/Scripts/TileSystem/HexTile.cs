@@ -8,14 +8,29 @@ using UnityEngine.Networking;
 
 public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    [SerializeField]
-    private BaseCog m_ResidentCog;
-    public BaseCog ResidentCog { get { return m_ResidentCog; } private set { m_ResidentCog = value; } }
+    #region Variables
+    public int s_BFSsRunning = 0;
 
     private NetworkIdentity m_NetId;
-
-    [SerializeField] bool m_DrivingCog = false;
+    
+    [SerializeField]
+    bool m_DrivingCog = false;
     public bool DrivingCog { get { return m_DrivingCog; } set { m_DrivingCog = value; } }
+
+    [HideInInspector]
+    [SerializeField]
+    private Cog m_ResidentCog;
+    public Cog ResidentCog
+    {
+        get { return m_ResidentCog; }
+        set
+        {
+            if (m_ResidentCog = value)
+            {
+                m_ResidentCogSceneId = value.GetComponent<NetworkIdentity>().netId;
+            }
+        }
+    }
 
     [HideInInspector]
     [SerializeField]
@@ -41,54 +56,48 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     [SerializeField]
     private HexTile m_NeighborZNeg;
     public HexTile NegativeZNeighbour { get { return m_NeighborZNeg; } set { m_NeighborZNeg = value; } }
-
-    List<HexTile> m_neighbors;
-
-    [SerializeField]
     
-    float m_spin = 0f;
-
-    public float Spin{get {return m_spin;}}
-
-    bool m_conflicted = false;
-    [SerializeField]
-    bool simulateSearch = false;
-
-    public int s_BFSsRunning = 0;
-
     [SyncVar(hook = "onAssignedResidentCog")]
     private NetworkInstanceId m_ResidentCogSceneId;
     private void onAssignedResidentCog(NetworkInstanceId i_CogSceneId)
     {
         m_ResidentCogSceneId = i_CogSceneId;
-        ResidentCog = ClientScene.FindLocalObject(m_ResidentCogSceneId).GetComponent<BaseCog>();
+        ResidentCog = ClientScene.FindLocalObject(m_ResidentCogSceneId).GetComponent<Cog>();
     }
 
-    List<HexTile> Neighbors //Could cache this for performance sake if tile are static through out the game
+    private List<HexTile> m_Neighbors;
+
+    /// <summary>
+    /// The tiles neighbouring this tile.
+    /// </summary>
+    public List<HexTile> Neighbors 
     {
         get
         {
-            if (m_neighbors == null)
+            if (m_Neighbors == null)
             {
-                m_neighbors = new List<HexTile>();
+                m_Neighbors = new List<HexTile>();
                 if (m_NeighborXPos != null)
-                    m_neighbors.Add(m_NeighborXPos);
+                    m_Neighbors.Add(m_NeighborXPos);
                 if (m_NeighborXNeg != null)
-                    m_neighbors.Add(m_NeighborXNeg);
+                    m_Neighbors.Add(m_NeighborXNeg);
                 if (m_NeighborYPos != null)
-                    m_neighbors.Add(m_NeighborYPos);
+                    m_Neighbors.Add(m_NeighborYPos);
                 if (m_NeighborYNeg != null)
-                    m_neighbors.Add(m_NeighborYNeg);
+                    m_Neighbors.Add(m_NeighborYNeg);
                 if (m_NeighborZPos != null)
-                    m_neighbors.Add(m_NeighborZPos);
+                    m_Neighbors.Add(m_NeighborZPos);
                 if (m_NeighborZNeg != null)
-                    m_neighbors.Add(m_NeighborZNeg);
+                    m_Neighbors.Add(m_NeighborZNeg);
             }
-            return m_neighbors;
+            return m_Neighbors;
         }
     }
 
-    public List<BaseCog> PopulatedNeighbors //Could cache this for performance sake if tile are static through out the game
+    /// <summary>
+    /// The cogs on the tiles neighbouring this tile.
+    /// </summary>
+    public List<Cog> PopulatedNeighbors //Could cache this for performance sake if tile are static through out the game
     {
         get
         {
@@ -97,175 +106,35 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
                             .ToList();
         }
     }
+    #endregion Variables
 
-
-
-
+    #region UnityMethods
     private void Awake()
     {
         m_NetId = GetComponent<NetworkIdentity>();
     }
+    #endregion UnityMethods
 
-
-    /// <summary>
-    /// Requests from the server to build a cog on the board.
-    /// </summary>
-    [Client]
-    public void BuildCog(BaseCog i_CogPrefab)
-    {
-        if (NetworkPlayer.LocalPlayer.Resources > i_CogPrefab.Cost)
-        {
-            NetworkPlayer.LocalPlayer.BuildCogRequest(m_NetId, i_CogPrefab.gameObject.name);
-        }
-    }
-
-    /// <summary>
-    /// Actually builds the cog on the server side.
-    /// </summary>
-    [Server]
-    public BaseCog BuildCog(NetworkIdentity i_PlacingPlayer, string i_CogPrefabName)
-    {
-        BaseCog cog = null;
-        NetworkPlayer placingPlayer = ClientScene.FindLocalObject(i_PlacingPlayer.netId).GetComponent<NetworkPlayer>();
-
-        if (ResidentCog == null)
-        {
-            cog = NetworkObjectPoolManager.PullObject(i_CogPrefabName).GetComponent<BaseCog>();
-
-            if (placingPlayer.Resources > cog.Cost)
-            {
-                placingPlayer.Resources -= cog.Cost;
-
-                cog.transform.position = transform.position;
-                cog.HolderTile = this;
-                ResidentCog = cog;
-                m_ResidentCogSceneId = cog.GetComponent<NetworkIdentity>().netId;
-                cog.OwningPlayer = placingPlayer;
-                cog.OwningPlayerId = placingPlayer.PlayerId;
-
-                cog.transform.position += (transform.Find("tile_cog_connection").position - cog.transform.Find("tile_cog_connection").position);
-                cog.resetCog();
-
-                placingPlayer.OwnedCogs.Add(cog);
-                //placingPlayer.PlayerBaseCog.PropagationStrategy.Propogate(placingPlayer, null);
-
-
-                cog.PropagationStrategy.Propogate(placingPlayer, null);
-            }
-            else
-            {
-                cog.gameObject.SetActive(false);
-            }
-        }
-        if (m_DrivingCog) {
-            cog.Rpc_UpdateSpin(cog.Spin = 1f);//TODO make this place a value in accordance to spin wanted
-        }
-        //Rpc_UpdateSpin(IsDriven());
-
-        return cog;
-    }
-
-    [ClientRpc]
-    private void Rpc_UpdateSpin(float i_SpinAmount)
-    {
-        if (!DrivingCog)
-        {
-            UpdateSpin(i_SpinAmount);
-        }
-    }
-
-    [ClientRpc]
-    private void Rpc_UpdateSpinInitial(float i_SpinAmount)
-    {
-        UpdateSpin(i_SpinAmount);
-    }
-
-    public void UpdateSpin(float spin) {
-        //if (gameObject.name.Contains("4")) { Debug.Log(" 4 was spun " + spin); }
-        StartCoroutine(updateSpin(spin));
-    }
-
-    private IEnumerator updateSpin(float spin)
-    {
-        m_spin = spin;
-
-        Animator animator = null;
-        do
-        {
-            yield return null;
-            animator = ResidentCog?.Animator;//Will this not run forever on an empty tile?
-        } while (animator == null);
-
-        animator.SetFloat("Spin", m_spin);
-    }
-
-    List<NetworkPlayer> ownersPresent(List<HexTile> tiles) {
-        List<NetworkPlayer> res = new List<NetworkPlayer>();
-        foreach (HexTile tile in tiles) {
-            if (tile.ResidentCog?.OwningPlayer != null && !res.Contains(tile.ResidentCog.OwningPlayer)) {
-                res.Add(tile.ResidentCog.OwningPlayer);
-            }
-        }
-        return res;
-    }
-
-    bool areAdjacent(HexTile a, HexTile b) {
-        return a.Neighbors.Contains(b);
-    }
-
-    bool isAdjacentToAny(HexTile tile, List<HexTile> candidateList)
-    {
-        bool res = false;
-
-        foreach (HexTile other in candidateList) {
-            res = res || areAdjacent(tile, other);
-        }
-        return res;
-    }
-
+    #region UNETMethods
     [Server]
     public void DestroyCog()
     {
         if (ResidentCog)
         {
-            NetworkPlayer owningPlayer = ResidentCog.OwningPlayer;
+            NetworkPlayer owningPlayer = (ResidentCog as PlayableCog)?.OwningPlayer;
             if (owningPlayer)
             {
                 owningPlayer.OwnedCogs.Remove(ResidentCog);
             }
             ResidentCog.InvokeDeathrattle();
             ResidentCog = null;
-            
-            owningPlayer?.PlayerBaseCog.PropagationStrategy.Propogate(owningPlayer, null, true);
 
+            owningPlayer?.PlayerBaseCog.PropagationStrategy.InitializePropagation(owningPlayer, null, true);
         }
     }
+    #endregion UNETMethods
 
-#if UNITY_EDITOR
-    public BaseCog Editor_BuildCog(BaseCog i_CogPrefab)
-    {
-        BaseCog cog = null;
-        if (ResidentCog == null)
-        {
-            cog = (UnityEditor.PrefabUtility.InstantiatePrefab(i_CogPrefab.gameObject) as GameObject).GetComponent<BaseCog>();
-            cog.transform.position = transform.position;
-            cog.HolderTile = this;
-
-            UnityEditor.Undo.RecordObject(this, "Updated resident cog");
-            ResidentCog = cog;
-
-            cog.transform.position += Vector3.up * (transform.Find("tile_cog_connection").position.y - cog.transform.Find("tile_cog_connection").position.y);
-        }
-        return cog;
-    }
-
-    public void Editor_DestroyCog()
-    {
-        DestroyImmediate(ResidentCog.gameObject);
-        ResidentCog = null;
-    }
-#endif
-
+    #region PublicMethods
     public HexTile GetRelativeTile(Vector3 direction)
     {
         if (direction == Vector3.zero)
@@ -298,7 +167,9 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         }
         throw new UnityException("sanity check failed we went mad, moo");
     }
+    #endregion PublicMethods
 
+    #region UIInteractivity
     public void OnPointerDown(PointerEventData eventData)
     {
         eventData.position = Camera.main.WorldToScreenPoint(transform.Find("tile_cog_connection").position);
@@ -314,4 +185,5 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     {
         RadialMenuController.Instance.OnDrag(eventData, this);
     }
+    #endregion UIInteractivity
 }

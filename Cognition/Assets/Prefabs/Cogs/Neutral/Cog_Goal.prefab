@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 114643794560422276}
   - component: {fileID: 114982007469533642}
   - component: {fileID: 114812569699911582}
-  - component: {fileID: 114801324158602266}
+  - component: {fileID: 114926117988139624}
   m_Layer: 0
   m_Name: Cog_Goal
   m_TagString: Untagged
@@ -604,17 +604,6 @@ MonoBehaviour:
     i15: 13
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114801324158602266
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1912954022955610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795ec2ad569117d40b13ce740f7928fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114812569699911582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -636,6 +625,17 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114926117988139624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1912954022955610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027e4c6c082ba7d4ea6f51234daced3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114982007469533642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -647,10 +647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875b12f2bc8aa4745a85756276e3ef33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Player1Material: {fileID: 0}
-  m_Player2Material: {fileID: 0}
   m_Cost: 5
-  m_HolderTile: {fileID: 0}
+  m_HoldingTile: {fileID: 0}
   m_initialhp: 10
   m_hp: 10
   m_Sprite: {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GoalCog : BaseCog
+public class GoalCog : NeutralCog
 {
     /// <summary>
     /// Amount of seconds between generation of progress.

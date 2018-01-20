@@ -1,21 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCogPropogationStrategy : GeneralCogPropagationStrategy
+public class PlayerCogPropogationStrategy : PlayableCogPropagationStrategy
 {
-
-    BaseCog Cog;
-    public new bool Propogate(NetworkPlayer i_Player, BaseCog i_RequestingCog)
+    public override float CheckSpin(Cog i_AskingCog)
     {
-        base.Propogate(i_Player, i_RequestingCog);
-
-        return true;
+        return -Cog.Spin;
     }
-
-    public new float ShouldSpin(BaseCog i_AskingCog)
-    {
-        return -Cog.HolderTile.Spin;
-    }
-
 }

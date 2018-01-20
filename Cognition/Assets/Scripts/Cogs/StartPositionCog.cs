@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartPositionCog : BaseCog
+public class StartPositionCog : NeutralCog
 {
 }

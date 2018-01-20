@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4179046123921902}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tile_axis_Z_NEG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4645542056107574}
   - component: {fileID: 33635705398055156}
   - component: {fileID: 23734484578273748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TileCog_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4833719025537146}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tile_axis_X_POS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4136364411473524}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tile_axis_Y_POS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4428564461441666}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tile_axis_Y_NEG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 114826140714643808}
   - component: {fileID: 64573322712715690}
   - component: {fileID: 114258587716942878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MechanicalTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4354962696645430}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tile_axis_Z_POS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4846268820140764}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 33563611118759644}
   - component: {fileID: 23288825252152108}
   - component: {fileID: 111875970369113272}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mechanical_Tiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4994235048030844}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tile_axis_X_NEG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 4224744159322588}
   - component: {fileID: 33813082557045030}
   - component: {fileID: 23258213883836368}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TileCog_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}

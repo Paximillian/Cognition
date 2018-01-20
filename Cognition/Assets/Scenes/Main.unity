@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_MatchHost: mm.unet.unity3d.com
   m_MatchPort: 443
   matchName: default
-  matchSize: 1
+  matchSize: 2
   isNetworkActive: 0
   matchMaker: {fileID: 0}
   m_GameScene:

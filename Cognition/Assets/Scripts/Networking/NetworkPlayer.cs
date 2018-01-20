@@ -24,7 +24,7 @@ public class NetworkPlayer : NetworkBehaviour
     /// <summary>
     /// The cogs owned by this player.
     /// </summary>
-    public HashSet<BaseCog> OwnedCogs { get; private set; } = new HashSet<BaseCog>();
+    public HashSet<Cog> OwnedCogs { get; private set; } = new HashSet<Cog>();
 
     private Text m_ResourcesUIText;
 
@@ -36,10 +36,10 @@ public class NetworkPlayer : NetworkBehaviour
         m_PlayerId = i_PlayerId;
     }
 
-    public BaseCog PlayerBaseCog { get; set; }
+    public Cog PlayerBaseCog { get; set; }
 
 
-    public HashSet<BaseCog> UpdatedCogs { get; private set; } = new HashSet<BaseCog>();
+    public HashSet<Cog> UpdatedCogs { get; private set; } = new HashSet<Cog>();
 
 
 
@@ -118,9 +118,7 @@ public class NetworkPlayer : NetworkBehaviour
                 tile.DrivingCog = true;
                 tile.DestroyCog();
                 
-                tile.BuildCog(m_NetId, "Cog_Player");
-                PlayerBaseCog = tile.ResidentCog;
-                tile.ResidentCog.OccupyingPlayers.Add(this);
+                BuildCog(tile, m_NetId, "Cog_Player");
             }
         }
     }
@@ -158,6 +156,70 @@ public class NetworkPlayer : NetworkBehaviour
         m_Nickname = i_Nickvar;
     }
 
+
+    #region UNETMethods
+    /// <summary>
+    /// Requests from the server to build a cog on the board.
+    /// </summary>
+    [Client]
+    public void BuildCog(HexTile i_Tile, Cog i_CogPrefab)
+    {
+        if (Resources > i_CogPrefab.Cost)
+        {
+            BuildCogRequest(i_Tile.GetComponent<NetworkIdentity>(), i_CogPrefab.gameObject.name);
+        }
+    }
+
+    /// <summary>
+    /// Actually builds the cog on the server side.
+    /// </summary>
+    [Server]
+    public PlayableCog BuildCog(HexTile i_Tile, NetworkIdentity i_PlacingPlayer, string i_CogPrefabName)
+    {
+        PlayableCog cog = null;
+        NetworkPlayer placingPlayer = ClientScene.FindLocalObject(i_PlacingPlayer.netId).GetComponent<NetworkPlayer>();
+
+        if (i_Tile.ResidentCog == null)
+        {
+            cog = NetworkObjectPoolManager.PullObject(i_CogPrefabName).GetComponent<PlayableCog>();
+
+            if (placingPlayer.Resources >= cog.Cost)
+            {
+                placingPlayer.Resources -= cog.Cost;
+
+                cog.transform.position = i_Tile.transform.position;
+                cog.HoldingTile = i_Tile;
+                i_Tile.ResidentCog = cog;
+                cog.OwningPlayer = placingPlayer;
+                cog.OwningPlayerId = placingPlayer.PlayerId;
+
+                cog.transform.position += (i_Tile.transform.Find("tile_cog_connection").position - cog.transform.Find("tile_cog_connection").position);
+                cog.ResetCog();
+
+                if (placingPlayer.PlayerBaseCog == null)
+                {
+                    placingPlayer.PlayerBaseCog = cog;
+                    cog.OccupyingPlayers.Add(placingPlayer);
+                }
+
+                placingPlayer.OwnedCogs.Add(cog);
+
+                cog.PropagationStrategy.InitializePropagation(placingPlayer, null);
+                cog.InvokeBattleCry();
+            }
+            else
+            {
+                cog.gameObject.SetActive(false);
+            }
+        }
+        if (i_Tile.DrivingCog)
+        {
+            cog.Rpc_UpdateSpin(cog.Spin = 1f);//TODO make this place a value in accordance to spin wanted
+        }
+
+        return cog;
+    }
+
     [Command]
     private void Cmd_SetReady()
     {
@@ -180,7 +242,7 @@ public class NetworkPlayer : NetworkBehaviour
     {
         HexTile tile = ClientScene.FindLocalObject(i_TileToBuildOn.netId).GetComponent<HexTile>();
 
-        tile.BuildCog(i_PlacingPlayer, i_CogPrefabName);
+        BuildCog(tile, i_PlacingPlayer, i_CogPrefabName);
     }
 
     [Command]
@@ -188,4 +250,5 @@ public class NetworkPlayer : NetworkBehaviour
     {
         m_Nickname = i_Nickname;
     }
+    #endregion UNETMethods
 }

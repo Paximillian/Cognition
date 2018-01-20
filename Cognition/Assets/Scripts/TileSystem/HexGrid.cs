@@ -9,14 +9,14 @@ public class HexGrid : MonoBehaviour
     public HexTile TilePrefab { get { return m_TilePrefab; } }
 
     [SerializeField]
-    private BaseCog m_ResourceCogPrefab;
-    public BaseCog ResourceCogPrefab { get { return m_ResourceCogPrefab; } }
+    private Cog m_ResourceCogPrefab;
+    public Cog ResourceCogPrefab { get { return m_ResourceCogPrefab; } }
 
     [SerializeField]
-    private BaseCog m_GoalCogPrefab;
-    public BaseCog GoalCogPrefab { get { return m_GoalCogPrefab; } }
+    private Cog m_GoalCogPrefab;
+    public Cog GoalCogPrefab { get { return m_GoalCogPrefab; } }
 
     [SerializeField]
-    private BaseCog m_PlayerInitialCogPrefab;
-    public BaseCog PlayerInitialCogPrefab { get { return m_PlayerInitialCogPrefab; } }
+    private Cog m_PlayerInitialCogPrefab;
+    public Cog PlayerInitialCogPrefab { get { return m_PlayerInitialCogPrefab; } }
 }
