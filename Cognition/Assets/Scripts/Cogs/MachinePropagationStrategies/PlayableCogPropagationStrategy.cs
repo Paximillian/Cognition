@@ -15,8 +15,9 @@ public class PlayableCogPropagationStrategy : PropagationStrategy
     }
     
     public override float CheckSpin(Cog i_AskingCog)
-    {        
-        if (i_AskingCog.Spin == 0f)
+    {
+        //If the cog isn't spinning or it's an enemy cog
+        if (i_AskingCog.Spin == 0f && Cog.HasSameOwner(i_AskingCog))
         {
             return -Cog.Spin;
         }
