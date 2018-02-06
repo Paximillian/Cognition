@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseDiffuse:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5a299a7d70f69aa40885ed57d1358b04, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -27,7 +27,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ColorMask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1ad22e6f981179249bcc54d41b4b5385, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DamagePattern:
@@ -88,7 +88,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSize: 1
+    - _OutlineSize: 0.513
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
