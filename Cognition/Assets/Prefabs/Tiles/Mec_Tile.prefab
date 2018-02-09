@@ -114,8 +114,8 @@ GameObject:
   - component: {fileID: 114826140714643808}
   - component: {fileID: 64573322712715690}
   - component: {fileID: 114258587716942878}
-  m_Layer: 0
-  m_Name: MechanicalTile
+  m_Layer: 8
+  m_Name: Mec_Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -563,14 +563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c1904393ffe2c43834cebfc0a3782c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ResidentCog: {fileID: 0}
+  s_BFSsRunning: 0
   m_DrivingCog: 0
+  m_ResidentCog: {fileID: 0}
   m_NeighborXPos: {fileID: 0}
   m_NeighborXNeg: {fileID: 0}
   m_NeighborYPos: {fileID: 0}
   m_NeighborYNeg: {fileID: 0}
   m_NeighborZPos: {fileID: 0}
   m_NeighborZNeg: {fileID: 0}
-  m_spin: 0
-  simulateSearch: 0
-  s_BFSsRunning: 0

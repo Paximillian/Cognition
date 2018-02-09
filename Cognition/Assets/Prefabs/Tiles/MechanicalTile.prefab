@@ -534,22 +534,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 193
-    i1: 127
-    i2: 108
-    i3: 36
-    i4: 102
-    i5: 251
-    i6: 218
-    i7: 164
-    i8: 26
-    i9: 76
-    i10: 57
-    i11: 249
-    i12: 41
-    i13: 129
-    i14: 245
-    i15: 73
+    i0: 142
+    i1: 196
+    i2: 94
+    i3: 49
+    i4: 117
+    i5: 31
+    i6: 222
+    i7: 132
+    i8: 251
+    i9: 165
+    i10: 43
+    i11: 241
+    i12: 157
+    i13: 66
+    i14: 129
+    i15: 32
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &114826140714643808
@@ -563,14 +563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c1904393ffe2c43834cebfc0a3782c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ResidentCog: {fileID: 0}
+  s_BFSsRunning: 0
   m_DrivingCog: 0
+  m_ResidentCog: {fileID: 0}
   m_NeighborXPos: {fileID: 0}
   m_NeighborXNeg: {fileID: 0}
   m_NeighborYPos: {fileID: 0}
   m_NeighborYNeg: {fileID: 0}
   m_NeighborZPos: {fileID: 0}
   m_NeighborZNeg: {fileID: 0}
-  m_spin: 0
-  simulateSearch: 0
-  s_BFSsRunning: 0
