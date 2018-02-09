@@ -171,6 +171,16 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     /// <summary>
+    /// Checks if this player can build the given cog on the given tile.
+    /// </summary>
+    [Client]
+    public bool CanBuildCog(HexTile i_Tile, Cog i_CogPrefab)
+    {
+        //TODO: Add build check logic here
+        return true;
+    }
+
+    /// <summary>
     /// Actually builds the cog on the server side.
     /// </summary>
     [Server]
