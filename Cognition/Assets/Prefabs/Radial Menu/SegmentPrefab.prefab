@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224536830946686078}
   - component: {fileID: 222499310952139188}
+  - component: {fileID: 114563706341068100}
   - component: {fileID: 114941113738707304}
   m_Layer: 5
   m_Name: SegmentPrefab
@@ -72,6 +73,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114563706341068100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405925258684032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d521bb16cfd1284b9742d84b02af308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BackgroundImage: {fileID: 114941113738707304}
+  m_ItemIcon: {fileID: 114376234802005996}
 --- !u!114 &114941113738707304
 MonoBehaviour:
   m_ObjectHideFlags: 1

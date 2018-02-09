@@ -7,19 +7,54 @@ using UnityEngine.UI;
 
 public class NetworkPlayer : NetworkBehaviour
 {
+    #region Variables
     public static NetworkPlayer LocalPlayer { get; private set; }
+
+    /// <summary>
+    /// Called when the amount of resources this player collected changes.
+    /// </summary>
+    public event Action<int> ResourcesChanged;
+
+    /// <summary>
+    /// Called when this player successfully finishes building a cog.
+    /// </summary>
+    public event Action<Cog> CogBuilt;
+
     public bool IsReady { get; private set; }
 
     private NetworkIdentity m_NetId;
 
     [SyncVar(hook = "assignedPlayerId")]
     private int m_PlayerId;
-    public int PlayerId { get { return m_PlayerId; } set { m_PlayerId = value; } }
+    public int PlayerId { get { return m_PlayerId; } private set { m_PlayerId = value; } }
+    private void assignedPlayerId(int i_PlayerId)
+    {
+        m_PlayerId = i_PlayerId;
+    }
 
     [SyncVar(hook = "onResourcesChanged")]
     [SerializeField]
     private int m_Resources = 0;
-    public int Resources { get { return m_Resources; } internal set { m_Resources = value; } }
+    public int Resources { get { return m_Resources; } set { m_Resources = value; } }
+    /// <summary>
+    /// Hook called when the amount of resources of this player changes.
+    /// </summary>
+    private void onResourcesChanged(int i_Resources)
+    {
+        m_Resources = i_Resources;
+
+        if (isLocalPlayer)
+        {
+            if (m_ResourcesUIText == null)
+            {
+                m_ResourcesUIText = GameObject.FindGameObjectWithTag("ResourcesUIText")?.GetComponent<Text>();
+            }
+
+            m_ResourcesUIText.text = m_Resources.ToString();
+
+            ResourcesChanged?.Invoke(m_Resources);
+        }
+    }
 
     /// <summary>
     /// The cogs owned by this player.
@@ -30,10 +65,9 @@ public class NetworkPlayer : NetworkBehaviour
 
     [SyncVar(hook = "onPlayerNicknameChanged")]
     private string m_Nickname = "Nope";
-
-    private void assignedPlayerId(int i_PlayerId)
+    private void onPlayerNicknameChanged(string i_Nickvar)
     {
-        m_PlayerId = i_PlayerId;
+        m_Nickname = i_Nickvar;
     }
 
     public Cog PlayerBaseCog { get; set; }
@@ -41,13 +75,13 @@ public class NetworkPlayer : NetworkBehaviour
 
     public HashSet<Cog> UpdatedCogs { get; private set; } = new HashSet<Cog>();
 
-
-
     /// <summary>
     /// How many players have been added to the game already.
     /// </summary>
     private static int s_LoadedPlayers = 0;
+    #endregion Variables
 
+    #region UnityMethods
     private void Awake()
     {
         m_NetId = GetComponent<NetworkIdentity>();
@@ -66,24 +100,18 @@ public class NetworkPlayer : NetworkBehaviour
         StartCoroutine(waitForRoleUpdate());
     }
 
-    /// <summary>
-    /// Hook called when the amount of resources of this player changes.
-    /// </summary>
-    private void onResourcesChanged(int i_Resources)
+    public override void OnStartLocalPlayer()
     {
-        m_Resources = i_Resources;
+        base.OnStartLocalPlayer();
 
-        if (isLocalPlayer)
-        {
-            if(m_ResourcesUIText == null)
-            {
-                m_ResourcesUIText = GameObject.FindGameObjectWithTag("ResourcesUIText")?.GetComponent<Text>();
-            }
-
-            m_ResourcesUIText.text = m_Resources.ToString();
-        }
+        LocalPlayer = this;
+        Cmd_SetReady();
+        Cmd_SetNickname(PlayerPrefs.GetString("Nickname", "Nope"));
+        NamesManager.Instance.LocalName = m_Nickname;
     }
+    #endregion UnityMethods
 
+    #region PrivateMethods
     /// <summary>
     /// Initializes the player in a valid starting position and sets up their initial cog.
     /// </summary>
@@ -123,7 +151,7 @@ public class NetworkPlayer : NetworkBehaviour
         }
     }
 
-    IEnumerator waitForRoleUpdate()
+    private IEnumerator waitForRoleUpdate()
     {
         while (s_LoadedPlayers < 2)
         {
@@ -136,27 +164,12 @@ public class NetworkPlayer : NetworkBehaviour
         }
     }
 
-    public override void OnStartLocalPlayer()
-    {
-        base.OnStartLocalPlayer();
-
-        LocalPlayer = this;
-        Cmd_SetReady();
-        Cmd_SetNickname(PlayerPrefs.GetString("Nickname", "Nope"));
-        NamesManager.Instance.LocalName = m_Nickname;
-    }
-
     protected virtual void onStartNonLocalPlayer()
     {
         NamesManager.Instance.OpponentName = m_Nickname;
     }
-
-    private void onPlayerNicknameChanged(string i_Nickvar)
-    {
-        m_Nickname = i_Nickvar;
-    }
-
-
+    #endregion PrivateMethods
+        
     #region UNETMethods
     /// <summary>
     /// Requests from the server to build a cog on the board.
@@ -216,6 +229,8 @@ public class NetworkPlayer : NetworkBehaviour
 
                 cog.PropagationStrategy.InitializePropagation(placingPlayer, null);
                 cog.InvokeBattleCry();
+
+                Rpc_CogBuilt(cog.netId);
             }
             else
             {
@@ -228,6 +243,20 @@ public class NetworkPlayer : NetworkBehaviour
         }
 
         return cog;
+    }
+
+    /// <summary>
+    /// Called on the client when a cog finishes building.
+    /// </summary>
+    [ClientRpc]
+    private void Rpc_CogBuilt(NetworkInstanceId i_BuiltCogId)
+    {
+        if (isLocalPlayer)
+        {
+            Cog cog = ClientScene.FindLocalObject(i_BuiltCogId).GetComponent<Cog>();
+
+            CogBuilt?.Invoke(cog);
+        }
     }
 
     [Command]
