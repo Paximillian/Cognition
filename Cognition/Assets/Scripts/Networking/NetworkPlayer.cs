@@ -177,7 +177,7 @@ public class NetworkPlayer : NetworkBehaviour
     [Client]
     public void BuildCog(HexTile i_Tile, Cog i_CogPrefab)
     {
-        if (Resources > i_CogPrefab.Cost)
+        if (Resources >= i_CogPrefab.Cost)
         {
             BuildCogRequest(i_Tile.GetComponent<NetworkIdentity>(), i_CogPrefab.gameObject.name);
         }
