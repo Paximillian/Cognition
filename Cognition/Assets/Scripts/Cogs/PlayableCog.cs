@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -6,6 +7,9 @@ using UnityEngine.Networking;
 public class PlayableCog : Cog
 {
     private Renderer m_Renderer;
+
+    public Func<Cog, bool> HasSameOwner => ((i_AskingCog) =>
+    (OwningPlayer.Equals((i_AskingCog as PlayableCog)?.OwningPlayer)));
 
     [SerializeField]
     private Material m_Player1Material, m_Player2Material;

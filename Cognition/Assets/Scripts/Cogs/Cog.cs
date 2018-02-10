@@ -58,6 +58,11 @@ public abstract class Cog : NetworkBehaviour
     public Func<Cog, List<Cog>> IntersectingNeighborsFor => ((cog) => cog.Neighbors.Intersect(Neighbors).ToList());
 
     /// <summary>
+    /// Do this cog and the requesting cog have the same owner? Is false for non-playable cogs
+    /// </summary>
+    //public virtual Func<Cog, bool> HasSameOwner => ((i_AskingCog) => false);
+
+    /// <summary>
     /// The strategy this cog takes when dealing with propagating the spin of the machine.
     /// </summary>
     public PropagationStrategy PropagationStrategy { get; private set; }
