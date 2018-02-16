@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 114433849722423466}
   - component: {fileID: 114485583251967128}
   m_Layer: 0
-  m_Name: Mec_ResourceCog
+  m_Name: Mec_ResourceCog_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,7 +394,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1385813790975954}
-  m_LocalRotation: {x: -0.29883626, y: 0.64085644, z: 0.64085644, w: -0.29883626}
+  m_LocalRotation: {x: -0.29883623, y: 0.6408564, z: 0.6408564, w: -0.29883623}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -409,7 +409,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382689225629150}
-  m_LocalRotation: {x: -0.29883626, y: 0.64085644, z: 0.64085644, w: 0.29883626}
+  m_LocalRotation: {x: -0.29883623, y: 0.6408564, z: 0.6408564, w: 0.29883623}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
