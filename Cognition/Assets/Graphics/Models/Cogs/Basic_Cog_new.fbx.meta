@@ -1,0 +1,133 @@
+fileFormatVersion: 2
+guid: 87d020b8d05cbc844a22ac44ea17aab8
+timeCreated: 1518774085
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cog_Graphic
+    100004: Cog_Rod_Graphic
+    100006: Cog_Rod_Graphic.001
+    100008: Cog_Rod_Graphic.002
+    100010: Cog_Rod_Graphic.003
+    100012: MDL_BasicCog
+    100014: MDL_BasicCog.001
+    100016: MDL_BasicCog.002
+    100018: MDL_BasicCog.003
+    100020: MDL_Cog_Rod
+    400000: //RootNode
+    400002: Cog_Graphic
+    400004: Cog_Rod_Graphic
+    400006: Cog_Rod_Graphic.001
+    400008: Cog_Rod_Graphic.002
+    400010: Cog_Rod_Graphic.003
+    400012: MDL_BasicCog
+    400014: MDL_BasicCog.001
+    400016: MDL_BasicCog.002
+    400018: MDL_BasicCog.003
+    400020: MDL_Cog_Rod
+    2300000: MDL_BasicCog
+    2300002: MDL_BasicCog.001
+    2300004: MDL_BasicCog.002
+    2300006: MDL_BasicCog.003
+    2300008: MDL_Cog_Rod
+    3300000: MDL_BasicCog
+    3300002: MDL_BasicCog.001
+    3300004: MDL_BasicCog.002
+    3300006: MDL_BasicCog.003
+    3300008: MDL_Cog_Rod
+    4300000: MDL_Cog_Rod
+    4300002: MDL_BasicCog
+    4300004: MDL_BasicCog.002
+    4300006: MDL_BasicCog.003
+    4300008: MDL_BasicCog.001
+    7400000: CogBasic|Engage
+    7400002: CogBasic|Idle
+    7400004: CogBasic|Rotate_CCW
+    7400006: CogBasic|Rotate_CW
+    7400008: CogBasic|Spawn
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 34da4d89b0e2957439df20860a58d829, type: 2}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
