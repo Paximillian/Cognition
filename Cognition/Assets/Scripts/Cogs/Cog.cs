@@ -25,6 +25,15 @@ public abstract class Cog : NetworkBehaviour
     private int m_Cost = 5;
     public int Cost { get { return m_Cost; } }
 
+    /// <summary>
+    /// Maximum build range away from other cogs beloning to the same player
+    /// </summary>
+    [Tooltip("Maximum build range away from other cogs beloning to the same player")]
+    [SerializeField]
+    [Range(0,5)]
+    private int m_buildRange = 1;
+    public int BuildRange { get { return m_buildRange; } }
+
     [SerializeField]
     private HexTile m_HoldingTile;
     public HexTile HoldingTile { get { return m_HoldingTile; } set { m_HoldingTile = value; } }

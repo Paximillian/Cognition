@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -190,7 +191,17 @@ public class NetworkPlayer : NetworkBehaviour
     public bool CanBuildCog(HexTile i_Tile, Cog i_CogPrefab)
     {
         //TODO: Add build check logic here
-        return true;
+        if (i_Tile?.ResidentCog != null) {//If there's already a cog here we can't build
+            return false;
+        }
+
+        if (i_CogPrefab.BuildRange == 0 || i_Tile == null) {//unlimited range cog or tile irrelevant
+            return true;
+        }
+
+        return i_Tile.PopulatedNeighborInRadius(i_CogPrefab.BuildRange)
+            .Where(cog => (cog is PlayableCog) && (cog as PlayableCog).OwningPlayer.Equals(this))
+            .Count() > 0;
     }
 
     /// <summary>

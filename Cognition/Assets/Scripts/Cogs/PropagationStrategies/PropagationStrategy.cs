@@ -11,13 +11,28 @@ using UnityEngine;
 public abstract class PropagationStrategy : MonoBehaviour
 {
     #region Variables
-    protected Cog Cog { get; private set; }
+    private Cog m_cog;
+    protected Cog Cog //NullExceptions were thrown on some cogs seemingly randomly when initialization was only in awake
+    {
+        get
+        {
+            if (m_cog == null)
+            {
+                m_cog = GetComponent<Cog>();
+            }
+            return m_cog;
+        }
+        private set { m_cog = value; }
+    }
     #endregion Variables
 
     #region UnityMethods
     protected virtual void Awake()
     {
-        Cog = GetComponent<Cog>();
+        if (m_cog == null)
+        {
+            Cog = GetComponent<Cog>();
+        }
     }
     #endregion UnityMethods
 
@@ -43,7 +58,7 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// </summary>
     /// <param name="i_RequestingCog">The cog that requested me to start spin.</param>
     /// <param name="i_Player">The player whose machine we're currently testing.</param>
-    /// <returns>True if I'm now spinning or false if I'm not.</returns>
+    /// <returns>True if after we finish propogation we should stop cogs we haven't visited.</returns>
     public void InitializePropagation(NetworkPlayer i_Player, Cog i_RequestingCog, bool i_StopUnaffected = false)
     {
         //This is the start of a propogation first cog should check surroundings
@@ -64,7 +79,8 @@ public abstract class PropagationStrategy : MonoBehaviour
     {
         bool isConflicted = false;
         HashSet<Cog> conflictingNeighbors = new HashSet<Cog>();
-        Debug.Log("Test:     " + (i_AskingCog is PlayableCog) + "         " + (i_AskingCog as PlayableCog)?.HasSameOwner(Cog));
+        //Debug line use when something breaks
+        //Debug.Log("Test:     " + (i_AskingCog is PlayableCog) + "         " + (i_AskingCog as PlayableCog)?.HasSameOwner(Cog)); 
         if (i_AskingCog.Spin != -Cog.Spin && ((Cog.Spin != 0f && i_AskingCog.Spin != 0) 
             || ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwner(Cog))))
         {

@@ -8,6 +8,9 @@ public class PlayableCog : Cog
 {
     private Renderer m_Renderer;
 
+    /// <summary>
+    /// Do this PlayableCog and the requesting cog have the same owner? Is false for non-playable cogs
+    /// </summary>
     public Func<Cog, bool> HasSameOwner => ((i_AskingCog) =>
     (OwningPlayer.Equals((i_AskingCog as PlayableCog)?.OwningPlayer)));
 
