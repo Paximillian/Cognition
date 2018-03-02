@@ -141,13 +141,17 @@ public class NetworkPlayer : NetworkBehaviour
 
             //We then build our initial cog on this tile.
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, -Vector3.up, out hit, 2, LayerMask.GetMask("HexTile")))
+            if (Physics.Raycast(transform.position + Vector3.up, -Vector3.up, out hit, 2, LayerMask.GetMask("HexTile")))
             {
                 HexTile tile = hit.collider.GetComponent<HexTile>();
                 tile.DrivingCog = true;
                 tile.DestroyCog();
-                
+
                 BuildCog(tile, m_NetId, "Cog_Player");
+            }
+            else
+            {
+                Debug.LogError("Couldn't find tile to put the player cog on");
             }
         }
     }

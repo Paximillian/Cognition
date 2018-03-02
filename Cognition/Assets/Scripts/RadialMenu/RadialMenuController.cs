@@ -216,6 +216,17 @@ public class RadialMenuController : MonoBehaviour
         checkForBuildRange();
         checkForSufficientResources(NetworkPlayer.LocalPlayer.Resources);
     }
+
+    /// <summary>
+    /// Cancels the active build menu.
+    /// </summary>
+    private void cancelBuild()
+    {
+        m_CurrentlySelectedTile = null;
+        m_isChoosing = false;
+        m_CurrentlySelectedCog = null;
+        m_MenuParent.SetActive(false);
+    }
     #endregion PrivateMethods
 
     #region PublicMethods
@@ -243,69 +254,108 @@ public class RadialMenuController : MonoBehaviour
 
     public void OnPointerUp(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
-        m_CurrentlySelectedTile = null;
-        m_isChoosing = false;
-        m_MenuParent.SetActive(false);
-
-        if(m_CurrentlySelectedCog)
+        if (Input.touchCount > 1)
         {
-            NetworkPlayer.LocalPlayer.BuildCog(i_SelectedTile, m_CurrentlySelectedCog);
+            cancelBuild();
+        }
+        else
+        {
+            if (i_pointerData.button == PointerEventData.InputButton.Left)
+            {
+                m_CurrentlySelectedTile = null;
+                m_isChoosing = false;
+                m_MenuParent.SetActive(false);
+
+                if (m_CurrentlySelectedCog)
+                {
+                    NetworkPlayer.LocalPlayer.BuildCog(i_SelectedTile, m_CurrentlySelectedCog);
+                }
+            }
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData, HexTile i_SelectedTile)
+    public void OnPointerDown(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
-        m_CurrentlySelectedTile = i_SelectedTile;
-        m_isChoosing = true;
-        m_MenuParent.SetActive(true);
-        turnOffAllItemsHightlight();
-        m_mouseStartPos = eventData.position;
-        m_MenuParent.transform.localPosition = m_mouseStartPos - new Vector2(Screen.width / 2, Screen.height / 2);
+        if (Input.touchCount > 1)
+        {
+            cancelBuild();
+        }
+        else
+        {
+            StartCoroutine(delayedShowMenu(i_pointerData, i_SelectedTile));
+        }
+    }
 
-        checkAllCogBuildingLimitations();
+    private IEnumerator delayedShowMenu(PointerEventData i_pointerData, HexTile i_SelectedTile)
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        if (i_pointerData.button == PointerEventData.InputButton.Left && Input.touchCount <= 1)
+        {
+            m_CurrentlySelectedTile = i_SelectedTile;
+            m_isChoosing = true;
+            m_MenuParent.SetActive(true);
+            turnOffAllItemsHightlight();
+            m_mouseStartPos = i_pointerData.position;
+            m_MenuParent.transform.localPosition = m_mouseStartPos - new Vector2(Screen.width / 2, Screen.height / 2);
+
+            checkAllCogBuildingLimitations();
+        }
     }
 
     public void OnDrag(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
-        if (m_isChoosing)
+        if (Input.touchCount > 1)
         {
-            Vector2 v = i_pointerData.position - m_mouseStartPos;
-            float angleRadians = Mathf.Atan2(v.y, v.x);
-            float angleDegrees = angleRadians * Mathf.Rad2Deg;
-
-            if (angleDegrees < 0) angleDegrees += 360;
-
-            float distance = Vector2.Distance(m_mouseStartPos, i_pointerData.position);
-
-            for (int i = 0; i < m_numOfItems; i++)
+            cancelBuild();
+        }
+        else
+        {
+            if (i_pointerData.button == PointerEventData.InputButton.Left)
             {
-                if (m_segmentStartEndAngles[i].x < m_segmentStartEndAngles[i].y)
+                if (m_isChoosing)
                 {
-                    if (angleDegrees > m_segmentStartEndAngles[i].x && angleDegrees < m_segmentStartEndAngles[i].y)
+                    Vector2 v = i_pointerData.position - m_mouseStartPos;
+                    float angleRadians = Mathf.Atan2(v.y, v.x);
+                    float angleDegrees = angleRadians * Mathf.Rad2Deg;
+
+                    if (angleDegrees < 0) angleDegrees += 360;
+
+                    float distance = Vector2.Distance(m_mouseStartPos, i_pointerData.position);
+
+                    for (int i = 0; i < m_numOfItems; i++)
                     {
-                        if (distance > m_MinLineDrawDistance)
+                        if (m_segmentStartEndAngles[i].x < m_segmentStartEndAngles[i].y)
                         {
-                            m_HoveredItemIndex = i;
-                            SetItemHighlight(i);
+                            if (angleDegrees > m_segmentStartEndAngles[i].x && angleDegrees < m_segmentStartEndAngles[i].y)
+                            {
+                                if (distance > m_MinLineDrawDistance)
+                                {
+                                    m_HoveredItemIndex = i;
+                                    SetItemHighlight(i);
+                                }
+                                else
+                                {
+                                    m_HoveredItemIndex = null;
+                                    turnOffAllItemsHightlight();
+                                }
+                            }
                         }
-                        else
+                        else if ((angleDegrees > m_segmentStartEndAngles[i].x && angleDegrees <= 360) || (angleDegrees < m_segmentStartEndAngles[i].y && angleDegrees >= 0))
                         {
-                            m_HoveredItemIndex = null;
-                            turnOffAllItemsHightlight();
+                            if (distance > m_MinLineDrawDistance)
+                            {
+                                m_HoveredItemIndex = i;
+                                SetItemHighlight(i);
+                            }
+                            else
+                            {
+                                m_HoveredItemIndex = null;
+                                turnOffAllItemsHightlight();
+                            }
                         }
-                    }
-                }
-                else if ((angleDegrees > m_segmentStartEndAngles[i].x && angleDegrees <= 360) || (angleDegrees < m_segmentStartEndAngles[i].y && angleDegrees >= 0))
-                {
-                    if (distance > m_MinLineDrawDistance)
-                    {
-                        m_HoveredItemIndex = i;
-                        SetItemHighlight(i);
-                    }
-                    else
-                    {
-                        m_HoveredItemIndex = null;
-                        turnOffAllItemsHightlight();
                     }
                 }
             }
