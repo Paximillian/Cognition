@@ -25,7 +25,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         {
             if (m_ResidentCog = value)
             {
-                m_ResidentCogSceneId = value.GetComponent<NetworkIdentity>().netId;
+                m_ResidentCogSceneId = value.GetComponent<NetworkIdentity>()?.netId ?? new NetworkInstanceId(0);
             }
         }
     }
@@ -92,25 +92,24 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         }
     }
 
-    public List<HexTile> GetHexTilesInRadious(int searchRadius) {
+    public List<HexTile> GetHexTilesInRadius(int searchRadius)
+    {
         HashSet<HexTile> resTiles = new HashSet<HexTile>();
         resTiles.Add(this);
-        for (int i = 0; i < searchRadius - 1; i++) {
-            //foreach (HexTile tile in resTiles) {//TODO: make linqy
-            //    resTiles.AddRange(tile.Neighbors);
-            //}
-            resTiles.AddRange(resTiles
-                .SelectMany(tile => tile.Neighbors)
-                .ToList());
-        }
 
-        //List<Cog> a = resTiles.SelectMany((neighbor) => neighbor.PopulatedNeighbors).ToList();
+        for (int i = 0; i < searchRadius; i++)
+        {
+            List<HexTile> tilesToAdd = resTiles.SelectMany(tile => tile.Neighbors).ToList();
+
+            if (resTiles.IsSupersetOf(tilesToAdd)) { break; }
+            else { resTiles.AddRange(tilesToAdd); }
+        }
 
         return resTiles.ToList();
     }
 
-    public Func<int, List<Cog>> PopulatedNeighborInRadius =>
-        ((radius) => GetHexTilesInRadious(radius)
+    public Func<int, List<Cog>> PopulatedNeighborsInRadius =>
+        ((radius) => GetHexTilesInRadius(radius - 1)
         .SelectMany((neighbor) => neighbor.PopulatedNeighbors).ToList());
 
     /// <summary>

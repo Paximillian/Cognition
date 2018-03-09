@@ -25,11 +25,29 @@ public class PlayableCog : Cog
         m_OwningPlayerId = i_OwningPlayerId;
         m_Renderer.material = m_OwningPlayerId == 1 ? m_Player1Material : m_Player2Material;
     }
-
+    
     /// <summary>
     /// The player that placed this cog.
     /// </summary>
-    public NetworkPlayer OwningPlayer { get; set; }
+    public NetworkPlayer OwningPlayer
+    {
+        get { return m_OwningPlayer; }
+        set
+        {
+            m_OwningPlayer = value;
+            m_OwningPlayerNetId = value.netId;
+        }
+    }
+    private NetworkPlayer m_OwningPlayer;
+    [SyncVar(hook = "onAssignedPlayerNetId")]
+    private NetworkInstanceId m_OwningPlayerNetId;
+    private void onAssignedPlayerNetId(NetworkInstanceId i_NetId)
+    {
+        if (!isServer)
+        {
+            OwningPlayer = ClientScene.FindLocalObject(i_NetId).GetComponent<NetworkPlayer>();
+        }
+    }
 
     protected override void Awake()
     {

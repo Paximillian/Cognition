@@ -203,8 +203,8 @@ public class NetworkPlayer : NetworkBehaviour
             return true;
         }
 
-        return i_Tile.PopulatedNeighborInRadius(i_CogPrefab.BuildRange)
-            .Where(cog => (cog is PlayableCog) && (cog as PlayableCog).OwningPlayer.Equals(this))
+        return i_Tile.PopulatedNeighborsInRadius(i_CogPrefab.BuildRange)
+            .Where(cog => (cog as PlayableCog)?.OwningPlayer.Equals(this) ?? false)
             .Count() > 0;
     }
 

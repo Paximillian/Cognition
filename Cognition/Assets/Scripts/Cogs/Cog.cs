@@ -30,7 +30,7 @@ public abstract class Cog : NetworkBehaviour
     /// </summary>
     [Tooltip("Maximum build range away from other cogs beloning to the same player")]
     [SerializeField]
-    [Range(0,5)]
+    [BuildRange(0,5)]
     private int m_buildRange = 1;
     public int BuildRange { get { return m_buildRange; } }
 
@@ -86,7 +86,7 @@ public abstract class Cog : NetworkBehaviour
     #region UnityMethods
     protected virtual void Awake()
     {
-        Animator = GetComponent<Animator>();
+        Animator = GetComponentInChildren<Animator>();
         PropagationStrategy = GetComponent<PropagationStrategy>();
     }
     #endregion UnityMethods
