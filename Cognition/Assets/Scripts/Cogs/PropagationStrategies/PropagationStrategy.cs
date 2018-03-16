@@ -82,7 +82,7 @@ public abstract class PropagationStrategy : MonoBehaviour
         //Debug line use when something breaks
         //Debug.Log("Test:     " + (i_AskingCog is PlayableCog) + "         " + (i_AskingCog as PlayableCog)?.HasSameOwner(Cog)); 
         if (i_AskingCog.Spin != -Cog.Spin && ((Cog.Spin != 0f && i_AskingCog.Spin != 0) 
-            || ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwner(Cog))))
+            || ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog))))
         {
             i_AskingCog.MakeConflicted(Cog);
             Cog.MakeConflicted(i_AskingCog);

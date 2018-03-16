@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class MobileCameraControls : ICameraControls
 {
+    private const float k_JustSomeMagicNumberThing = 10;
+    private const float k_ZoomSensitivity = 5;
+
     private Vector3 m_LastTouchPosition;
     private float m_LastZoomFingerDistance;
 
@@ -41,9 +44,9 @@ public class MobileCameraControls : ICameraControls
 
         if (Input.touchCount == 2)
         {
-            Vector3 touch1 = Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
-            Vector3 touch2 = Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(1).position.x, Input.GetTouch(1).position.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
-
+            Vector3 touch1 = Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, k_JustSomeMagicNumberThing));
+            Vector3 touch2 = Camera.main.ScreenToWorldPoint(new Vector3(Input.GetTouch(1).position.x, Input.GetTouch(1).position.y, k_JustSomeMagicNumberThing));
+            
             float distance = Vector3.Distance(touch1, touch2);
 
             if (Input.GetTouch(1).phase != TouchPhase.Began)
@@ -54,6 +57,6 @@ public class MobileCameraControls : ICameraControls
             m_LastZoomFingerDistance = distance;
         }
         
-        return delta;
+        return delta * k_ZoomSensitivity;
     }
 }
