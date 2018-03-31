@@ -48,6 +48,7 @@ public class PlayableCog : Cog
             OwningPlayer = ClientScene.FindLocalObject(i_NetId).GetComponent<NetworkPlayer>();
         }
         
+        gameObject.SetActive(true);
         StartCoroutine(delayedAlert());
     }
 

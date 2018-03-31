@@ -44,9 +44,10 @@ public class NetworkGameObjectPool
 		}
 		
 		GameObject newGameobj = GameObject.Instantiate(i_PoolObject, new Vector3(-1337, -1337, -1337), Quaternion.identity, NetworkObjectPoolManager.Instance.transform) as GameObject;
-		RpcSetActive(newGameobj, false);
+        newGameobj.SetActive(false);
         m_GameObjectList.Add(newGameobj);
         NetworkServer.Spawn(newGameobj);
+		NetworkObjectPoolManager.Instance.SetPooledObjectActiveState(newGameobj, false);
 
         return newGameobj;
     }
@@ -67,13 +68,7 @@ public class NetworkGameObjectPool
 		
 		return returnedObject;
 	}
-
-    [ClientRpc]
-    private void RpcSetActive(GameObject i_GameObj, bool i_Active)
-    {
-        i_GameObj.SetActive(i_Active);
-    }
-
+    
     public GameObject PullObject()
 	{
 		if(m_PoolObj.Count == 0)
@@ -101,7 +96,7 @@ public class NetworkGameObjectPool
 			objToPull = pullableObjects[Random.Range(0, pullableObjects.Count)];
 		}
 
-		RpcSetActive(objToPull, true);
+        NetworkObjectPoolManager.Instance.SetPooledObjectActiveState(objToPull, true);
 
         return objToPull; 
     }
