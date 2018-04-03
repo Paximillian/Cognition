@@ -34,8 +34,11 @@ public class PlayerCog : PlayableCog
         {
             yield return new WaitForSeconds(m_GenerationInterval);
 
-            OwningPlayer.Resources += m_ResourcesPerGeneration;
-            Rpc_ShowFloatingText(OwningPlayer.PlayerId, m_ResourcesPerGeneration.ToString());
+            if (OwningPlayer)
+            {
+                OwningPlayer.Resources += m_ResourcesPerGeneration;
+                Rpc_ShowFloatingText(OwningPlayer.PlayerId, m_ResourcesPerGeneration.ToString());
+            }
         }
     }
 

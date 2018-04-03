@@ -319,7 +319,7 @@ public class HexGridConstructionWindow : EditorWindow
                 {
                     case 0:
                         if (i_Tile.PositiveZNeighbour) { drawTile(i_Tile.PositiveZNeighbour); }
-                        else if(m_CurrentPlacementType == ePlacementType.Tile) { drawExpansionTile(i_Tile, i, tilePos); }
+                        else if (m_CurrentPlacementType == ePlacementType.Tile) { drawExpansionTile(i_Tile, i, tilePos); }
                         break;
                     case 60:
                         if (i_Tile.PositiveYNeighbour) { drawTile(i_Tile.PositiveYNeighbour); }
@@ -447,9 +447,7 @@ public class HexGridConstructionWindow : EditorWindow
     private void drawExpansionTile(HexTile i_Tile, int i_Angle, Vector3 i_TileEditorPos)
     {
         Vector3 expansionTileCenterPosition = Quaternion.AngleAxis(i_Angle, Vector3.forward) * Vector3.up * k_HexagonRadius * 2 + i_TileEditorPos;
-        if (!m_ExpansionTilesDrawnThisFrame.Any(position => Mathf.Approximately(expansionTileCenterPosition.x, position.x) 
-                                                         && Mathf.Approximately(expansionTileCenterPosition.y, position.y) 
-                                                         && Mathf.Approximately(expansionTileCenterPosition.z, position.z)))
+        if (!m_ExpansionTilesDrawnThisFrame.Any(position => vector3Approximately(expansionTileCenterPosition, position)))
         {
             m_ExpansionTilesDrawnThisFrame.Add(expansionTileCenterPosition);
 
@@ -463,6 +461,18 @@ public class HexGridConstructionWindow : EditorWindow
                 createTile(i_Tile, i_Angle);
             }
         }
+    }
+    
+    private bool vector3Approximately(Vector3 a, Vector3 b)
+    {
+        return mathfApproximately(a.x, b.x) &&
+               mathfApproximately(a.y, b.y) &&
+               mathfApproximately(a.z, b.z);
+    }
+
+    private bool mathfApproximately(float a, float b)
+    {
+        return Mathf.Abs(a-b) <= 0.01f;
     }
 
     /// <summary>
@@ -586,7 +596,6 @@ public class HexGridConstructionWindow : EditorWindow
     #endregion UnityMethods
 
     #region EditorMethods
-#if UNITY_EDITOR
     public static Cog Editor_BuildCog(HexTile i_Tile, Cog i_CogPrefab)
     {
         Cog cog = null;
@@ -609,7 +618,6 @@ public class HexGridConstructionWindow : EditorWindow
         DestroyImmediate(i_Tile.ResidentCog.gameObject);
         i_Tile.ResidentCog = null;
     }
-#endif
     #endregion EditorMethods
 }
 #endif

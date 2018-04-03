@@ -18,24 +18,24 @@ public class FloatingMessage : MonoBehaviour
 
     private void Awake()
     {
-	Text = GetComponentInChildren<TextMesh>();
-	Sprite = GetComponentInChildren<SpriteRenderer>();
+        Text = GetComponentInChildren<TextMesh>();
+        Sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void OnEnable()
     {
-	StartCoroutine(floatText());
+        StartCoroutine(floatText());
     }
 
     private IEnumerator floatText()
     {
-	for(float t = 0; t < m_FloatDuration; t += Time.deltaTime)
-	{
-	    transform.position += transform.up * m_FloatVelocity;
-	    yield return null;
-	}
+        for (float t = 0; t < m_FloatDuration; t += Time.deltaTime)
+        {
+            transform.position += transform.up * m_FloatVelocity;
+            yield return null;
+        }
 
-	gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void SetInvokingPlayerId(int i_InvokerId)

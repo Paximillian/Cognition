@@ -125,7 +125,7 @@ public class NetworkObjectPoolManager : NetworkBehaviour
 		try
 		{
 			returnedObject = Instance.GetPoolForObject(i_ObjectPoolTag).PullObject();
-		}
+        }
 		catch(Exception ex)
 		{
 			if(ex is NullReferenceException)
@@ -139,5 +139,20 @@ public class NetworkObjectPoolManager : NetworkBehaviour
 		}
 
 		return returnedObject;
-	}
+    }
+    
+    /// <summary>
+    /// Activates the given object on all clients.
+    /// </summary>
+    [Server]
+    public void SetPooledObjectActiveState(GameObject i_GameObj, bool i_Active)
+    {
+        RpcSetActive(i_GameObj, i_Active);
+    }
+
+    [ClientRpc]
+    private void RpcSetActive(GameObject i_GameObj, bool i_Active)
+    {
+        i_GameObj.SetActive(i_Active);
+    }
 }
