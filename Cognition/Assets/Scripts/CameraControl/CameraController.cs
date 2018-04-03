@@ -1,0 +1,119 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[RequireComponent(typeof(Camera))]
+public class CameraController : MonoBehaviour
+{
+    #region Variables
+    private Camera m_Camera;
+
+    private ICameraControls m_GestureHandler;
+    #endregion Variables
+
+    #region UnityMethods
+    private void Awake()
+    {
+        m_Camera = GetComponent<Camera>();
+
+#if UNITY_EDITOR
+        if (UnityEditor.EditorApplication.isRemoteConnected)
+        {
+            m_GestureHandler = new MobileCameraControls();
+        }
+        else
+#endif
+        if (Application.isMobilePlatform)
+        {
+            m_GestureHandler = new MobileCameraControls();
+        }
+        else
+        {
+            m_GestureHandler = new PCCameraControls();
+        }
+    }
+
+    private void Update()
+    {
+        checkZoom();
+        checkPan();
+    }
+    #endregion UnityMethods
+
+    #region PrivateMethods
+    private int seenBoundaryPointCount()
+    {
+        Rect normalizedRectRange = new Rect(0, 0, 1, 1);
+        int seenPoints = 0;
+
+        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryRight.position))) { seenPoints++; }
+        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryLeft.position))) { seenPoints++; }
+        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryTop.position))) { seenPoints++; }
+        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryBottom.position))) { seenPoints++; }
+
+        return seenPoints;
+    }
+
+    private void checkZoom()
+    {
+        float zoom = m_GestureHandler.GetZoomDelta();
+        if (zoom != 0)
+        {
+            Vector3 centerPosition = m_GestureHandler.GetPosition();
+            
+            int boundaryPointsInSight = seenBoundaryPointCount();
+            if (zoom > 0)
+            {
+                if (boundaryPointsInSight > 0)
+                {
+                    transform.position += transform.forward * zoom;
+                }
+            }
+            else if (zoom < 0)
+            {
+                if (boundaryPointsInSight < 4)
+                {
+                    transform.position += transform.forward * zoom;
+                }
+            }
+        }
+    }
+
+    private void checkPan()
+    {
+        Vector3 panDelta = m_GestureHandler.GetPanDelta();
+        panDelta = Vector3.ProjectOnPlane(panDelta, transform.up);
+
+        if (panDelta.x > 0)
+        {
+            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryRight.position).x > 1)
+            {
+                transform.position += Vector3.right * panDelta.x;
+            }
+        }
+        else if (panDelta.x < 0)
+        {
+            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryLeft.position).x < 0)
+            {
+                transform.position += Vector3.right * panDelta.x;
+            }
+        }
+
+        if (panDelta.y > 0)
+        {
+            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryTop.position).y > 1)
+            {
+                transform.position += Vector3.forward * panDelta.y;
+            }
+        }
+        else if (panDelta.y < 0)
+        {
+            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryBottom.position).y < 0)
+            {
+                transform.position += Vector3.forward * panDelta.y;
+            }
+        }
+    }
+    #endregion PrivateMethods
+}

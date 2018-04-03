@@ -44,6 +44,7 @@ public class RadialMenuSegment : MonoBehaviour
     /// </summary>
     private void updateState(eSegmentState i_NewState)
     {
+        if (!BackgroundImage) { return;  }
         if (i_NewState.CheckState(eSegmentState.OutOfRange))
         {
             BackgroundImage.color = Color.black;

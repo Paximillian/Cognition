@@ -12,8 +12,8 @@ public class animationStateTest : MonoBehaviour {
     public float delta;
 	// Use this for initialization
 	void Start () {
-        animator = GetComponent<Animator>();
-        Nanim = neighbor.GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        Nanim = neighbor.GetComponentInChildren<Animator>();
 	}
 	
 	// Update is called once per frame

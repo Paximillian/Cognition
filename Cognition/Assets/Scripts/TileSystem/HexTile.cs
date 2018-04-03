@@ -9,8 +9,6 @@ using UnityEngine.Networking;
 public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     #region Variables
-    public int s_BFSsRunning = 0;
-
     private NetworkIdentity m_NetId;
     
     [SerializeField]
@@ -27,7 +25,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         {
             if (m_ResidentCog = value)
             {
-                m_ResidentCogSceneId = value.GetComponent<NetworkIdentity>().netId;
+                m_ResidentCogSceneId = value.GetComponent<NetworkIdentity>()?.netId ?? new NetworkInstanceId(0);
             }
         }
     }
@@ -93,6 +91,26 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
             return m_Neighbors;
         }
     }
+
+    public List<HexTile> GetHexTilesInRadius(int searchRadius)
+    {
+        HashSet<HexTile> resTiles = new HashSet<HexTile>();
+        resTiles.Add(this);
+
+        for (int i = 0; i < searchRadius; i++)
+        {
+            List<HexTile> tilesToAdd = resTiles.SelectMany(tile => tile.Neighbors).ToList();
+
+            if (resTiles.IsSupersetOf(tilesToAdd)) { break; }
+            else { resTiles.AddRange(tilesToAdd); }
+        }
+
+        return resTiles.ToList();
+    }
+
+    public Func<int, List<Cog>> PopulatedNeighborsInRadius =>
+        ((radius) => GetHexTilesInRadius(radius - 1)
+        .SelectMany((neighbor) => neighbor.PopulatedNeighbors).ToList());
 
     /// <summary>
     /// The cogs on the tiles neighbouring this tile.

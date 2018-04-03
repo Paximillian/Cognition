@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -140,13 +141,17 @@ public class NetworkPlayer : NetworkBehaviour
 
             //We then build our initial cog on this tile.
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, -Vector3.up, out hit, 2, LayerMask.GetMask("HexTile")))
+            if (Physics.Raycast(transform.position + Vector3.up, -Vector3.up, out hit, 2, LayerMask.GetMask("HexTile")))
             {
                 HexTile tile = hit.collider.GetComponent<HexTile>();
                 tile.DrivingCog = true;
                 tile.DestroyCog();
-                
+
                 BuildCog(tile, m_NetId, "Cog_Player");
+            }
+            else
+            {
+                Debug.LogError("Couldn't find tile to put the player cog on");
             }
         }
     }
@@ -190,7 +195,17 @@ public class NetworkPlayer : NetworkBehaviour
     public bool CanBuildCog(HexTile i_Tile, Cog i_CogPrefab)
     {
         //TODO: Add build check logic here
-        return true;
+        if (i_Tile?.ResidentCog != null) {//If there's already a cog here we can't build
+            return false;
+        }
+
+        if (i_CogPrefab.BuildRange == 0 || i_Tile == null) {//unlimited range cog or tile irrelevant
+            return true;
+        }
+
+        return i_Tile.PopulatedNeighborsInRadius(i_CogPrefab.BuildRange)
+            .Where(cog => (cog as PlayableCog)?.OwningPlayer.Equals(this) ?? false)
+            .Count() > 0;
     }
 
     /// <summary>
