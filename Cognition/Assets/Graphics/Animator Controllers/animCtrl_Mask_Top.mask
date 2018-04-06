@@ -11,7 +11,7 @@ AvatarMask:
   - m_Path: 
     m_Weight: 1
   - m_Path: BigCog
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: BigCog/innerCog_B
     m_Weight: 1
   - m_Path: InnerCloser.Bk
@@ -23,9 +23,9 @@ AvatarMask:
   - m_Path: InnerCloser.Ft/InnerClose_A
     m_Weight: 1
   - m_Path: Main_rotator
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Main_rotator/VictoryCog_Base
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: outerCloser.Bk
     m_Weight: 1
   - m_Path: outerCloser.Bk/OuterClose_B
