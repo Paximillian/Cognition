@@ -145,7 +145,7 @@ public class NetworkPlayer : NetworkBehaviour
             {
                 HexTile tile = hit.collider.GetComponent<HexTile>();
                 tile.DrivingCog = true;
-                tile.DestroyCog();
+                tile.DestroyCog(true);
 
                 BuildCog(tile, m_NetId, "Cog_Player");
             }
@@ -204,7 +204,7 @@ public class NetworkPlayer : NetworkBehaviour
         }
 
         return i_Tile.PopulatedNeighborsInRadius(i_CogPrefab.BuildRange)
-            .Where(cog => (cog as PlayableCog)?.OwningPlayer.Equals(this) ?? false)
+            .Where(cog => ((cog as PlayableCog)?.OwningPlayer.Equals(this) ?? false) || ((cog as NeutralCog)?.OccupyingPlayers.Contains(this) ?? false))
             .Count() > 0;
     }
 

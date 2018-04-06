@@ -135,7 +135,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     #region UNETMethods
     [Server]
-    public void DestroyCog()
+    public void DestroyCog(bool initialBaseCog = false)
     {
         if (ResidentCog)
         {
@@ -145,10 +145,17 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
                 owningPlayer.OwnedCogs.Remove(ResidentCog);
             }
             ResidentCog.InvokeDeathrattle();
-            ResidentCog = null;
+            ResidentCog = null; //For server
+            if (!initialBaseCog) { Rpc_RemoveResidentCog(); } //For client
 
             owningPlayer?.PlayerBaseCog.PropagationStrategy.InitializePropagation(owningPlayer, null, true);
         }
+    }
+
+    [ClientRpc]
+    private void Rpc_RemoveResidentCog()
+    {
+        ResidentCog = null;
     }
     #endregion UNETMethods
 
