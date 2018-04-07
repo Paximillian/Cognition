@@ -53,7 +53,8 @@ public class GoalCog : NeutralCog
 
         //TODO: Replace with actual presentable method for goal progress.
         Debug.Log(m_Progress);
-        if(m_Progress <= -1) { SceneManager.LoadScene("Player2Win"); }
+        Animator?.SetFloat("Win", Mathf.Abs(i_Progress));
+        if (m_Progress <= -1) { SceneManager.LoadScene("Player2Win"); }
         else if(m_Progress >= 1) { SceneManager.LoadScene("Player1Win"); }
     }
 

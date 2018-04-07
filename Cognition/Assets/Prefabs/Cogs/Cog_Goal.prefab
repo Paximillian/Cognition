@@ -555,7 +555,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705371605949174}
-  m_LocalRotation: {x: -0.39285272, y: 0.5879342, z: 0.39285257, w: 0.58793443}
+  m_LocalRotation: {x: -0.39285275, y: 0.58793426, z: 0.3928526, w: 0.5879345}
   m_LocalPosition: {x: -0.00006862258, y: 0.30498636, z: 0}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
   m_Children:
@@ -970,8 +970,8 @@ MonoBehaviour:
   m_Cost: 5
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
-  m_initialhp: 10
-  m_hp: 10
+  m_initialhp: 1000
+  m_hp: 1000
   m_Sprite: {fileID: 0}
   m_spin: 0
   m_GenerationInterval: 0.1
