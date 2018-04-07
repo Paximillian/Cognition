@@ -46,6 +46,8 @@ public abstract class Cog : NetworkBehaviour
     private float m_hp = 10f;
     public float HP { get { return m_hp; } }
 
+    [SerializeField] private ParticleSystem m_conflictParticles;
+
     [SerializeField]
     private Sprite m_Sprite;
     public Sprite Sprite { get { return m_Sprite; } private set { m_Sprite = value; } }
@@ -128,6 +130,7 @@ public abstract class Cog : NetworkBehaviour
         m_hp = m_initialhp;
         StopConflicted();
         Rpc_UpdateSpin(m_spin = 0f);
+
     }
     
     public void UpdateSpin(float spin)
@@ -142,17 +145,51 @@ public abstract class Cog : NetworkBehaviour
         if (!m_Conflicted)
         {
             m_Conflicted = true;
-            transform.localScale = Vector3.one + Vector3.right * 0.2f; //Conflict placeholder
+            //transform.localScale = Vector3.one + Vector3.right * 0.2f; //Conflict placeholder
+            ShowConflictEffect(i_ConflictingCog.transform.position);
+            Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
+
             StartCoroutine(dealConflictDamage());
             i_ConflictingCog.PropagationStrategy.CheckConflict(this);
         }
     }
-    
+
+    [ClientRpc]
+    public void Rpc_ShowConflictEffect(Vector3 conflictingCogPos)
+    {
+        ShowConflictEffect(conflictingCogPos);
+    }
+
+    public void ShowConflictEffect(Vector3 conflictingCogPos)
+    {
+        if (!m_conflictParticles) return;
+        m_conflictParticles.gameObject.transform.position = (transform.position + conflictingCogPos) / 2f;
+        m_conflictParticles.gameObject.SetActive(true);
+        m_conflictParticles?.Play();
+    }
+
     public void StopConflicted()
     {
         m_Conflicted = false;
-        transform.localScale = Vector3.one; //StopConflict placeholder
+        //transform.localScale = Vector3.one; //StopConflict placeholder
+        StopConflictEffect();
+        Rpc_StopConflictEffect();
+
     }
+
+    [ClientRpc]
+    public void Rpc_StopConflictEffect()
+    {
+        StopConflictEffect();
+    }
+
+    public void StopConflictEffect()
+    {
+        if (!m_conflictParticles) return;
+        m_conflictParticles.Stop();
+        m_conflictParticles.gameObject.SetActive(false);
+    }
+
     #endregion PublicMethods
 
     #region PrivateMethods
