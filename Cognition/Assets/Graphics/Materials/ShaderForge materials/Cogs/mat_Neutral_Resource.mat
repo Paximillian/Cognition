@@ -86,6 +86,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GlowPower: 0
+    - _HighlightIntensity: 1
     - _LightContrast: 0
     - _LightDistance: 1
     - _LightPositionX: 1
