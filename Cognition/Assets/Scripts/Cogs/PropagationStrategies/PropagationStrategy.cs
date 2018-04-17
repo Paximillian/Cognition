@@ -77,6 +77,7 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// </summary>
     public bool CheckConflict(Cog i_AskingCog)
     {
+        if (i_AskingCog is NullCog) { return false; }
         bool isConflicted = false;
         HashSet<Cog> conflictingNeighbors = new HashSet<Cog>();
         //Debug line use when something breaks
@@ -89,7 +90,7 @@ public abstract class PropagationStrategy : MonoBehaviour
             isConflicted = true;
         }
 
-        foreach (Cog neighbour in Cog.Neighbors)
+        foreach (Cog neighbour in Cog.Neighbors.Where(cog => !(cog is NullCog)))
         {
             foreach (Cog conflictingCog in Cog.IntersectingNeighborsFor(neighbour))
             {
@@ -222,6 +223,7 @@ public abstract class PropagationStrategy : MonoBehaviour
             if (cogToStop.OccupyingPlayers.Contains(i_Player))
             {
                 cogToStop.OccupyingPlayers.Remove(i_Player);
+                //cogToStop.Rpc_RemoveOccupyingPlayer(i_Player.PlayerId);
 
                 if (cogToStop.OccupyingPlayers.Count == 0)
                 {

@@ -203,9 +203,12 @@ public class NetworkPlayer : NetworkBehaviour
             return true;
         }
 
-        return i_Tile.PopulatedNeighborsInRadius(i_CogPrefab.BuildRange)
-            .Where(cog => ((cog as PlayableCog)?.OwningPlayer.Equals(this) ?? false) || ((cog as NeutralCog)?.OccupyingPlayers.Contains(this) ?? false))
-            .Count() > 0;
+        return i_Tile.PopulatedNeighborsInRadius(i_CogPrefab.BuildRange) //Allow building if one of these:
+            .Where(cog => ((cog as PlayableCog)?.OwningPlayer.Equals(this) ?? false)  //1) Is a cog this player owns
+            || ((cog as NeutralCog)?.OccupyingPlayers.Contains(this) ?? false) //2) Is a neutral cog this player controls
+            || ((cog as NeutralCog)?.HoldingTile.PopulatedNeighbors //3) Is a neutral cog that has an adjacent moving cog owned by this player (for client)
+                .Where(neighbor => ((neighbor as PlayerCog)?.OwningPlayer.Equals(this) ?? false) && (neighbor.Spin != 0f)).Count() > 0)
+            ).Count() > 0;
     }
 
     /// <summary>

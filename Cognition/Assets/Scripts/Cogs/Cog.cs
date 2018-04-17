@@ -83,6 +83,7 @@ public abstract class Cog : NetworkBehaviour
     /// This is different than the OwningPlayer property by that this also applies to neutral cogs like the resources or the goal cogs.
     /// </summary>
     public HashSet<NetworkPlayer> OccupyingPlayers { get; set; } = new HashSet<NetworkPlayer>();
+
     #endregion Variables
 
     #region UnityMethods
@@ -137,10 +138,10 @@ public abstract class Cog : NetworkBehaviour
     {
         m_spin = spin;
 
-        Animator.SetFloat("Spin", m_spin);
+        Animator?.SetFloat("Spin", m_spin);
     }
     
-    public void MakeConflicted(Cog i_ConflictingCog)
+    virtual public void MakeConflicted(Cog i_ConflictingCog)
     {
         if (!m_Conflicted)
         {
