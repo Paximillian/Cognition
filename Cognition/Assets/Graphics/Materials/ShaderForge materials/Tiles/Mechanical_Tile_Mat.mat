@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Mechanical_Tile_Mat
-  m_Shader: {fileID: 4800000, guid: 121aa954e88caa54cb62058db1a67527, type: 3}
+  m_Shader: {fileID: 4800000, guid: b9f7f6c2b473bcb4a855f3e3c7d997db, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -71,6 +71,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Brightness: 1.5
     - _BumpScale: 1
     - _ContrastFix: 0.9
     - _Cutoff: 0.5
@@ -101,6 +102,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _VertexOffset: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
