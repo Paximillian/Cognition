@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114024942373163838}
   - component: {fileID: 114485580257338382}
   - component: {fileID: 114128391104952482}
+  - component: {fileID: 114148721969026084}
   m_Layer: 0
   m_Name: Cog_Goal
   m_TagString: Untagged
@@ -988,6 +989,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027e4c6c082ba7d4ea6f51234daced3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114148721969026084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1016062921824356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CogEffects: []
 --- !u!114 &114485580257338382
 MonoBehaviour:
   m_ObjectHideFlags: 1

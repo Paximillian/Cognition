@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 114451229971691470}
   - component: {fileID: 114433849722423466}
   - component: {fileID: 114485583251967128}
+  - component: {fileID: 114334178787794642}
   m_Layer: 0
   m_Name: Mec_ResourceCog_old
   m_TagString: Untagged
@@ -925,6 +926,18 @@ MonoBehaviour:
   m_GenerationInterval: 5
   m_DelayBetweenPlayers: 0.25
   m_ResourcesPerGeneration: 10
+--- !u!114 &114334178787794642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1048334113182058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CogEffects: []
 --- !u!114 &114433849722423466
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[DisallowMultipleComponent]
+[RequireComponent(typeof(CogEffectManager))]
 public abstract class Cog : NetworkBehaviour
 {
     #region Variables
@@ -84,6 +86,10 @@ public abstract class Cog : NetworkBehaviour
     /// </summary>
     public HashSet<NetworkPlayer> OccupyingPlayers { get; set; } = new HashSet<NetworkPlayer>();
 
+    /// <summary>
+    /// The cog effect manager gathers all cog effects on this cog and gives us one centralized point of access to the effect system.
+    /// </summary>
+    protected CogEffectManager CogEffectManager { get; private set; }
     #endregion Variables
 
     #region UnityMethods
@@ -91,6 +97,7 @@ public abstract class Cog : NetworkBehaviour
     {
         Animator = GetComponentInChildren<Animator>();
         PropagationStrategy = GetComponent<PropagationStrategy>();
+        CogEffectManager = GetComponent<CogEffectManager>();
     }
     #endregion UnityMethods
 
@@ -108,11 +115,33 @@ public abstract class Cog : NetworkBehaviour
     }
     #endregion UNETMethods
 
+    #region CogEventHooks
+    /// <summary>
+    /// Bootup is the keyword indicating an effect that happens when a cog enters play.
+    /// </summary>
+    public void InvokeBootup()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Bootup);
+    }
+
+    /// <summary>
+    /// Breakdown is the keyword indicating an effect that happens when this cog is destroyed.
+    /// </summary>
+    public void InvokeBreakdown()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Breakdown);
+    }
+
+    /// <summary>
+    /// Spin is the keyword indicating a constant effect that triggers every frame, the cog effect itself can determine the actual time between triggers by filtering invocations in its CanTrigger method
+    /// </summary>
+    public void InvokeSpin()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Spin);
+    }
+    #endregion CogEventHooks
+
     #region PublicMethods
-    public virtual void InvokeBattleCry() { }
-
-    public virtual void InvokeDeathrattle() { }
-
     public void DealDamage(float damage)
     {
         m_hp -= damage;

@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 114988866581564722}
   - component: {fileID: 114999969476549438}
   - component: {fileID: 114161095088557014}
+  - component: {fileID: 114252493326281612}
   m_Layer: 0
   m_Name: Cog_Player
   m_TagString: Untagged
@@ -414,12 +415,25 @@ MonoBehaviour:
   m_HoldingTile: {fileID: 0}
   m_initialhp: 1000
   m_hp: 1000
+  m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
   m_GenerationInterval: 1
   m_ResourcesPerGeneration: 1
+--- !u!114 &114252493326281612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1787226716998062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CogEffects: []
 --- !u!114 &114988866581564722
 MonoBehaviour:
   m_ObjectHideFlags: 1

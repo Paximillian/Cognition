@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 114568561842402182}
   - component: {fileID: 114669261181312234}
   - component: {fileID: 114560549251368754}
+  - component: {fileID: 114770618411802656}
   m_Layer: 0
   m_Name: Mec_RecourceCog
   m_TagString: Untagged
@@ -911,6 +912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cost: 5
+  m_buildRange: 1
   m_HoldingTile: {fileID: 0}
   m_initialhp: 10
   m_hp: 10
@@ -983,3 +985,15 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114770618411802656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1522857080921044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CogEffects: []

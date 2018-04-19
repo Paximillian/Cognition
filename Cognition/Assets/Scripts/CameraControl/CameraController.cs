@@ -42,6 +42,9 @@ public class CameraController : MonoBehaviour
     #endregion UnityMethods
 
     #region PrivateMethods
+    /// <summary>
+    /// How many camera boundary points are currently in view?
+    /// </summary>
     private int seenBoundaryPointCount()
     {
         Rect normalizedRectRange = new Rect(0, 0, 1, 1);
@@ -55,6 +58,9 @@ public class CameraController : MonoBehaviour
         return seenPoints;
     }
 
+    /// <summary>
+    /// Checks for any zooming input and executes it.
+    /// </summary>
     private void checkZoom()
     {
         float zoom = m_GestureHandler.GetZoomDelta();
@@ -63,6 +69,7 @@ public class CameraController : MonoBehaviour
             Vector3 centerPosition = m_GestureHandler.GetPosition();
             
             int boundaryPointsInSight = seenBoundaryPointCount();
+            //Zoom in
             if (zoom > 0)
             {
                 if (boundaryPointsInSight > 0)
@@ -70,6 +77,7 @@ public class CameraController : MonoBehaviour
                     transform.position += transform.forward * zoom;
                 }
             }
+            //Zoom out
             else if (zoom < 0)
             {
                 if (boundaryPointsInSight < 4)
@@ -80,6 +88,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks for any panning input and executes it.
+    /// </summary>
     private void checkPan()
     {
         Vector3 panDelta = m_GestureHandler.GetPanDelta();
