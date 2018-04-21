@@ -12,10 +12,15 @@ public static class TypeExtensions
                                                               .Where(part => part.Length > 1)
                                                               .Select(part => char.ToUpper(part[0]) +
                                                                               part.Substring(1)));
-
+        
         for (char letter = 'A'; letter <= 'Z'; letter++)
         {
             nameWithoutUnderscore = nameWithoutUnderscore.Replace(letter.ToString(), " " + letter);
+        }
+
+        if (nameWithoutUnderscore.StartsWith(" I "))
+        {
+            nameWithoutUnderscore = nameWithoutUnderscore.Substring(2);
         }
 
         return nameWithoutUnderscore;

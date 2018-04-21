@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerResourceGenerationCogEffect : CooldownableCogEffect, ISpinKeyword
+public class PlayerResourceGenerationCogEffect : CooldownableCogEffect
 {    
     /// <summary>
     /// How many resources are generated each time.
