@@ -100,7 +100,7 @@ public abstract class PropagationStrategy : MonoBehaviour
 
         if (conflictingNeighbors.Count > 0)
         {
-            Cog.MakeConflicted(i_AskingCog);
+            Cog.MakeConflicted(conflictingNeighbors.ElementAt(0));
         }
 
         foreach (Cog conflictingCog in conflictingNeighbors)
