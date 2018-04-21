@@ -14,13 +14,13 @@ public class CreateNeighbourForPlayerCog
         // Use the Assert class to test conditions.
         // yield to skip a frame
 
-        NetworkPlayer player = new NetworkPlayer();
+        //NetworkPlayer player = new NetworkPlayer();
 
-        HexTile playerTile = new HexTile();
-        HexTile neighbourTile = new HexTile();
+        //HexTile playerTile = new HexTile();
+        //HexTile neighbourTile = new HexTile();
 
-        playerTile.NegativeXNeighbour = neighbourTile;
-        neighbourTile.PositiveXNeighbour = playerTile;
+        //playerTile.NegativeXNeighbour = neighbourTile;
+        //neighbourTile.PositiveXNeighbour = playerTile;
 
 
 

@@ -177,11 +177,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4647782492586658}
-  - component: {fileID: 114342201142693160}
+  - component: {fileID: 114826570113025706}
   - component: {fileID: 114568561842402182}
   - component: {fileID: 114669261181312234}
   - component: {fileID: 114560549251368754}
   - component: {fileID: 114770618411802656}
+  - component: {fileID: 114249175389977296}
   m_Layer: 0
   m_Name: Mec_RecourceCog
   m_TagString: Untagged
@@ -559,7 +560,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1522857080921044}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.91, y: 0, z: 2.48}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4702997411652944}
@@ -900,9 +901,9 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114342201142693160
+--- !u!114 &114249175389977296
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1522857080921044}
@@ -911,13 +912,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fd88bcb7b1f2841a0d35b7ed89f61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Cost: 5
-  m_buildRange: 1
-  m_HoldingTile: {fileID: 0}
-  m_initialhp: 10
-  m_hp: 10
-  m_Sprite: {fileID: 0}
-  m_spin: 0
+  m_Keyword: 2
+  m_Description: 
   m_GenerationInterval: 5
   m_DelayBetweenPlayers: 0.25
   m_ResourcesPerGeneration: 10
@@ -996,4 +992,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CogEffects: []
+--- !u!114 &114826570113025706
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1522857080921044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc7cc4e035c9044d8391a5d667ba98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Cost: 5
+  m_buildRange: 1
+  m_HoldingTile: {fileID: 0}
+  m_initialhp: 10
+  m_hp: 10
+  m_conflictParticles: {fileID: 0}
+  m_Sprite: {fileID: 0}
+  m_spin: 0

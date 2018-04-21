@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(CogEffectManager), true)]
+[CanEditMultipleObjects]
 public class CogEffectManagerEditor : Editor
 {
     #region Variables
@@ -63,6 +64,7 @@ public class CogEffectManagerEditor : Editor
                 foreach (CogEffect effect in (target as MonoBehaviour).GetComponents<CogEffect>())
                 {
                     m_ShowEffect.Add(effect, false);
+                    effect.hideFlags |= HideFlags.HideInInspector;
                 }
             }
 
@@ -98,12 +100,24 @@ public class CogEffectManagerEditor : Editor
     /// </summary>
     private void removeSelectedEffects()
     {
-        CogEffectManager manager = target as CogEffectManager;
-
         while (m_EffectsToRemove.Count > 0)
         {
-            manager.CogEffects.Remove(m_EffectsToRemove[0]);
-            DestroyImmediate(m_EffectsToRemove[0], true);
+            foreach (GameObject selectedObject in Selection.gameObjects)
+            {
+                CogEffectManager manager = selectedObject.GetComponent<CogEffectManager>();
+
+                if (manager)
+                {
+                    SerializedObject serializedTarget = new SerializedObject(manager);
+                    serializedTarget.Update();
+
+                    manager.CogEffects.Remove(m_EffectsToRemove[0]);
+                    DestroyImmediate(m_EffectsToRemove[0], true);
+
+                    serializedTarget.ApplyModifiedProperties();
+                }
+            }
+
             m_EffectsToRemove.RemoveAt(0);
         }
     }
@@ -121,22 +135,33 @@ public class CogEffectManagerEditor : Editor
             }
             else
             {
-                CogEffectManager manager = target as CogEffectManager;
-
-                CogEffect newEffect = manager.gameObject.AddComponent(newEffectScript.GetClass()) as CogEffect;
-
-                if (newEffect != null)
+                foreach (GameObject selectedObject in Selection.gameObjects)
                 {
-                    newEffect.hideFlags |= HideFlags.HideInInspector;
-                    manager.CogEffects.Add(newEffect);
+                    CogEffectManager manager = selectedObject.GetComponent<CogEffectManager>();
 
-                    if (m_ShowEffect == null)
+                    if (manager)
                     {
-                        ShowEffect[newEffect] = true;
-                    }
-                    else
-                    {
-                        ShowEffect.Add(newEffect, true);
+                        SerializedObject serializedTarget = new SerializedObject(selectedObject);
+                        serializedTarget.Update();
+
+                        CogEffect newEffect = selectedObject.AddComponent(newEffectScript.GetClass()) as CogEffect;
+
+                        if (newEffect != null)
+                        {
+                            newEffect.hideFlags |= HideFlags.HideInInspector;
+                            manager.CogEffects.Add(newEffect);
+
+                            if (m_ShowEffect == null)
+                            {
+                                ShowEffect[newEffect] = true;
+                            }
+                            else
+                            {
+                                ShowEffect.Add(newEffect, true);
+                            }
+                        }
+
+                        serializedTarget.ApplyModifiedProperties();
                     }
                 }
             }
@@ -158,7 +183,7 @@ public class CogEffectManagerEditor : Editor
                 drawEffectCategories();
             }
             
-            MonoScript newEffectScript = EditorGUILayout.ObjectField("Add New Effect", null, typeof(MonoScript), false) as MonoScript;
+            MonoScript newEffectScript = EditorGUILayout.ObjectField(new GUIContent("Add New Effect", "Drag a script of a CogEffect here to add it to the manager"), null, typeof(MonoScript), false) as MonoScript;
             if (newEffectScript)
             {
                 checkForNewEffects(newEffectScript);
@@ -191,28 +216,52 @@ public class CogEffectManagerEditor : Editor
 
     private void drawEffectsOfCategory(eCogEffectKeyword keyword)
     {
-        foreach (CogEffect effect in ((CogEffectManager)target).CogEffects
-                                                               .Where(effect => effect?.Keyword == keyword))
+        //This a list of all selected object's CogEffects lists that match the given keyword.
+        List<List<CogEffect>> targetManagerEffects = Selection.gameObjects
+                                               .Select(selectedObject => selectedObject.GetComponent<CogEffectManager>().CogEffects
+                                                    .Where(effect => effect?.Keyword == keyword).ToList())
+                                               .ToList();
+
+        //If all the selected managers have the same number of items in this category.
+        if (targetManagerEffects.Max(effects => effects.Count) == targetManagerEffects.Min(effects => effects.Count))
         {
-            drawEffect(effect);
+            for (int i = 0; i < targetManagerEffects[0].Count; ++i)
+            {
+                //Since we're observing the effects of all selected cogs, we'll need to find the one refering to this current object.
+                CogEffect targetObjectEffect = targetManagerEffects.First(cogEffectList => ShowEffect.ContainsKey(cogEffectList[i]))
+                                                                   .ToArray()[i];
+
+                drawEffect(targetObjectEffect, 
+                           targetManagerEffects.Select(effects => effects[i]).ToArray());
+            }
+        }
+        else
+        {
+            GUILayout.Label("Selected objects don't have the same effects for this keyword");
         }
     }
 
-    private void drawEffect(CogEffect effect)
+    /// <summary>
+    /// Draws the effect provided as a parameter.
+    /// </summary>
+    /// <param name="effect">The effect we want to draw.</param>
+    /// <param name="effectOnAllSelectedManagers">An array</param>
+    /// <param name="o_RequestRemoval">Outputs an indication telling us whether we need to remove this effect from the manager.</param>
+    private void drawEffect(CogEffect effect, CogEffect[] effectOnAllSelectedManagers)
     {
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
         {
-            if (ShowEffect[effect] = EditorGUILayout.Foldout(ShowEffect[effect], effect.GetType().Name))
+            if (ShowEffect[effect] = EditorGUILayout.Foldout(ShowEffect[effect], effect.GetType().GetDisplayName().Replace("Cog Effect", string.Empty)))
             {
                 EditorGUI.indentLevel++;
-                Editor.CreateEditor(effect).DrawDefaultInspector();
+                Editor.CreateEditor(effectOnAllSelectedManagers).OnInspectorGUI();
 
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.FlexibleSpace();
                     if (GUILayout.Button("Remove"))
                     {
-                        m_EffectsToRemove.Add(effect);
+                        m_EffectsToRemove.AddRange(effectOnAllSelectedManagers);
                     }
                     GUILayout.FlexibleSpace();
                 }

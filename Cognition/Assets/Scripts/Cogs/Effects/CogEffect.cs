@@ -19,9 +19,11 @@ public abstract class CogEffect : NetworkBehaviour
     /// The cog that triggered the activation of this effect.
     /// </summary>
     protected Cog TriggeringCog { get; private set; }
-
-    [SerializeField]
-    private string m_Description;
+    
+    /// <summary>
+    /// The description of this effect.
+    /// </summary>
+    protected abstract string Description { get; }
     #endregion Variables
 
     #region UnityMethods
@@ -35,10 +37,18 @@ public abstract class CogEffect : NetworkBehaviour
     {
         UnityEditor.EditorApplication.delayCall += () =>
         {
-            if ((hideFlags & HideFlags.HideInInspector) == 0)
+            // ¯\_(ツ)_/¯
+            if (this != null)
             {
-                DestroyImmediate(this, true);
-                UnityEditor.EditorUtility.DisplayDialog("you dun goofed", "You can't add a Cog Effect directly to an object, use the CogEffectManager script on the target objecto manage Cog Effects instead", "Cool, thx");
+                if ((hideFlags & HideFlags.HideInInspector) == 0)
+                {
+                    if (GetComponent<CogEffectManager>()?.CogEffects.Contains(this) ?? false) { }
+                    else
+                    {
+                        DestroyImmediate(this, true);
+                        UnityEditor.EditorUtility.DisplayDialog("you dun goofed", "You can't add a Cog Effect directly to an object, use the CogEffectManager script on the target objecto manage Cog Effects instead", "Cool, thx");
+                    }
+                }
             }
         };
     }

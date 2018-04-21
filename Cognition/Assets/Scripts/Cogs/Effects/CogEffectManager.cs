@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 /// <summary>
 /// The cog effect manager gathers all cog effects on this cog and gives us one centralized point of access to the effect system.
 /// </summary>
+[RequireComponent(typeof(Cog))]
 public class CogEffectManager : NetworkBehaviour
 {
     #region Variables

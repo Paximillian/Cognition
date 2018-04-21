@@ -19,10 +19,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4119275347097268}
+  - component: {fileID: 114688217324537762}
   - component: {fileID: 114633194520145196}
-  - component: {fileID: 114024942373163838}
   - component: {fileID: 114485580257338382}
   - component: {fileID: 114128391104952482}
+  - component: {fileID: 114329139702416608}
+  - component: {fileID: 114020608146665122}
   m_Layer: 0
   m_Name: Cog_Goal
   m_TagString: Untagged
@@ -956,9 +958,9 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114024942373163838
+--- !u!114 &114020608146665122
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016062921824356}
@@ -967,14 +969,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875b12f2bc8aa4745a85756276e3ef33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Cost: 5
-  m_buildRange: 1
-  m_HoldingTile: {fileID: 0}
-  m_initialhp: 1000
-  m_hp: 1000
-  m_Sprite: {fileID: 0}
-  m_spin: 0
-  m_GenerationInterval: 0.1
+  m_Keyword: 2
+  m_Description: 
+  m_GenerationInterval: 1
   m_ProgressPerGeneration: 0.01
   m_DelayBetweenPlayers: 0.01
 --- !u!114 &114128391104952482
@@ -986,6 +983,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 027e4c6c082ba7d4ea6f51234daced3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114329139702416608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1016062921824356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114485580257338382
@@ -1023,21 +1031,40 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 17
-    i1: 238
-    i2: 160
-    i3: 233
-    i4: 53
-    i5: 186
-    i6: 150
-    i7: 148
-    i8: 202
-    i9: 174
-    i10: 68
-    i11: 213
-    i12: 34
-    i13: 128
-    i14: 222
-    i15: 164
+    i0: 80
+    i1: 101
+    i2: 121
+    i3: 152
+    i4: 131
+    i5: 201
+    i6: 255
+    i7: 132
+    i8: 139
+    i9: 216
+    i10: 81
+    i11: 231
+    i12: 243
+    i13: 71
+    i14: 2
+    i15: 79
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114688217324537762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1016062921824356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc7cc4e035c9044d8391a5d667ba98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Cost: 5
+  m_buildRange: 1
+  m_HoldingTile: {fileID: 0}
+  m_initialhp: 10
+  m_hp: 10
+  m_conflictParticles: {fileID: 0}
+  m_Sprite: {fileID: 0}
+  m_spin: 0
