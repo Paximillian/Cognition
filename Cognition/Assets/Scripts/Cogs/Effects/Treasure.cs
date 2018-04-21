@@ -8,7 +8,15 @@ public class Treasure : CogEffect
 {
     [SerializeField]
     private int m_ResourceAmount = 100;
-    
+
+    protected override string Description
+    {
+        get
+        {
+            return "Test";
+        }
+    }
+
     protected override bool canTrigger()
     {
         return true;
