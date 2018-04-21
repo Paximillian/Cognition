@@ -72,11 +72,11 @@ public abstract class CogEffect : NetworkBehaviour
     /// Can only be called from the server.
     /// </summary>
     [Server]
-    public void Trigger()
+    public void Trigger(Cog invokingCog = null)
     {
-        triggerLogic();
+        triggerLogic(invokingCog ?? TriggeringCog);
 
-        Rpc_TriggerVisuals();
+        Rpc_TriggerVisuals(invokingCog?.netId ?? TriggeringCog.netId);
     }
     #endregion EntryPoints
 
@@ -85,9 +85,11 @@ public abstract class CogEffect : NetworkBehaviour
     /// Activates any visual effects pertaining to this effect.
     /// </summary>
     [ClientRpc]
-    private void Rpc_TriggerVisuals()
+    private void Rpc_TriggerVisuals(NetworkInstanceId invokerNetId)
     {
-        triggerVisuals();
+        Cog invokingCog = ClientScene.FindLocalObject(invokerNetId).GetComponent<Cog>();
+
+        triggerVisuals(invokingCog);
     }
     #endregion NetworkMethods
 
@@ -102,12 +104,12 @@ public abstract class CogEffect : NetworkBehaviour
     /// Activates the logic of this effect on the server.
     /// </summary>
     [Server]
-    protected abstract void triggerLogic();
+    protected abstract void triggerLogic(Cog invokingCog);
 
     /// <summary>
     /// Activates the visual representation of this effect on the client.
     /// </summary>
     [Client]
-    protected abstract void triggerVisuals();
+    protected abstract void triggerVisuals(Cog invokingCog);
     #endregion AbstractMethods
 }

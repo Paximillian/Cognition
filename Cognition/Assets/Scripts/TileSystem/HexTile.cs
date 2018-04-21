@@ -145,7 +145,13 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
                 owningPlayer.OwnedCogs.Remove(ResidentCog);
             }
 
-            ResidentCog.InvokeBreakdown();
+            //Triggers breakdown effects
+            foreach (Cog neighbour in ResidentCog.Neighbors)
+            {
+                neighbour.InvokeDisconnectionEffects(ResidentCog);
+            }
+            ResidentCog.InvokeBreakdownEffects();
+
             ResidentCog = null;
             if (!initialBaseCog) { Rpc_RemoveResidentCog(); } //For client
 

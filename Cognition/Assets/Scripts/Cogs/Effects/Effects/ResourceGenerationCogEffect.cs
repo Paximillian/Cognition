@@ -37,7 +37,7 @@ public class ResourceGenerationCogEffect : CooldownableCogEffect
         Cooldown -= m_DelayBetweenPlayers * TriggeringCog.OccupyingPlayers.Count;
     }
     
-    protected override void triggerLogic()
+    protected override void triggerLogic(Cog invokingCog)
     {
         foreach (NetworkPlayer player in TriggeringCog.OccupyingPlayers)
         {
@@ -45,7 +45,7 @@ public class ResourceGenerationCogEffect : CooldownableCogEffect
         }
     }
 
-    protected override void triggerVisuals()
+    protected override void triggerVisuals(Cog invokingCog)
     {
         StartCoroutine(showFloatingText());
     }

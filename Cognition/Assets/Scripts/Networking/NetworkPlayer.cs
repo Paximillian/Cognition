@@ -246,7 +246,13 @@ public class NetworkPlayer : NetworkBehaviour
                 placingPlayer.OwnedCogs.Add(cog);
 
                 cog.PropagationStrategy.InitializePropagation(placingPlayer, null);
-                cog.InvokeBootup();
+
+                //Invokes effects based on building of this cog.
+                foreach (Cog neighbour in cog.Neighbors)
+                {
+                    neighbour.InvokeConnectionEffects(cog);
+                }
+                cog.InvokeBootupEffects();
 
                 Rpc_CogBuilt(cog.netId);
             }

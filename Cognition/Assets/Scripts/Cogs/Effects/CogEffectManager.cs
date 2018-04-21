@@ -34,15 +34,14 @@ public class CogEffectManager : NetworkBehaviour
     /// <summary>
     /// Triggers all effects on this cog that match the given keyword.
     /// </summary>
-    /// <param name="i_Keyword"></param>
     [Server]
-    public void TriggerEffects(eCogEffectKeyword i_Keyword)
+    public void TriggerEffects(eCogEffectKeyword keyword, Cog invokingCog = null)
     {
         foreach (CogEffect effect in CogEffects)
         {
-            if (effect.CanTrigger(i_Keyword))
+            if (effect.CanTrigger(keyword))
             {
-                effect.Trigger();
+                effect.Trigger(invokingCog);
             }
         }
     }

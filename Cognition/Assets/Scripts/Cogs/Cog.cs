@@ -171,7 +171,7 @@ public abstract class Cog : NetworkBehaviour
     [ServerCallback]
     protected virtual void Update()
     {
-        InvokeSpin();
+        InvokeSpinEffects();
     }
     #endregion UnityMethods
 
@@ -193,7 +193,8 @@ public abstract class Cog : NetworkBehaviour
     /// <summary>
     /// Bootup is the keyword indicating an effect that happens when a cog enters play.
     /// </summary>
-    public void InvokeBootup()
+    [Server]
+    public void InvokeBootupEffects()
     {
         CogEffectManager.TriggerEffects(eCogEffectKeyword.Bootup);
     }
@@ -201,7 +202,8 @@ public abstract class Cog : NetworkBehaviour
     /// <summary>
     /// Breakdown is the keyword indicating an effect that happens when this cog is destroyed.
     /// </summary>
-    public void InvokeBreakdown()
+    [Server]
+    public void InvokeBreakdownEffects()
     {
         CogEffectManager.TriggerEffects(eCogEffectKeyword.Breakdown);
     }
@@ -209,9 +211,30 @@ public abstract class Cog : NetworkBehaviour
     /// <summary>
     /// Spin is the keyword indicating a constant effect that triggers every frame, the cog effect itself can determine the actual time between triggers by filtering invocations in its CanTrigger method
     /// </summary>
-    public void InvokeSpin()
+    [Server]
+    public void InvokeSpinEffects()
     {
         CogEffectManager.TriggerEffects(eCogEffectKeyword.Spin);
+    }
+
+    /// <summary>
+    /// Connection is the keyword indicating an effect that happens when ANOTHER cog is built adjacently to this one.
+    /// Connection is NOT invoked on this cog when this cog itself is built next to another existing cog.
+    /// </summary>
+    [Server]
+    public void InvokeConnectionEffects(Cog connectedCog)
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Connection, connectedCog);
+    }
+
+    /// <summary>
+    /// Disconnection is the keyword indicating an effect that happens when ANOTHER neighbouring cog is destroyed.
+    /// Disconnection is NOT invoked on this cog when this cog itself is destroyed next to another cog.
+    /// </summary>
+    [Server]
+    public void InvokeDisconnectionEffects(Cog disconnectedCog)
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Disconnection, disconnectedCog);
     }
     #endregion CogEventHooks
 

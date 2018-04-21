@@ -81,7 +81,7 @@ public class GoalCogEffect : CooldownableCogEffect
     #endregion PrivateMethods
 
     #region OverridenMethods
-    protected override void triggerLogic()
+    protected override void triggerLogic(Cog invokingCog)
     {
         foreach (NetworkPlayer player in TriggeringCog.OccupyingPlayers)
         {
@@ -90,7 +90,7 @@ public class GoalCogEffect : CooldownableCogEffect
         }
     }
 
-    protected override void triggerVisuals()
+    protected override void triggerVisuals(Cog invokingCog)
     {
         StartCoroutine(displayDelayedEffects());
     }

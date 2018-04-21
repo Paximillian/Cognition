@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerResourceGenerationCogEffect : CooldownableCogEffect
+public class PlayerResourceGenerationCogEffect : CooldownableCogEffect, ISpinKeyword
 {    
     /// <summary>
     /// How many resources are generated each time.
@@ -22,7 +22,7 @@ public class PlayerResourceGenerationCogEffect : CooldownableCogEffect
         }
     }
 
-    protected override void triggerLogic()
+    protected override void triggerLogic(Cog invokingCog)
     {
         NetworkPlayer owningPlayer = (TriggeringCog as PlayableCog).OwningPlayer;
         if (owningPlayer)
@@ -31,7 +31,7 @@ public class PlayerResourceGenerationCogEffect : CooldownableCogEffect
         }
     }
 
-    protected override void triggerVisuals()
+    protected override void triggerVisuals(Cog invokingCog)
     {
         NetworkPlayer owningPlayer = (TriggeringCog as PlayableCog).OwningPlayer;
         FloatingMessage message = ObjectPoolManager.PullObject("ResourceGain").GetComponent<FloatingMessage>();

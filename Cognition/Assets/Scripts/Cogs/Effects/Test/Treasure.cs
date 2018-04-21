@@ -22,12 +22,12 @@ public class Treasure : CogEffect
         return true;
     }
 
-    protected override void triggerLogic()
+    protected override void triggerLogic(Cog invokingCog)
     {
         (TriggeringCog as PlayableCog).OwningPlayer.Resources += m_ResourceAmount;
     }
 
-    protected override void triggerVisuals()
+    protected override void triggerVisuals(Cog invokingCog)
     {
         Camera.main.backgroundColor = new Color(Random.value, Random.value, Random.value);
     }

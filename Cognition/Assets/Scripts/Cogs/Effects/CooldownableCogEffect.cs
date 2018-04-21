@@ -46,7 +46,11 @@ public abstract class CooldownableCogEffect : CogEffect
     {
         bool ready = m_ReadyToTrigger;
         m_ReadyToTrigger = false;
-        StartCoroutine(cooldownTicker());
+
+        if (ready)
+        {
+            StartCoroutine(cooldownTicker());
+        }
 
         return ready;
     }
