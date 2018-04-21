@@ -22,6 +22,7 @@ public abstract class Cog : NetworkBehaviour
     /// Is the cog currently in conflict?
     /// </summary>
     private bool m_Conflicted = false;
+    public bool IsConflicted { get { return m_Conflicted; } }
 
     [SerializeField]
     [Range(1, 10)]
@@ -171,7 +172,15 @@ public abstract class Cog : NetworkBehaviour
     [ServerCallback]
     protected virtual void Update()
     {
-        InvokeSpinEffects();
+        if (Spin != 0)
+        {
+            InvokeSpinEffects();
+
+            if (m_Conflicted)
+            {
+                InvokeConflictedEffects();
+            }
+        }
     }
     #endregion UnityMethods
 
@@ -236,6 +245,23 @@ public abstract class Cog : NetworkBehaviour
     {
         CogEffectManager.TriggerEffects(eCogEffectKeyword.Disconnection, disconnectedCog);
     }
+
+    /// <summary>
+    /// Confliction is the keyword indicating an effect that happens when this cog has entered a conflict.
+    /// </summary>
+    [Server]
+    public void InvokeConflictionEffects()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Confliction);
+    }
+
+    /// <summary>
+    /// Conflicted is the keyword indicating an effect that constantly happens when this cog is conflicted.
+    /// </summary>
+    private void InvokeConflictedEffects()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Conflicted);
+    }
     #endregion CogEventHooks
 
     #region PublicMethods
@@ -257,7 +283,6 @@ public abstract class Cog : NetworkBehaviour
         m_hp = m_initialhp;
         StopConflicted();
         Rpc_UpdateSpin(m_spin = 0f);
-
     }
     
     public void UpdateSpin(float spin)
@@ -272,12 +297,14 @@ public abstract class Cog : NetworkBehaviour
         if (!m_Conflicted)
         {
             m_Conflicted = true;
-            //transform.localScale = Vector3.one + Vector3.right * 0.2f; //Conflict placeholder
+
             ShowConflictEffect(i_ConflictingCog.transform.position);
             Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
 
             StartCoroutine(dealConflictDamage());
             i_ConflictingCog.PropagationStrategy.CheckConflict(this);
+
+            InvokeConflictionEffects();
         }
     }
 

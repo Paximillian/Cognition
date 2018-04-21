@@ -9,4 +9,6 @@ public enum eCogEffectKeyword
     Spin, //Triggers every frame.
     Connection, //Triggers when ANOTHER cog is built next to this one.
     Disconnection, //Triggers when ANOTHER adjacent cog is destroyed.
+    Confliction,
+    Conflicted,
 }

@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class PlayableCog : Cog
 {
     private Renderer m_Renderer;
+    
+    /// <summary>
+    /// All the friendly neighbours of this cog.
+    /// </summary>
+    public List<Cog> FriendlyNeighbors => Neighbors.Where(neighbour => this.HasSameOwnerAs(neighbour)).ToList();
+
+    /// <summary>
+    /// All the enemy neighbours of this cog.
+    /// </summary>
+    public List<Cog> EnemyNeighbors => Neighbors.Where(neighbour => !this.HasSameOwnerAs(neighbour)).ToList();
 
     /// <summary>
     /// Do this PlayableCog and the requesting cog have the same owner? Is false for non-playable cogs
