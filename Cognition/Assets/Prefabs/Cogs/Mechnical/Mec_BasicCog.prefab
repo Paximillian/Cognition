@@ -85,6 +85,8 @@ GameObject:
   - component: {fileID: 114783200862515592}
   - component: {fileID: 114472116153118004}
   - component: {fileID: 114211795047338420}
+  - component: {fileID: 114281210845130708}
+  - component: {fileID: 114089753634831774}
   m_Layer: 0
   m_Name: Mec_BasicCog
   m_TagString: Untagged
@@ -416,6 +418,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114089753634831774
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295058665275452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88882c3c6f270c4b82f802b5ce27ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 0
+  m_Description: 
+  m_ResourceAmount: 100
 --- !u!114 &114211795047338420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -425,6 +441,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795ec2ad569117d40b13ce740f7928fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114281210845130708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295058665275452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114472116153118004

@@ -516,6 +516,7 @@ GameObject:
   - component: {fileID: 114037054479767010}
   - component: {fileID: 114642911558540310}
   - component: {fileID: 114356369386725290}
+  - component: {fileID: 114581029182399776}
   m_Layer: 0
   m_Name: Basic_testCog
   m_TagString: Untagged
@@ -2212,6 +2213,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795ec2ad569117d40b13ce740f7928fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114581029182399776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753293295822922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CogEffects: []
 --- !u!114 &114614755807904692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2224,6 +2237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cost: 5
+  m_buildRange: 1
   m_HoldingTile: {fileID: 0}
   m_initialhp: 10
   m_hp: 10

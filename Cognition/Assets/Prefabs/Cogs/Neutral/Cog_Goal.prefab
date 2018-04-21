@@ -19,10 +19,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4119275347097268}
+  - component: {fileID: 114593256828202774}
   - component: {fileID: 114633194520145196}
-  - component: {fileID: 114024942373163838}
   - component: {fileID: 114485580257338382}
   - component: {fileID: 114128391104952482}
+  - component: {fileID: 114148721969026084}
+  - component: {fileID: 114320467077508318}
   m_Layer: 0
   m_Name: Cog_Goal
   m_TagString: Untagged
@@ -956,27 +958,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114024942373163838
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1016062921824356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 875b12f2bc8aa4745a85756276e3ef33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Cost: 5
-  m_buildRange: 1
-  m_HoldingTile: {fileID: 0}
-  m_initialhp: 10
-  m_hp: 10
-  m_Sprite: {fileID: 0}
-  m_spin: 0
-  m_GenerationInterval: 0.1
-  m_ProgressPerGeneration: 0.01
-  m_DelayBetweenPlayers: 0.01
 --- !u!114 &114128391104952482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -988,6 +969,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027e4c6c082ba7d4ea6f51234daced3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114148721969026084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1016062921824356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114320467077508318
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1016062921824356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875b12f2bc8aa4745a85756276e3ef33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 2
+  m_Description: 
+  m_GenerationInterval: 1
+  m_ProgressPerGeneration: 0.01
+  m_DelayBetweenPlayers: 0.01
 --- !u!114 &114485580257338382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1009,6 +1017,25 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114593256828202774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1016062921824356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc7cc4e035c9044d8391a5d667ba98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Cost: 5
+  m_buildRange: 1
+  m_HoldingTile: {fileID: 0}
+  m_initialhp: 10
+  m_hp: 10
+  m_conflictParticles: {fileID: 0}
+  m_Sprite: {fileID: 0}
+  m_spin: 0
 --- !u!114 &114633194520145196
 MonoBehaviour:
   m_ObjectHideFlags: 1

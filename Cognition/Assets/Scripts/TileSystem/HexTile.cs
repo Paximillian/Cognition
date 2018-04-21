@@ -144,8 +144,9 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
             {
                 owningPlayer.OwnedCogs.Remove(ResidentCog);
             }
-            ResidentCog.InvokeDeathrattle();
-            ResidentCog = null; //For server
+
+            ResidentCog.InvokeBreakdown();
+            ResidentCog = null;
             if (!initialBaseCog) { Rpc_RemoveResidentCog(); } //For client
 
             owningPlayer?.PlayerBaseCog.PropagationStrategy.InitializePropagation(owningPlayer, null, true);

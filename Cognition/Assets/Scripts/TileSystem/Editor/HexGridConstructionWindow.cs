@@ -424,7 +424,7 @@ public class HexGridConstructionWindow : EditorWindow
                                 break;
                         }
 
-                        Cog cog = Editor_BuildCog(i_Tile, cogToBuild);
+                        Editor_BuildCog(i_Tile, cogToBuild);
                         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
                     }
                 }

@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 114335818847224452}
   - component: {fileID: 114878484252523908}
   - component: {fileID: 114900418886313408}
+  - component: {fileID: 114366210459956318}
   m_Layer: 0
   m_Name: Mechnical_Basic_Cog_old
   m_TagString: Untagged
@@ -329,6 +330,18 @@ MonoBehaviour:
     i15: 134
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114366210459956318
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1338299697451418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CogEffects: []
 --- !u!114 &114585625897302962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -340,14 +353,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7e2dd550997444788b8331da2c058f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
-  m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
   m_Cost: 5
-  m_HolderTile: {fileID: 0}
+  m_buildRange: 1
+  m_HoldingTile: {fileID: 0}
   m_initialhp: 10
   m_hp: 10
   m_Sprite: {fileID: 21300000, guid: 0a8a9c54610d206479f0993b82ba97b8, type: 3}
   m_spin: 0
+  m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
+  m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114878484252523908
 MonoBehaviour:
   m_ObjectHideFlags: 1

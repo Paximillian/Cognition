@@ -247,7 +247,7 @@ public class NetworkPlayer : NetworkBehaviour
                 placingPlayer.OwnedCogs.Add(cog);
 
                 cog.PropagationStrategy.InitializePropagation(placingPlayer, null);
-                cog.InvokeBattleCry();
+                cog.InvokeBootup();
 
                 Rpc_CogBuilt(cog.netId);
             }

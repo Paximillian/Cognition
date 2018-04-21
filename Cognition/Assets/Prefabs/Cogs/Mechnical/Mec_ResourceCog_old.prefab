@@ -50,10 +50,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4100196685561736}
   - component: {fileID: 95550551278272748}
-  - component: {fileID: 114221417301758752}
+  - component: {fileID: 114576031854908008}
   - component: {fileID: 114451229971691470}
   - component: {fileID: 114433849722423466}
   - component: {fileID: 114485583251967128}
+  - component: {fileID: 114334178787794642}
+  - component: {fileID: 114187139419230352}
   m_Layer: 0
   m_Name: Mec_ResourceCog_old
   m_TagString: Untagged
@@ -903,9 +905,9 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114221417301758752
+--- !u!114 &114187139419230352
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1048334113182058}
@@ -914,17 +916,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fd88bcb7b1f2841a0d35b7ed89f61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Cost: 5
-  m_buildRange: 1
-  m_HoldingTile: {fileID: 0}
-  m_initialhp: 200
-  m_hp: 200
-  m_conflictParticles: {fileID: 198876740546824274}
-  m_Sprite: {fileID: 0}
-  m_spin: 0
+  m_Keyword: 2
+  m_Description: 
   m_GenerationInterval: 5
   m_DelayBetweenPlayers: 0.25
   m_ResourcesPerGeneration: 10
+--- !u!114 &114334178787794642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1048334113182058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114433849722423466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -989,6 +996,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027e4c6c082ba7d4ea6f51234daced3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114576031854908008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1048334113182058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc7cc4e035c9044d8391a5d667ba98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Cost: 5
+  m_buildRange: 1
+  m_HoldingTile: {fileID: 0}
+  m_initialhp: 10
+  m_hp: 10
+  m_conflictParticles: {fileID: 0}
+  m_Sprite: {fileID: 0}
+  m_spin: 0
 --- !u!198 &198720875356072732
 ParticleSystem:
   m_ObjectHideFlags: 1

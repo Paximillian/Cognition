@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[DisallowMultipleComponent]
+[RequireComponent(typeof(CogEffectManager))]
 public abstract class Cog : NetworkBehaviour
 {
     #region Variables
@@ -82,8 +85,79 @@ public abstract class Cog : NetworkBehaviour
     /// The players that are powering this cog.
     /// This is different than the OwningPlayer property by that this also applies to neutral cogs like the resources or the goal cogs.
     /// </summary>
-    public HashSet<NetworkPlayer> OccupyingPlayers { get; set; } = new HashSet<NetworkPlayer>();
+    public HashSet<NetworkPlayer> OccupyingPlayers
+    {
+        get
+        {
+            if (isServer) { StartCoroutine(sendOccupyingPlayersUpdate()); }
+            return m_OccupyingPlayers;
+        }
+        set
+        {
+            if (isServer) { StartCoroutine(sendOccupyingPlayersUpdate()); }
+            m_OccupyingPlayers = value;
+        }
+    }
+    private HashSet<NetworkPlayer> m_OccupyingPlayers = new HashSet<NetworkPlayer>();
 
+    /// <summary>
+    /// Our OccupyingPlayers collection is an hashset, but we need to sync those values for various client-side calculations, which is not possible for this type.
+    /// What we'll do is hook into the property and proc a syncing process that is emulating the process of a sync var syncing process.
+    /// Once the list changes, we'll convert it to a json, which will be synced as a syncvar, and once it's received, we'll deserialize it back to an actual list.
+    /// </summary>
+    #region OccupyingPlayersSyncing
+    [SyncVar(hook ="updateOccupyingPlayers")]
+    private string m_OccupyingPlayersString;
+    
+    /// <summary>
+    /// Converts the player list to a list of ids and converts it to a json that will be stored in the syncvar.
+    /// </summary>
+    private IEnumerator sendOccupyingPlayersUpdate()
+    {
+        yield return null;
+        uint[] idList = m_OccupyingPlayers.Select(player => player.netId.Value).ToArray();
+        m_OccupyingPlayersString = JsonConvert.SerializeObject(idList);
+    }
+
+    /// <summary>
+    /// Called on clients once an update is sent, it converts the list back to a list of IDs.
+    /// </summary>
+    private void updateOccupyingPlayers(string idListString)
+    {
+        if (!isServer)
+        {
+            if (!idListString.Equals(m_OccupyingPlayersString))
+            {
+                m_OccupyingPlayersString = idListString;
+                NetworkInstanceId[] idList = JsonConvert.DeserializeObject<uint[]>(idListString)
+                                                        .Select(id => new NetworkInstanceId(id)).
+                                                        ToArray();
+
+                StartCoroutine(findPlayersForIds(idList));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Takes the id list and converts it back to a list of occupying plaers.
+    /// </summary>
+    /// <param name="idList"></param>
+    /// <returns></returns>
+    private IEnumerator findPlayersForIds(NetworkInstanceId[] idList)
+    {
+        do
+        {
+            m_OccupyingPlayers = new HashSet<NetworkPlayer>(idList.Select(id => ClientScene.FindLocalObject(id)?.GetComponent<NetworkPlayer>()));
+            yield return new WaitForEndOfFrame();
+        }
+        while(m_OccupyingPlayers.Contains(null));
+    }
+    #endregion OccupyingPlayersSyncing
+
+    /// <summary>
+    /// The cog effect manager gathers all cog effects on this cog and gives us one centralized point of access to the effect system.
+    /// </summary>
+    protected CogEffectManager CogEffectManager { get; private set; }
     #endregion Variables
 
     #region UnityMethods
@@ -91,6 +165,13 @@ public abstract class Cog : NetworkBehaviour
     {
         Animator = GetComponentInChildren<Animator>();
         PropagationStrategy = GetComponent<PropagationStrategy>();
+        CogEffectManager = GetComponent<CogEffectManager>();
+    }
+
+    [ServerCallback]
+    protected virtual void Update()
+    {
+        InvokeSpin();
     }
     #endregion UnityMethods
 
@@ -108,11 +189,33 @@ public abstract class Cog : NetworkBehaviour
     }
     #endregion UNETMethods
 
+    #region CogEventHooks
+    /// <summary>
+    /// Bootup is the keyword indicating an effect that happens when a cog enters play.
+    /// </summary>
+    public void InvokeBootup()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Bootup);
+    }
+
+    /// <summary>
+    /// Breakdown is the keyword indicating an effect that happens when this cog is destroyed.
+    /// </summary>
+    public void InvokeBreakdown()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Breakdown);
+    }
+
+    /// <summary>
+    /// Spin is the keyword indicating a constant effect that triggers every frame, the cog effect itself can determine the actual time between triggers by filtering invocations in its CanTrigger method
+    /// </summary>
+    public void InvokeSpin()
+    {
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Spin);
+    }
+    #endregion CogEventHooks
+
     #region PublicMethods
-    public virtual void InvokeBattleCry() { }
-
-    public virtual void InvokeDeathrattle() { }
-
     public void DealDamage(float damage)
     {
         m_hp -= damage;
@@ -190,7 +293,6 @@ public abstract class Cog : NetworkBehaviour
         m_conflictParticles.Stop();
         m_conflictParticles.gameObject.SetActive(false);
     }
-
     #endregion PublicMethods
 
     #region PrivateMethods
