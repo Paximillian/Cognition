@@ -913,8 +913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 2
-  m_Description: 
-  m_GenerationInterval: 5
+  m_Cooldown: 5
   m_DelayBetweenPlayers: 0.25
   m_ResourcesPerGeneration: 10
 --- !u!114 &114560549251368754

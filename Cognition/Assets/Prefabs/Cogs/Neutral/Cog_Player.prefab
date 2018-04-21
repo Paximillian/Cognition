@@ -423,8 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 2
-  m_Description: Constantly streams resources to the player.
-  m_GenerationInterval: 5
+  m_Cooldown: 5
   m_ResourcesPerGeneration: 10
 --- !u!114 &114973134474964664
 MonoBehaviour:
