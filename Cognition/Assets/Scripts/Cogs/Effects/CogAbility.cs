@@ -4,24 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-[RequireComponent(typeof(CogEffectManager))]
-public abstract class CogEffect : NetworkBehaviour
+[RequireComponent(typeof(CogAbilityManager))]
+public abstract class CogAbility : NetworkBehaviour
 {
     #region Variables
     /// <summary>
-    /// The name of the effect type will be used to categorize it's trigger time by making it into a keyword.
+    /// The name of the ability type will be used to categorize it's trigger time by making it into a keyword.
     /// </summary>
-    public eCogEffectKeyword Keyword { get { return m_Keyword; } }
+    public eCogAbilityKeyword Keyword { get { return m_Keyword; } }
     [SerializeField]
-    private eCogEffectKeyword m_Keyword;
+    private eCogAbilityKeyword m_Keyword;
 
     /// <summary>
-    /// The cog that triggered the activation of this effect.
+    /// The cog that triggered the activation of this ability.
     /// </summary>
     protected Cog TriggeringCog { get; private set; }
     
     /// <summary>
-    /// The description of this effect.
+    /// The description of this ability.
     /// </summary>
     protected abstract string Description { get; }
     #endregion Variables
@@ -42,11 +42,11 @@ public abstract class CogEffect : NetworkBehaviour
             {
                 if ((hideFlags & HideFlags.HideInInspector) == 0)
                 {
-                    if (GetComponent<CogEffectManager>()?.CogEffects.Contains(this) ?? false) { }
+                    if (GetComponent<CogAbilityManager>()?.CogAbilities.Contains(this) ?? false) { }
                     else
                     {
                         DestroyImmediate(this, true);
-                        UnityEditor.EditorUtility.DisplayDialog("you dun goofed", "You can't add a Cog Effect directly to an object, use the CogEffectManager script on the target objecto manage Cog Effects instead", "Cool, thx");
+                        UnityEditor.EditorUtility.DisplayDialog("you dun goofed", "You can't add a Cog Ability directly to an object, use the CogAbilityManager script on the target objecto manage Cog Abilities instead", "Cool, thx");
                     }
                 }
             }
@@ -57,18 +57,18 @@ public abstract class CogEffect : NetworkBehaviour
 
     #region EntryPoints
     /// <summary>
-    /// Can this effect be triggered?
+    /// Can this ability be triggered?
     /// </summary>
-    /// <param name="keyword">The type of the requested effect. If this effect isn't of the given type then it won't trigger.</param>
+    /// <param name="keyword">The type of the requested ability. If this effect isn't of the given type then it won't trigger.</param>
     [Server]
-    public bool CanTrigger(eCogEffectKeyword keyword)
+    public bool CanTrigger(eCogAbilityKeyword keyword)
     {
         return keyword == Keyword &&
                canTrigger();
     }
 
     /// <summary>
-    /// Triggers this effect.
+    /// Triggers this ability.
     /// Can only be called from the server.
     /// </summary>
     [Server]
@@ -82,7 +82,7 @@ public abstract class CogEffect : NetworkBehaviour
 
     #region NetworkMethods
     /// <summary>
-    /// Activates any visual effects pertaining to this effect.
+    /// Activates any visual effects pertaining to this ability.
     /// </summary>
     [ClientRpc]
     private void Rpc_TriggerVisuals(NetworkInstanceId invokerNetId)
@@ -95,19 +95,19 @@ public abstract class CogEffect : NetworkBehaviour
 
     #region AbstractMethods
     /// <summary>
-    /// Returns an indication of whether this effect can currently be triggered.
+    /// Returns an indication of whether this ability can currently be triggered.
     /// </summary>
     [Server]
     protected abstract bool canTrigger();
 
     /// <summary>
-    /// Activates the logic of this effect on the server.
+    /// Activates the logic of this ability on the server.
     /// </summary>
     [Server]
     protected abstract void triggerLogic(Cog invokingCog);
 
     /// <summary>
-    /// Activates the visual representation of this effect on the client.
+    /// Activates the visual representation of this ability on the client.
     /// </summary>
     [Client]
     protected abstract void triggerVisuals(Cog invokingCog);

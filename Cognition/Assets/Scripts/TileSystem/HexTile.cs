@@ -145,13 +145,14 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
                 owningPlayer.OwnedCogs.Remove(ResidentCog);
             }
 
-            //Triggers breakdown effects
+            //Triggers breakdown abilities
             foreach (Cog neighbour in ResidentCog.Neighbors)
             {
-                neighbour.InvokeDisconnectionEffects(ResidentCog);
+                neighbour.InvokeDisconnectionAbilities(ResidentCog);
             }
-            ResidentCog.InvokeBreakdownEffects();
+            ResidentCog.InvokeBreakdownAbilities();
 
+            ResidentCog.ResetCog();
             ResidentCog = null;
             if (!initialBaseCog) { Rpc_RemoveResidentCog(); } //For client
 
@@ -162,6 +163,11 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     [ClientRpc]
     private void Rpc_RemoveResidentCog()
     {
+        if (!isServer)
+        {
+            ResidentCog.UpdateSpin(ResidentCog.Spin = 0);
+        }
+
         ResidentCog = null;
     }
     #endregion UNETMethods

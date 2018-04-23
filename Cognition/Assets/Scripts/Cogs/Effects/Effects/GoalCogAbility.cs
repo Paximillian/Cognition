@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GoalCogEffect : CooldownableCogEffect
+public class GoalCogAbility : CooldownableCogAbility
 {
     #region Variables
     /// <summary>

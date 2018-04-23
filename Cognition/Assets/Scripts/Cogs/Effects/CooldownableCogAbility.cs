@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public abstract class CooldownableCogEffect : CogEffect
+public abstract class CooldownableCogAbility : CogAbility
 {
     #region Variables
     /// <summary>

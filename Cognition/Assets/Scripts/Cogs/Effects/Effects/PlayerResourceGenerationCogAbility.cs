@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerResourceGenerationCogEffect : CooldownableCogEffect
+public class PlayerResourceGenerationCogAbility : CooldownableCogAbility
 {    
     /// <summary>
     /// How many resources are generated each time.

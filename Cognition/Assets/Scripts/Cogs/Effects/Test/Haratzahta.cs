@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Haratzahta : CogEffect
+public class Haratzahta : CogAbility
 {
     [SerializeField]
     private float m_Damage;

@@ -236,7 +236,6 @@ public class NetworkPlayer : NetworkBehaviour
                 cog.OwningPlayerId = placingPlayer.PlayerId;
 
                 cog.transform.position += (i_Tile.transform.Find("tile_cog_connection").position - cog.transform.Find("tile_cog_connection").position);
-                cog.ResetCog();
 
                 if (placingPlayer.PlayerBaseCog == null)
                 {
@@ -248,12 +247,12 @@ public class NetworkPlayer : NetworkBehaviour
 
                 cog.PropagationStrategy.InitializePropagation(placingPlayer, null);
 
-                //Invokes effects based on building of this cog.
+                //Invokes abilities based on building of this cog.
                 foreach (Cog neighbour in cog.Neighbors)
                 {
-                    neighbour.InvokeConnectionEffects(cog);
+                    neighbour.InvokeConnectionAbilities(cog);
                 }
-                cog.InvokeBootupEffects();
+                cog.InvokeBootupAbilities();
 
                 Rpc_CogBuilt(cog.netId);
             }
