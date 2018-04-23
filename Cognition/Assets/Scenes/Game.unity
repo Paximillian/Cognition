@@ -12818,43 +12818,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1768296668}
   m_Script: {fileID: 11500000, guid: 3279a3ccd24d30a46ab6e31f058cd7c2, type: 3}
---- !u!1 &1768296670 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1787226716998062, guid: a8c91a3a86ee8b24f86639d095e91191,
-    type: 2}
-  m_PrefabInternal: {fileID: 1768296668}
---- !u!114 &1768296671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1768296670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 168
-    i1: 201
-    i2: 26
-    i3: 58
-    i4: 134
-    i5: 238
-    i6: 139
-    i7: 36
-    i8: 248
-    i9: 102
-    i10: 57
-    i11: 208
-    i12: 149
-    i13: 233
-    i14: 17
-    i15: 145
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!1001 &1779825452
 Prefab:
   m_ObjectHideFlags: 0
@@ -15150,43 +15113,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 2083206781}
   m_Script: {fileID: 11500000, guid: 3279a3ccd24d30a46ab6e31f058cd7c2, type: 3}
---- !u!1 &2083206783 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1787226716998062, guid: a8c91a3a86ee8b24f86639d095e91191,
-    type: 2}
-  m_PrefabInternal: {fileID: 2083206781}
---- !u!114 &2083206784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2083206783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 168
-    i1: 201
-    i2: 26
-    i3: 58
-    i4: 134
-    i5: 238
-    i6: 139
-    i7: 36
-    i8: 248
-    i9: 102
-    i10: 57
-    i11: 208
-    i12: 149
-    i13: 233
-    i14: 17
-    i15: 145
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!1001 &2085988881
 Prefab:
   m_ObjectHideFlags: 0
