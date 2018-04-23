@@ -8,6 +8,11 @@ using UnityEngine.UI;
 public class RadialMenuController : MonoBehaviour
 {
     #region Variables
+    /// <summary>
+    /// If floating over a menu item for a greater amount of seconds than this, a tooltip would show up to give details of the selected cog.
+    /// </summary>
+    private float k_TooltipShowDelay = 1;
+
     public static RadialMenuController Instance { get; private set; }
 
     /// <summary>
@@ -39,7 +44,7 @@ public class RadialMenuController : MonoBehaviour
     [Tooltip("The minimum distance you need to move the finger from center to make an item highlighted")]
     [SerializeField]
     private float m_MinLineDrawDistance;
-
+    
     private bool m_isChoosing = false;
     private Vector2 m_mouseStartPos;
 
@@ -227,6 +232,50 @@ public class RadialMenuController : MonoBehaviour
         m_CurrentlySelectedCog = null;
         m_MenuParent.SetActive(false);
     }
+
+    /// <summary>
+    /// If the item is hovered over for a short while, then we'll display a tooltip detailing its functionality.
+    /// </summary>
+    private IEnumerator showTooltipDelayed()
+    {
+        int? selectedCogIndex = m_HoveredItemIndex;
+
+        yield return new WaitForSeconds(k_TooltipShowDelay);
+
+        if (selectedCogIndex == m_HoveredItemIndex && selectedCogIndex.HasValue)
+        {
+            Tooltip.Instance.Show();
+            Tooltip.Instance.SetText(m_Items[selectedCogIndex.Value].Description);
+        }
+    }
+
+    /// <summary>
+    /// Removes highlight from all items.
+    /// </summary>
+    private void unlightAll()
+    {
+        Tooltip.Instance.Hide();
+        m_HoveredItemIndex = null;
+        turnOffAllItemsHightlight();
+    }
+
+    /// <summary>
+    /// Highlights the item at the given index.
+    /// </summary>
+    private void highlightItem(int i)
+    {
+        int? lastSelectedIndex = m_HoveredItemIndex;
+
+        m_HoveredItemIndex = i;
+        SetItemHighlight(i);
+
+        if (m_HoveredItemIndex != lastSelectedIndex)
+        {
+            Tooltip.Instance.Hide();
+            StopAllCoroutines();
+            StartCoroutine(showTooltipDelayed());
+        }
+    }
     #endregion PrivateMethods
 
     #region PublicMethods
@@ -250,10 +299,16 @@ public class RadialMenuController : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            Tooltip.Instance.Hide();
+        }
     }
 
     public void OnPointerUp(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
+        Tooltip.Instance.Hide();
+
         if (Input.touchCount > 1)
         {
             cancelBuild();
@@ -279,6 +334,7 @@ public class RadialMenuController : MonoBehaviour
         if (Input.touchCount > 1)
         {
             cancelBuild();
+            Tooltip.Instance.Hide();
         }
         else
         {
@@ -310,6 +366,7 @@ public class RadialMenuController : MonoBehaviour
         if (Input.touchCount > 1)
         {
             cancelBuild();
+            Tooltip.Instance.Hide();
         }
         else
         {
@@ -333,13 +390,11 @@ public class RadialMenuController : MonoBehaviour
                             {
                                 if (distance > m_MinLineDrawDistance)
                                 {
-                                    m_HoveredItemIndex = i;
-                                    SetItemHighlight(i);
+                                    highlightItem(i);
                                 }
                                 else
                                 {
-                                    m_HoveredItemIndex = null;
-                                    turnOffAllItemsHightlight();
+                                    unlightAll();
                                 }
                             }
                         }
@@ -347,13 +402,11 @@ public class RadialMenuController : MonoBehaviour
                         {
                             if (distance > m_MinLineDrawDistance)
                             {
-                                m_HoveredItemIndex = i;
-                                SetItemHighlight(i);
+                                highlightItem(i);
                             }
                             else
                             {
-                                m_HoveredItemIndex = null;
-                                turnOffAllItemsHightlight();
+                                unlightAll();
                             }
                         }
                     }
