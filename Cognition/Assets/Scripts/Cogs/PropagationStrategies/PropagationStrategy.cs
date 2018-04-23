@@ -123,13 +123,14 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// <returns></returns>
     private List<Tuple<Cog, Cog>> propagate(NetworkPlayer i_Player, Cog i_RequestingCog, bool i_StopUnaffected = false)
     {
+        bool conflicted = false;
         List<Tuple<Cog, Cog>> propogationPairs = new List<Tuple<Cog, Cog>>();
         i_Player.UpdatedCogs.Add(Cog);
 
         if (i_RequestingCog != null)
         {
             Cog.Rpc_UpdateSpin(Cog.Spin = i_RequestingCog.PropagationStrategy.CheckSpin(Cog));
-            CheckConflict(i_RequestingCog);
+            conflicted = conflicted || CheckConflict(i_RequestingCog);
         }
 
         foreach (Cog neighbor in Cog.HoldingTile.PopulatedNeighbors)
@@ -145,9 +146,13 @@ public abstract class PropagationStrategy : MonoBehaviour
                 }
                 else {//Perform only a single step in this direction
                     neighbor.Rpc_UpdateSpin(neighbor.Spin = Cog.PropagationStrategy.CheckSpin(neighbor));
-                    CheckConflict(neighbor);
+                    conflicted = conflicted || CheckConflict(neighbor);
                 }
             }
+        }
+
+        if (!conflicted) {
+            Cog.StopConflicted();
         }
 
         return propogationPairs;

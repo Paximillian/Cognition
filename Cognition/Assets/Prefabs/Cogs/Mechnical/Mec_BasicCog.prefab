@@ -86,7 +86,8 @@ GameObject:
   - component: {fileID: 114472116153118004}
   - component: {fileID: 114211795047338420}
   - component: {fileID: 114281210845130708}
-  - component: {fileID: 114056720185725584}
+  - component: {fileID: 114097923127379960}
+  - component: {fileID: 114738314885781384}
   m_Layer: 0
   m_Name: Mec_BasicCog
   m_TagString: Untagged
@@ -418,7 +419,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114056720185725584
+--- !u!114 &114097923127379960
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
@@ -426,11 +427,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1295058665275452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88882c3c6f270c4b82f802b5ce27ae1, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e30a32ce8433f42ac36b36b554c776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Keyword: 5
-  m_ResourceAmount: 100
+  m_Keyword: 6
+  m_conflictDamage: 1
 --- !u!114 &114211795047338420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -495,6 +496,18 @@ MonoBehaviour:
   m_spin: 0
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
+--- !u!114 &114738314885781384
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295058665275452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9268374c887f04c4890b3e7f7dc0884f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 5
 --- !u!114 &114783200862515592
 MonoBehaviour:
   m_ObjectHideFlags: 1

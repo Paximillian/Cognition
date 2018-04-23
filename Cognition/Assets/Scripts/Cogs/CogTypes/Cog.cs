@@ -58,7 +58,16 @@ public abstract class Cog : NetworkBehaviour
 
     [SerializeField]
     float m_spin = 0f;
-    public float Spin { get { return m_spin; } set { m_spin = value; } }
+    public float Spin { get { return m_spin; }
+        set
+        {
+            if (value == 0f)
+            {
+                StopConflicted();
+            }
+            m_spin = value;
+        }
+    }
 
     protected bool IsActive { get { return Spin != 0f; } }
     
@@ -250,9 +259,9 @@ public abstract class Cog : NetworkBehaviour
     /// Confliction is the keyword indicating an effect that happens when this cog has entered a conflict.
     /// </summary>
     [Server]
-    public void InvokeConflictionEffects()
+    public void InvokeConflictionEffects(Cog conflicterCog)
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Confliction);
+        CogEffectManager.TriggerEffects(eCogEffectKeyword.Confliction, conflicterCog);
     }
 
     /// <summary>
@@ -282,12 +291,12 @@ public abstract class Cog : NetworkBehaviour
         name += $"_{s_CogIndex++}";
         m_hp = m_initialhp;
         StopConflicted();
-        Rpc_UpdateSpin(m_spin = 0f);
+        Rpc_UpdateSpin(Spin = 0f);
     }
     
     public void UpdateSpin(float spin)
     {
-        m_spin = spin;
+        Spin = spin;
 
         Animator?.SetFloat("Spin", m_spin);
     }
@@ -298,13 +307,13 @@ public abstract class Cog : NetworkBehaviour
         {
             m_Conflicted = true;
 
-            ShowConflictEffect(i_ConflictingCog.transform.position);
-            Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
+            //ShowConflictEffect(i_ConflictingCog.transform.position);
+            //Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
 
-            StartCoroutine(dealConflictDamage());
+            //StartCoroutine(dealConflictDamage());
             i_ConflictingCog.PropagationStrategy.CheckConflict(this);
 
-            InvokeConflictionEffects();
+            InvokeConflictionEffects(i_ConflictingCog);
         }
     }
 
@@ -314,12 +323,13 @@ public abstract class Cog : NetworkBehaviour
         ShowConflictEffect(conflictingCogPos);
     }
 
-    public void ShowConflictEffect(Vector3 conflictingCogPos)
+    public void ShowConflictEffect(Vector3 conflictingCogPos, bool showOnClient = false)
     {
         if (!m_conflictParticles) return;
         m_conflictParticles.gameObject.transform.position = (transform.position + conflictingCogPos) / 2f;
         m_conflictParticles.gameObject.SetActive(true);
         m_conflictParticles?.Play();
+        if (showOnClient) { Rpc_ShowConflictEffect(conflictingCogPos); }
     }
 
     public void StopConflicted()

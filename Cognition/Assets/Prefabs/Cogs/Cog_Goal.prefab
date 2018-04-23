@@ -381,8 +381,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016062921824356}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.3348794, y: -6.371029e-17, z: 2.8692565}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.26, z: 15.510521}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4813155331831210}
   - {fileID: 4374576973146182}
@@ -960,7 +960,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114020608146665122
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1016062921824356}
@@ -970,9 +970,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 2
-  m_Description: 
-  m_GenerationInterval: 1
-  m_ProgressPerGeneration: 0.01
+  m_Cooldown: 0.1
+  m_ProgressPerGeneration: 0.005
   m_DelayBetweenPlayers: 0.01
 --- !u!114 &114128391104952482
 MonoBehaviour:

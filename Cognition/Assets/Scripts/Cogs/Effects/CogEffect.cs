@@ -87,7 +87,7 @@ public abstract class CogEffect : NetworkBehaviour
     [ClientRpc]
     private void Rpc_TriggerVisuals(NetworkInstanceId invokerNetId)
     {
-        Cog invokingCog = ClientScene.FindLocalObject(invokerNetId).GetComponent<Cog>();
+        Cog invokingCog = ClientScene.FindLocalObject(invokerNetId).GetComponent<Cog>(); //Is this really necessary?
 
         triggerVisuals(invokingCog);
     }
