@@ -7,13 +7,31 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(CogAbilityManager))]
 public abstract class CogAbility : NetworkBehaviour
 {
+    #region NestedDefinitions
+    public enum eTargetType
+    {
+        All,
+        Ally,
+        Enemy
+    }
+    #endregion NestedDefinitions
+
     #region Variables
     /// <summary>
     /// The name of the ability type will be used to categorize it's trigger time by making it into a keyword.
     /// </summary>
     public eCogAbilityKeyword Keyword { get { return m_Keyword; } }
     [SerializeField]
+    [Tooltip("The name of the ability type will be used to categorize it's trigger time by making it into a keyword.")]
     private eCogAbilityKeyword m_Keyword;
+
+    /// <summary>
+    /// Who does this ability affect? (This does NOT affect the ability's logic in any way, it's only used to display the keyword name for this ability in appropriate coloration.
+    /// </summary>
+    [SerializeField]
+    [Tooltip("Who does this ability affect? (This does NOT affect the ability's logic in any way, it's only used to display the keyword name for this ability in appropriate coloration.")]
+    [DualFactionConditionalHide(nameof(m_Keyword), true)]
+    private eTargetType m_TargetType;
 
     /// <summary>
     /// The cog that triggered the activation of this ability.
@@ -27,7 +45,7 @@ public abstract class CogAbility : NetworkBehaviour
     {
         get
         {
-            return Keyword.GetDescriptionText();
+            return Keyword.GetDescriptionText(m_TargetType);
         }
     }
     #endregion Variables
