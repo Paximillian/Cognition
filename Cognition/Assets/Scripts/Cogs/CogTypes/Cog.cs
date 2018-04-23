@@ -174,6 +174,17 @@ public abstract class Cog : NetworkBehaviour
     /// The cog ability manager gathers all cog abilities on this cog and gives us one centralized point of access to the abilities system.
     /// </summary>
     protected CogAbilityManager CogAbilityManager { get; private set; }
+
+    public string Description
+    {
+        get
+        {
+            return string.Join(Environment.NewLine, 
+                               CogAbilityManager.CogAbilities
+                                                .Where(ability => !(ability is IGameMechanicAbility))
+                                                .Select(ability => ability.Description));
+        }
+    }
     #endregion Variables
 
     #region UnityMethods
