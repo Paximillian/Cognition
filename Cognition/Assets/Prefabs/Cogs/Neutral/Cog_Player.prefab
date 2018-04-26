@@ -423,8 +423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 2
-  m_Cooldown: 5
-  m_ResourcesPerGeneration: 10
+  m_Cooldown: 1
+  m_ResourcesPerGeneration: 1
 --- !u!114 &114973134474964664
 MonoBehaviour:
   m_ObjectHideFlags: 1

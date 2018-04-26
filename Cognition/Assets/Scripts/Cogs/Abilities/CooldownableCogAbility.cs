@@ -13,10 +13,10 @@ public abstract class CooldownableCogAbility : CogAbility
     private bool m_ReadyToTrigger = false;
 
     /// <summary>
-    /// Amount of seconds between generation of resources.
+    /// Amount of seconds between triggers of the effect.
     /// </summary>
     [SerializeField]
-    [Range(1, 20)]
+    [Range(0, 20)]
     [Tooltip("Amount of seconds of cooldown between triggers.")]
     private float m_Cooldown = 5f;
     protected float Cooldown { get { return m_Cooldown; } set { m_Cooldown = value; } }
