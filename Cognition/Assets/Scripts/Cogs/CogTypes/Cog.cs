@@ -25,7 +25,7 @@ public abstract class Cog : NetworkBehaviour
     public bool IsConflicted { get { return m_Conflicted; } }
 
     [SerializeField]
-    [Range(1, 10)]
+    [Range(1, 100)]
     private int m_Cost = 5;
     public int Cost { get { return m_Cost; } }
 
@@ -326,11 +326,19 @@ public abstract class Cog : NetworkBehaviour
         m_hp -= damage;
         if (m_hp <= 0f)
         {
-            m_HoldingTile.DestroyCog();
-
+            StartCoroutine(DestroyCogAfterFrame());
             transform.position = Vector3.one * -1337;
-            Rpc_KillCog();
         }
+    }
+
+    IEnumerator DestroyCogAfterFrame() {
+        yield return new WaitForEndOfFrame();
+        DestroyCog();
+    }
+
+    public void DestroyCog() {
+        m_HoldingTile.DestroyCog();
+        Rpc_KillCog();
     }
 
     [Server]
