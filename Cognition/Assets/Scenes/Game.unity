@@ -8729,7 +8729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectsToPool:
   - InnerList:
-    - {fileID: 1295058665275452, guid: c8e636c91c5f8d44e8a1b39533397cfe, type: 2}
+    - {fileID: 1295058665275452, guid: ed76a1b6624dd3f489fc9713a3094f39, type: 2}
   - InnerList:
     - {fileID: 1787226716998062, guid: a0b24a414abc61a4a9cd16b989e47449, type: 2}
   - InnerList:
@@ -8740,13 +8740,16 @@ MonoBehaviour:
     - {fileID: 1951451056961398, guid: 5abb273eda923ce46a8ecde3a144c0ca, type: 2}
   - InnerList:
     - {fileID: 1295058665275452, guid: 56f9fb2beb2e0224f9d877a712f1536d, type: 2}
+  - InnerList:
+    - {fileID: 1670331429034538, guid: 8e81a051077ff104699978953ad40c54, type: 2}
   ObjectPoolNames:
-  - Mec_BasicCog
+  - Neutral_BasicCog
   - Cog_Player
   - Arcane_Telecog
   - Bio_IncubatorCog
   - Arcane_RelayCog
   - Bio_RadialSpawnCog
+  - Arcane_BasicCog
   ObjectPoolStartAmounts:
   - InnerList: 1e000000
   - InnerList: 02000000
@@ -8754,7 +8757,8 @@ MonoBehaviour:
   - InnerList: 02000000
   - InnerList: 02000000
   - InnerList: 02000000
-  SubListSizes: 010000000100000001000000010000000100000001000000
+  - InnerList: 02000000
+  SubListSizes: 01000000010000000100000001000000010000000100000001000000
 --- !u!114 &1252734263
 MonoBehaviour:
   m_ObjectHideFlags: 0
