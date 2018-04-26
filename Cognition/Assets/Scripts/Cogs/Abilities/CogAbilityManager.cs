@@ -15,7 +15,19 @@ public class CogAbilityManager : NetworkBehaviour
     /// <summary>
     /// The abilities that can be triggered on this cog.
     /// </summary>
-    public List<CogAbility> CogAbilities { get; private set; }
+    private List<CogAbility> m_CogAbilities;
+    public List<CogAbility> CogAbilities
+    {
+        get
+        {
+            if (m_CogAbilities == null)
+            {
+                m_CogAbilities = GetComponents<CogAbility>().ToList();
+            }
+
+            return m_CogAbilities;
+        }
+    }
 
     /// <summary>
     /// The abilities of the given keyword that can be triggered on this cog.
@@ -32,12 +44,12 @@ public class CogAbilityManager : NetworkBehaviour
     #region UnityMethods
     private void OnEnable()
     {
-        CogAbilities = GetComponents<CogAbility>().ToList();
+        var temp = CogAbilities;
     }
 
     private void OnValidate()
     {
-        CogAbilities = GetComponents<CogAbility>().ToList();
+        var temp = CogAbilities;
     }
     #endregion UnityMethods
 
@@ -50,7 +62,7 @@ public class CogAbilityManager : NetworkBehaviour
     {
         foreach (CogAbility ability in CogAbilities)
         {
-            if (ability.CanTrigger(keyword))
+            if (ability.CanTrigger(keyword, invokingCog))
             {
                 ability.Trigger(invokingCog);
             }

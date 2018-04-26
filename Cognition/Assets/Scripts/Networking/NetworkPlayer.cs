@@ -120,7 +120,7 @@ public class NetworkPlayer : NetworkBehaviour
 
         if (isServer)
         {
-            Rpc_SetServerPlayer();
+            Server = this;
         }
     }
     #endregion UnityMethods
@@ -135,8 +135,12 @@ public class NetworkPlayer : NetworkBehaviour
     /// <summary>
     /// Starts the game 3 seconds after both players connect.
     /// </summary>
+    [Server]
     private IEnumerator countDownToGameStart()
     {
+        Rpc_SetServerPlayer();
+        yield return new WaitForSeconds(2f);
+
         for (int i = 3; i > 0; --i)
         {
             m_CountdownText = i.ToString();
@@ -194,7 +198,7 @@ public class NetworkPlayer : NetworkBehaviour
 
             if (s_LoadedPlayers == NetworkManager.singleton.matchSize)
             {
-                StartCoroutine(countDownToGameStart());
+                Server.StartCoroutine(Server.countDownToGameStart());
             }
         }
     }

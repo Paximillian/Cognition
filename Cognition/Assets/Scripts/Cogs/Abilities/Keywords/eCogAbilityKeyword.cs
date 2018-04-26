@@ -9,8 +9,8 @@ public enum eCogAbilityKeyword
     Spin, //Triggers every frame.
     [DualFactionKeyword] Connection, //Triggers when ANOTHER cog is built next to this one.
     [DualFactionKeyword] Disconnection, //Triggers when ANOTHER adjacent cog is destroyed.
-    [DualFactionKeyword] Confliction, //Triggers when a conflict starts.
-    [DualFactionKeyword] Conflicted, //Triggers every frame while conflicted.
+    Confliction, //Triggers when a conflict starts.
+    Conflicted, //Triggers every frame while conflicted.
     Windup, //Triggered when the cog starts spinning from a stopped position, doesn't trigger on build.
     Winddown, //Triggered when the cog stops spinning from a spinning position, doesn't trigger on destruction.
 }

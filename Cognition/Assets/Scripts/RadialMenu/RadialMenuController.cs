@@ -13,8 +13,6 @@ public class RadialMenuController : Singleton<RadialMenuController>
     /// </summary>
     private float k_TooltipShowDelay = 1;
 
-    public static RadialMenuController Instance { get; private set; }
-
     /// <summary>
     /// The items to choose from in the radial menu
     /// </summary>
@@ -68,20 +66,6 @@ public class RadialMenuController : Singleton<RadialMenuController>
     #endregion Variables
 
     #region UnityMethods
-    protected override void Awake()
-    {
-        base.Awake();
-
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     private void Start ()
     {
         setupItems();

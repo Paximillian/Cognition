@@ -31,7 +31,7 @@ public abstract class CogAbility : NetworkBehaviour
     [SerializeField]
     [Tooltip("Who does this ability affect? (This does NOT affect the ability's logic in any way, it's only used to display the keyword name for this ability in appropriate coloration.")]
     [DualFactionConditionalHide(nameof(m_Keyword), true)]
-    private eTargetType m_TargetType;
+    private eTargetType m_TargetType = eTargetType.All;
 
     /// <summary>
     /// The cog that triggered the activation of this ability.
@@ -85,9 +85,12 @@ public abstract class CogAbility : NetworkBehaviour
     /// </summary>
     /// <param name="keyword">The type of the requested ability. If this effect isn't of the given type then it won't trigger.</param>
     [Server]
-    public bool CanTrigger(eCogAbilityKeyword keyword)
+    public bool CanTrigger(eCogAbilityKeyword keyword, Cog invokingCog = null)
     {
         return keyword == Keyword &&
+               (m_TargetType == eTargetType.All ||
+                    (m_TargetType == eTargetType.Ally && TriggeringCog.HasSameOwnerAs(invokingCog) ||
+                    (m_TargetType == eTargetType.Enemy && !TriggeringCog.HasSameOwnerAs(invokingCog)))) &&
                canTrigger();
     }
 

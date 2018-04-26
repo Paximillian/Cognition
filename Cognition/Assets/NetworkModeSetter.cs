@@ -5,24 +5,24 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class NetworkModeSetter : MonoBehaviour {
-
-    private bool multiPlayerMode = false;
+    
     [SerializeField]
     Text buttonText;
 
-    public void ToggleMode() {
+    private void Start()
+    {
+        GetComponent<Button>().onClick?.Invoke();
+    }
 
-        multiPlayerMode = !multiPlayerMode;
-        if (!multiPlayerMode)
-        {
-            NetworkManager.singleton.matchSize = 1;
-            (NetworkManager.singleton as NetworkGameManager).DebugMode = true;
-            buttonText.text = "SinglePlayer";
-        }
-        else {
-            NetworkManager.singleton.matchSize = 2;
-            (NetworkManager.singleton as NetworkGameManager).DebugMode = false;
-            buttonText.text = "MultiPlayer";
-        }
+    public void ToggleSize()
+    {
+        buttonText.text = (NetworkManager.singleton.matchSize = (3 - NetworkManager.singleton.matchSize)).ToString();
+    }
+
+    public void ToggleDebug()
+    {
+        buttonText.text = ((NetworkManager.singleton as NetworkGameManager).DebugMode = !(NetworkManager.singleton as NetworkGameManager).DebugMode)
+                            ? "Debug On"
+                            : "Debug Off";
     }
 }
