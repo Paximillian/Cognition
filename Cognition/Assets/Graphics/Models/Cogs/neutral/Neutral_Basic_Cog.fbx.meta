@@ -10,11 +10,15 @@ ModelImporter:
     100004: Cog_Rod_Graphic
     100006: MDL_BasicCog
     100008: MDL_Cog_Rod
+    100010: Cog_Graphic_end
+    100012: Cog_Rod_Graphic_end
     400000: //RootNode
     400002: Cog_Graphic
     400004: Cog_Rod_Graphic
     400006: MDL_BasicCog
     400008: MDL_Cog_Rod
+    400010: Cog_Graphic_end
+    400012: Cog_Rod_Graphic_end
     2300000: MDL_BasicCog
     2300002: MDL_Cog_Rod
     3300000: MDL_BasicCog
@@ -26,6 +30,7 @@ ModelImporter:
     7400004: CogBasic|Rotate_CW
     7400006: CogBasic|Spawn
     7400008: CogBasic|Idle
+    7400010: CogBasic|Engaged
     9500000: //RootNode
   externalObjects:
   - first:
@@ -60,8 +65,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: CogBasic|Engage
-      takeName: CogBasic|Engage
+      name: CogBasic|Engaged
+      takeName: CogBasic|Engaged
       firstFrame: 0
       lastFrame: 8
       wrapMode: 0
