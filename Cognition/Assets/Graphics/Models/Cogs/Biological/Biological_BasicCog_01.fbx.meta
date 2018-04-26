@@ -1,87 +1,93 @@
 fileFormatVersion: 2
-guid: 285855cd541e7c84490a04a413ca0bd8
-timeCreated: 1516734400
+guid: bc50fcb4078c6a04c864938c85d40ac3
+timeCreated: 1524779558
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: BigCog
-    100002: InnerClose_A
-    100004: innerClose_B
-    100006: InnerCloser.Bk
-    100008: InnerCloser.Ft
-    100010: innerCog_B
-    100012: InnerCogA
-    100014: Main_rotator
-    100016: OuterClose_A
-    100018: OuterClose_B
-    100020: outerCloser.Bk
-    100022: outerCloser.Ft
-    100024: SmallCog
-    100026: Sphere
-    100028: sphereVictory
-    100030: //RootNode
-    100032: VictoryCog_Base
-    400000: BigCog
-    400002: InnerClose_A
-    400004: innerClose_B
-    400006: InnerCloser.Bk
-    400008: InnerCloser.Ft
-    400010: innerCog_B
-    400012: InnerCogA
-    400014: Main_rotator
-    400016: OuterClose_A
-    400018: OuterClose_B
-    400020: outerCloser.Bk
-    400022: outerCloser.Ft
-    400024: SmallCog
-    400026: Sphere
-    400028: sphereVictory
-    400030: //RootNode
-    400032: VictoryCog_Base
-    2300000: InnerClose_A
-    2300002: innerClose_B
-    2300004: innerCog_B
-    2300006: InnerCogA
-    2300008: OuterClose_A
-    2300010: OuterClose_B
-    2300012: Sphere
-    2300014: VictoryCog_Base
-    3300000: InnerClose_A
-    3300002: innerClose_B
-    3300004: innerCog_B
-    3300006: InnerCogA
-    3300008: OuterClose_A
-    3300010: OuterClose_B
-    3300012: Sphere
-    3300014: VictoryCog_Base
-    4300000: VictoryCog_Base
-    4300002: OuterClose_B
-    4300004: innerClose_B
-    4300006: OuterClose_A
-    4300008: InnerClose_A
-    4300010: Sphere
-    4300012: innerCog_B
-    4300014: InnerCogA
-    7400000: VictoryCog|ClosedStage
-    7400002: VictoryCog|Idle
-    7400004: VictoryCog|OpenStage1
-    7400006: VictoryCog|OpenStage2
-    7400008: VictoryCog|Rotate_CCW
-    7400010: VictoryCog|Rotate_CW
-    7400012: VictoryCog|Victory
+    100000: Base
+    100002: Base.001
+    100004: //RootNode
+    100006: Body
+    100008: Body.001
+    100010: Cog_A
+    100012: Cog_B
+    100014: Cog_C
+    100016: Cog_D
+    100018: Cog_E
+    100020: Cog_F
+    100022: Jnt_Cog_A
+    100024: Jnt_Cog_A_end
+    100026: Jnt_Cog_B
+    100028: Jnt_Cog_B_end
+    100030: Jnt_Cog_C
+    100032: Jnt_Cog_C_end
+    100034: Jnt_Cog_D
+    100036: Jnt_Cog_D_end
+    100038: Jnt_Cog_E
+    100040: Jnt_Cog_E_end
+    100042: Jnt_Cog_F
+    100044: Jnt_Cog_F_end
+    400000: Base
+    400002: Base.001
+    400004: //RootNode
+    400006: Body
+    400008: Body.001
+    400010: Cog_A
+    400012: Cog_B
+    400014: Cog_C
+    400016: Cog_D
+    400018: Cog_E
+    400020: Cog_F
+    400022: Jnt_Cog_A
+    400024: Jnt_Cog_A_end
+    400026: Jnt_Cog_B
+    400028: Jnt_Cog_B_end
+    400030: Jnt_Cog_C
+    400032: Jnt_Cog_C_end
+    400034: Jnt_Cog_D
+    400036: Jnt_Cog_D_end
+    400038: Jnt_Cog_E
+    400040: Jnt_Cog_E_end
+    400042: Jnt_Cog_F
+    400044: Jnt_Cog_F_end
+    2100000: Mat_BioloGic_Achmed
+    2300000: Body
+    2300002: Body.001
+    2300004: Cog_A
+    2300006: Cog_B
+    2300008: Cog_C
+    2300010: Cog_D
+    2300012: Cog_E
+    2300014: Cog_F
+    3300000: Body
+    3300002: Body.001
+    3300004: Cog_A
+    3300006: Cog_B
+    3300008: Cog_C
+    3300010: Cog_D
+    3300012: Cog_E
+    3300014: Cog_F
+    4300000: Body.001
+    4300002: Body
+    4300004: Cog_A
+    7400000: Biological_Basic_Engaged
+    7400002: Biological_Basic_Idle
+    7400004: Biological_Basic_Rotate_CCW
+    7400006: Biological_Basic_Rotate_CW
+    7400008: Biological_Basic_Spawn
     9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Mat_VictoryCog
-    second: {fileID: 2100000, guid: 87334b0ce2131d04fb91e1a942f37f7d, type: 2}
+      name: Mat_BioloGic_Achmed
+    second: {fileID: 2100000, guid: 5e8c3f89148cded419d6b89dfe402919, type: 2}
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -104,8 +110,92 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: VictoryCog|ClosedStage
-      takeName: VictoryCog|ClosedStage
+      name: Biological_Basic_Engaged
+      takeName: Biological_Achmed|Engaged
+      firstFrame: 0
+      lastFrame: 13
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Biological_Basic_Idle
+      takeName: Biological_Achmed|Idle
+      firstFrame: 0
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Biological_Basic_Rotate_CCW
+      takeName: Biological_Achmed|Rotate_CCW
+      firstFrame: 0
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Biological_Basic_Rotate_CW
+      takeName: Biological_Achmed|Rotate_CW
       firstFrame: 0
       lastFrame: 47
       wrapMode: 0
@@ -132,150 +222,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: VictoryCog|Idle
-      takeName: VictoryCog|Idle
+      name: Biological_Basic_Spawn
+      takeName: Biological_Achmed|Spawn
       firstFrame: 0
-      lastFrame: 47
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: VictoryCog|OpenStage1
-      takeName: VictoryCog|OpenStage1
-      firstFrame: 0
-      lastFrame: 47
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: VictoryCog|OpenStage2
-      takeName: VictoryCog|OpenStage2
-      firstFrame: 0
-      lastFrame: 47
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: VictoryCog|Rotate_CCW
-      takeName: VictoryCog|Rotate_CCW
-      firstFrame: 0
-      lastFrame: 47
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: VictoryCog|Rotate_CW
-      takeName: VictoryCog|Rotate_CW
-      firstFrame: 0
-      lastFrame: 47
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: VictoryCog|Victory
-      takeName: VictoryCog|Victory
-      firstFrame: 0
-      lastFrame: 29
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -321,7 +271,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
