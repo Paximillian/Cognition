@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RadialMenuController : MonoBehaviour
+public class RadialMenuController : Singleton<RadialMenuController>
 {
     #region Variables
     /// <summary>
@@ -68,8 +68,10 @@ public class RadialMenuController : MonoBehaviour
     #endregion Variables
 
     #region UnityMethods
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (Instance == null)
         {
             Instance = this;
@@ -80,12 +82,21 @@ public class RadialMenuController : MonoBehaviour
         }
     }
 
-    void Start ()
+    private void Start ()
     {
         setupItems();
+    }
 
+    private void OnEnable()
+    {
         NetworkPlayer.LocalPlayer.ResourcesChanged += LocalPlayer_OnResourcesChanged;
         NetworkPlayer.LocalPlayer.CogBuilt += LocalPlayer_OnCogBuilt;
+    }
+
+    private void OnDisable()
+    {
+        NetworkPlayer.LocalPlayer.ResourcesChanged -= LocalPlayer_OnResourcesChanged;
+        NetworkPlayer.LocalPlayer.CogBuilt -= LocalPlayer_OnCogBuilt;
     }
     #endregion UnityMethods
 
