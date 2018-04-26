@@ -345,6 +345,13 @@ public abstract class Cog : NetworkBehaviour
     #endregion CogEventHooks
 
     #region PublicMethods
+    [Server]
+    public void Heal(int healAmount)
+    {
+        m_hp = Mathf.Min(m_initialhp, m_hp + healAmount);
+    }
+
+    [Server]
     public void DealDamage(float damage)
     {
         m_hp -= damage;

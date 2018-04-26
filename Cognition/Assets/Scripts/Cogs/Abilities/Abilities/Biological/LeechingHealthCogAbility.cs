@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Haratzahta : CogAbility
+public class LeechingHealthCogAbility : CogAbility
 {
+    [Tooltip("Amount of HP to heal from this cog")]
     [SerializeField]
-    private float m_Damage;
+    private int m_HealAmount;
 
     public override string Description
     {
         get
         {
-            return base.Description + "Damages any cogs built next to this one";
+            return base.Description + "Leeches health from nearby destroyed cogs";
         }
     }
 
@@ -23,11 +24,10 @@ public class Haratzahta : CogAbility
 
     protected override void triggerLogic(Cog invokingCog)
     {
-        invokingCog.DealDamage(m_Damage);
+        TriggeringCog.Heal(m_HealAmount);
     }
 
     protected override void triggerVisuals(Cog invokingCog)
     {
-        invokingCog.ShowConflictEffect(invokingCog.transform.position);
     }
 }
