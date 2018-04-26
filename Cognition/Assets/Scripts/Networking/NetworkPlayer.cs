@@ -263,7 +263,7 @@ public class NetworkPlayer : NetworkBehaviour
         }
         if (i_Tile.DrivingCog)
         {
-            cog.Rpc_UpdateSpin(cog.Spin = 1f);//TODO make this place a value in accordance to spin wanted
+            cog.RequestUpdateSpin(1f);//TODO make this place a value in accordance to spin wanted
         }
 
         return cog;

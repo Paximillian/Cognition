@@ -25,7 +25,7 @@ public abstract class Cog : NetworkBehaviour
     public bool IsConflicted { get { return m_Conflicted; } }
 
     [SerializeField]
-    [Range(1, 10)]
+    [Range(1, 100)]
     private int m_Cost = 5;
     public int Cost { get { return m_Cost; } }
 
@@ -174,16 +174,39 @@ public abstract class Cog : NetworkBehaviour
     /// <summary>
     /// The cog ability manager gathers all cog abilities on this cog and gives us one centralized point of access to the abilities system.
     /// </summary>
-    protected CogAbilityManager CogAbilityManager { get; private set; }
+    protected CogAbilityManager CogAbilityManager
+    {
+        get
+        {
+            if (m_CogAbilityManager == null)
+            {
+                m_CogAbilityManager = GetComponent<CogAbilityManager>();
+            }
 
+            return m_CogAbilityManager;
+        }
+    }
+    protected CogAbilityManager m_CogAbilityManager;
+
+    /// <summary>
+    /// A textual description of the functionality of this cog.
+    /// </summary>
+    [Tooltip("A textual description of the functionality of this cog.")]
+    [SerializeField]
+    private string m_Description;
+
+    /// <summary>
+    /// The text used to display information about this cog to the player.
+    /// </summary>
     public string Description
     {
         get
         {
-            return string.Join(Environment.NewLine, 
-                               CogAbilityManager.CogAbilities
-                                                .Where(ability => !(ability is IGameMechanicAbility))
-                                                .Select(ability => ability.Description));
+            return $"{m_Description}{Environment.NewLine}" +
+                      string.Join(Environment.NewLine, 
+                                   CogAbilityManager.CogAbilities
+                                                    .Where(ability => !(ability is IGameMechanicAbility))
+                                                    .Select(ability => ability.Description));
         }
     }
     #endregion Variables
@@ -194,7 +217,7 @@ public abstract class Cog : NetworkBehaviour
         name += $"_{s_CogIndex++}";
         Animator = GetComponentInChildren<Animator>();
         PropagationStrategy = GetComponent<PropagationStrategy>();
-        CogAbilityManager = GetComponent<CogAbilityManager>();
+        m_CogAbilityManager = GetComponent<CogAbilityManager>();
     }
 
     [ServerCallback]
@@ -220,7 +243,7 @@ public abstract class Cog : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void Rpc_UpdateSpin(float i_SpinAmount)
+    private void Rpc_UpdateSpin(float i_SpinAmount)
     {
         UpdateSpin(i_SpinAmount);
     }
@@ -327,11 +350,19 @@ public abstract class Cog : NetworkBehaviour
         m_hp -= damage;
         if (m_hp <= 0f)
         {
-            m_HoldingTile.DestroyCog();
-
+            StartCoroutine(DestroyCogAfterFrame());
             transform.position = Vector3.one * -1337;
-            Rpc_KillCog();
         }
+    }
+
+    IEnumerator DestroyCogAfterFrame() {
+        yield return new WaitForEndOfFrame();
+        DestroyCog();
+    }
+
+    public void DestroyCog() {
+        m_HoldingTile.DestroyCog();
+        Rpc_KillCog();
     }
 
     [Server]
@@ -343,10 +374,29 @@ public abstract class Cog : NetworkBehaviour
 
         UpdateSpin(Spin = 0f);
     }
-    
+
+    /// <summary>
+    /// Requests the spin direction of the cog to be changed on the clients.
+    /// </summary>
+    /// <param name="i_SpinAmount"></param>
+    [Server]
+    public void RequestUpdateSpin(float i_SpinAmount)
+    {
+        Spin = i_SpinAmount;
+
+        Rpc_UpdateSpin(i_SpinAmount);
+    }
+
+    /// <summary>
+    /// Changes the spin direction of the cog on the client.
+    /// </summary>
+    [Client]
     public void UpdateSpin(float spin)
     {
-        Spin = spin;
+        if (!isServer)
+        {
+            Spin = spin;
+        }
 
         Animator?.SetFloat("Spin", Spin);
     }

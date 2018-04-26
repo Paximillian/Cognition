@@ -24,6 +24,16 @@ public abstract class PropagationStrategy : MonoBehaviour
         }
         private set { m_cog = value; }
     }
+
+    /// <summary>
+    /// A list of populated neighbours of this cog.
+    /// </summary>
+    protected virtual IEnumerable<Cog> Neighbors => Cog.HoldingTile.PopulatedNeighbors;
+        
+    /// <summary>
+    /// A list of cogs that are neighbours of both this cog and the given cog.
+    /// </summary>
+    protected virtual Func<Cog, IEnumerable<Cog>> IntersectingNeighborsFor => (cog) => Cog.IntersectingNeighborsFor(cog);
     #endregion Variables
 
     #region UnityMethods
@@ -50,6 +60,15 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// <param name="i_AskingCog">A non-spinning cog that this cog requested a propagation for in this recently.</param>
     /// <returns>True if the asking cog should start spinning, false if not.</returns>
     public abstract float CheckSpin(Cog i_AskingCog);
+
+    /// <summary>
+    /// Checks if we conflict with the given cog.
+    /// Normally, a conflict is determined by the fact that the 2 cogs are spinning in the same direction.
+    /// </summary>
+    protected virtual bool CheckConfliction(Cog i_AskingCog)
+    {
+        return i_AskingCog.Spin == Cog.Spin;
+    }
     #endregion AbstractMethods
 
     #region PublicMethods
@@ -80,9 +99,8 @@ public abstract class PropagationStrategy : MonoBehaviour
         if (i_AskingCog is NullCog) { return false; }
         bool isConflicted = false;
         HashSet<Cog> conflictingNeighbors = new HashSet<Cog>();
-        //Debug line use when something breaks
-        //Debug.Log("Test:     " + (i_AskingCog is PlayableCog) + "         " + (i_AskingCog as PlayableCog)?.HasSameOwner(Cog)); 
-        if (i_AskingCog.Spin != -Cog.Spin && ((Cog.Spin != 0f && i_AskingCog.Spin != 0) 
+
+        if (CheckConfliction(i_AskingCog) && ((Cog.Spin != 0f && i_AskingCog.Spin != 0) 
             || ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog))))
         {
             i_AskingCog.MakeConflicted(Cog);
@@ -90,9 +108,9 @@ public abstract class PropagationStrategy : MonoBehaviour
             isConflicted = true;
         }
 
-        foreach (Cog neighbour in Cog.Neighbors.Where(cog => !(cog is NullCog)))
+        foreach (Cog neighbour in Neighbors.Where(cog => !(cog is NullCog)))
         {
-            foreach (Cog conflictingCog in Cog.IntersectingNeighborsFor(neighbour))
+            foreach (Cog conflictingCog in IntersectingNeighborsFor(neighbour))
             {
                 conflictingNeighbors.Add(conflictingCog);
             }
@@ -129,11 +147,11 @@ public abstract class PropagationStrategy : MonoBehaviour
 
         if (i_RequestingCog != null)
         {
-            Cog.Rpc_UpdateSpin(Cog.Spin = i_RequestingCog.PropagationStrategy.CheckSpin(Cog));
+            Cog.RequestUpdateSpin(i_RequestingCog.PropagationStrategy.CheckSpin(Cog));
             conflicted = conflicted || CheckConflict(i_RequestingCog);
         }
 
-        foreach (Cog neighbor in Cog.HoldingTile.PopulatedNeighbors)
+        foreach (Cog neighbor in Neighbors)
         {
             if (!i_Player.UpdatedCogs.Contains(neighbor))
             {
@@ -145,7 +163,7 @@ public abstract class PropagationStrategy : MonoBehaviour
                     neighbor.OccupyingPlayers.AddRange(Cog.OccupyingPlayers);
                 }
                 else {//Perform only a single step in this direction
-                    neighbor.Rpc_UpdateSpin(neighbor.Spin = Cog.PropagationStrategy.CheckSpin(neighbor));
+                    neighbor.RequestUpdateSpin(Cog.PropagationStrategy.CheckSpin(neighbor));
                     conflicted = conflicted || CheckConflict(neighbor);
                 }
             }
@@ -163,11 +181,11 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// </summary>
     private void onCreateUpdateSpin()
     {
-        foreach (Cog populatedNeighbor in Cog.HoldingTile.PopulatedNeighbors)
+        foreach (Cog populatedNeighbor in Neighbors)
         {
             if (populatedNeighbor.Spin != 0f)
             {
-                Cog.Rpc_UpdateSpin(Cog.Spin = populatedNeighbor.PropagationStrategy.CheckSpin(Cog));
+                Cog.RequestUpdateSpin(populatedNeighbor.PropagationStrategy.CheckSpin(Cog));
                 //CheckConflict(neighbor);
                 break;
             }
@@ -232,7 +250,7 @@ public abstract class PropagationStrategy : MonoBehaviour
 
                 if (cogToStop.OccupyingPlayers.Count == 0)
                 {
-                    cogToStop.Rpc_UpdateSpin(0f);
+                    cogToStop.RequestUpdateSpin(0f);
                 }
             }
         }
@@ -249,7 +267,7 @@ public abstract class PropagationStrategy : MonoBehaviour
 
         foreach (Cog cogToStop in StoppedCogs)
         {
-            cogToStop.Rpc_UpdateSpin(0f);
+            cogToStop.RequestUpdateSpin(0f);
         }
     }
     #endregion PrivateMethods

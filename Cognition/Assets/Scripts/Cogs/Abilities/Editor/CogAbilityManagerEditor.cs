@@ -228,22 +228,21 @@ public class CogAbilityManagerEditor : Editor
     private void drawAbilitiesOfCategory(eCogAbilityKeyword keyword)
     {
         //This a list of all selected object's CogAbilities lists that match the given keyword.
-        List<List<CogAbility>> targetManagerAbilities = Selection.gameObjects
+        IEnumerable<IEnumerable<CogAbility>> targetManagerAbilities = Selection.gameObjects
                                                                  .Select(selectedObject => selectedObject.GetComponent<CogAbilityManager>().CogAbilities
-                                                                      .Where(ability => ability?.Keyword == keyword).ToList())
-                                                                 .ToList();
+                                                                      .Where(ability => ability?.Keyword == keyword));
 
         //If all the selected managers have the same number of items in this category.
-        if (targetManagerAbilities.Max(abilities => abilities.Count) == targetManagerAbilities.Min(abilities => abilities.Count))
+        if (targetManagerAbilities.Max(abilities => abilities.Count()) == targetManagerAbilities.Min(abilities => abilities.Count()))
         {
-            for (int i = 0; i < targetManagerAbilities[0].Count; ++i)
+            for (int i = 0; i < targetManagerAbilities.ElementAt(0).Count(); ++i)
             {
                 //Since we're observing the abilities of all selected cogs, we'll need to find the one refering to this current object.
-                CogAbility targetObjectAbility = targetManagerAbilities.First(cogAbilityList => ShowAbility.ContainsKey(cogAbilityList[i]))
+                CogAbility targetObjectAbility = targetManagerAbilities.First(cogAbilityList => ShowAbility.ContainsKey(cogAbilityList.ElementAt(i)))
                                                                        .ToArray()[i];
 
                 drawAbility(targetObjectAbility, 
-                            targetManagerAbilities.Select(abilities => abilities[i]).ToArray());
+                            targetManagerAbilities.Select(abilities => abilities.ElementAt(i)).ToArray());
             }
         }
         else

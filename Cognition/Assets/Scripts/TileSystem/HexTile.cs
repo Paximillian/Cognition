@@ -30,27 +30,27 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         }
     }
 
-    [HideInInspector]
+    [ReadOnly]
     [SerializeField]
     private HexTile m_NeighborXPos;
     public HexTile PositiveXNeighbour { get { return m_NeighborXPos; } set { m_NeighborXPos = value; } }
-    [HideInInspector]
+    [ReadOnly]
     [SerializeField]
     private HexTile m_NeighborXNeg;
     public HexTile NegativeXNeighbour { get { return m_NeighborXNeg; } set { m_NeighborXNeg = value; } }
-    [HideInInspector]
+    [ReadOnly]
     [SerializeField]
     private HexTile m_NeighborYPos;
     public HexTile PositiveYNeighbour { get { return m_NeighborYPos; } set { m_NeighborYPos = value; } }
-    [HideInInspector]
+    [ReadOnly]
     [SerializeField]
     private HexTile m_NeighborYNeg;
     public HexTile NegativeYNeighbour { get { return m_NeighborYNeg; } set { m_NeighborYNeg = value; } }
-    [HideInInspector]
+    [ReadOnly]
     [SerializeField]
     private HexTile m_NeighborZPos;
     public HexTile PositiveZNeighbour { get { return m_NeighborZPos; } set { m_NeighborZPos = value; } }
-    [HideInInspector]
+    [ReadOnly]
     [SerializeField]
     private HexTile m_NeighborZNeg;
     public HexTile NegativeZNeighbour { get { return m_NeighborZNeg; } set { m_NeighborZNeg = value; } }
@@ -92,7 +92,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         }
     }
 
-    public List<HexTile> GetHexTilesInRadius(int searchRadius)
+    public IEnumerable<HexTile> GetHexTilesInRadius(int searchRadius)
     {
         HashSet<HexTile> resTiles = new HashSet<HexTile>();
         resTiles.Add(this);
@@ -105,23 +105,23 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
             else { resTiles.AddRange(tilesToAdd); }
         }
 
-        return resTiles.ToList();
+        return resTiles;
     }
 
-    public Func<int, List<Cog>> PopulatedNeighborsInRadius =>
+    public Func<int, IEnumerable<Cog>> PopulatedNeighborsInRadius =>
         ((radius) => GetHexTilesInRadius(radius - 1)
-        .SelectMany((neighbor) => neighbor.PopulatedNeighbors).ToList());
+                        .SelectMany((neighbor) => neighbor.PopulatedNeighbors)
+                        .Where(cog => !cog.Equals(ResidentCog)));
 
     /// <summary>
     /// The cogs on the tiles neighbouring this tile.
     /// </summary>
-    public List<Cog> PopulatedNeighbors //Could cache this for performance sake if tile are static through out the game
+    public IEnumerable<Cog> PopulatedNeighbors //Could cache this for performance sake if tile are static through out the game
     {
         get
         {
             return Neighbors.Where((neighbor) => neighbor.ResidentCog != null)
-                            .Select((tile) => tile.ResidentCog)
-                            .ToList();
+                            .Select((tile) => tile.ResidentCog);
         }
     }
     #endregion Variables

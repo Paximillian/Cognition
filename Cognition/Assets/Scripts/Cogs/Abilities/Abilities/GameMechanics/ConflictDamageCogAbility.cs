@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConflictDamageEffect : CogAbility
+public class ConflictDamageCogAbility : CogAbility, IGameMechanicAbility
 {
 
     /// <summary>

@@ -36,7 +36,7 @@ public static class eCogAbilityKeywordExtensions
                 return "red";
             case CogAbility.eTargetType.All:
             default:
-                return "white";
+                return "black";
         }
     }
 }

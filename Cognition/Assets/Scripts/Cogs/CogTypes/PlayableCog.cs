@@ -12,17 +12,17 @@ public class PlayableCog : Cog
     /// <summary>
     /// All the friendly neighbours of this cog.
     /// </summary>
-    public List<Cog> FriendlyNeighbors => Neighbors.Where(neighbour => this.HasSameOwnerAs(neighbour)).ToList();
+    public IEnumerable<Cog> FriendlyNeighbors => Neighbors.Where(neighbour => this.HasSameOwnerAs(neighbour));
 
     /// <summary>
     /// All the enemy neighbours of this cog.
     /// </summary>
-    public List<Cog> EnemyNeighbors => Neighbors.Where(neighbour => !this.HasSameOwnerAs(neighbour)).ToList();
+    public IEnumerable<Cog> EnemyNeighbors => Neighbors.Where(neighbour => !this.HasSameOwnerAs(neighbour));
 
     /// <summary>
     /// Do this PlayableCog and the requesting cog have the same owner? Is false for non-playable cogs
     /// </summary>
-    public Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) =>
+    public override Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) =>
                                                 (OwningPlayer.Equals((i_AskingCog as PlayableCog)?.OwningPlayer)));
 
     [SerializeField]
