@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class ResourceGift : CogAbility
+public class ActivateOtherRelayCogVisual : CogAbility, IGameMechanicAbility
 {
-    [SerializeField]
-    private int m_ResourceAmount = 100;
-
-    public override string Description
+        public override string Description
     {
         get
         {
@@ -24,7 +19,9 @@ public class ResourceGift : CogAbility
 
     protected override void triggerLogic(Cog invokingCog)
     {
-        (TriggeringCog as PlayableCog).OwningPlayer.Resources += m_ResourceAmount;
+        //if (invokingCog.HasSameOwnerAs(TriggeringCog)) {
+            (invokingCog as RelayCog)?.ActivateRelayEffect(TriggeringCog);
+        //}
     }
 
     protected override void triggerVisuals(Cog invokingCog)

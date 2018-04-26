@@ -509,13 +509,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4628818844826946}
-  - component: {fileID: 114844726275843192}
+  - component: {fileID: 114981567561140672}
   - component: {fileID: 114890100249540940}
   - component: {fileID: 114757124058599192}
-  - component: {fileID: 114802339875147002}
   - component: {fileID: 114238958811556158}
   - component: {fileID: 114769837981634110}
+  - component: {fileID: 114802339875147002}
   - component: {fileID: 114901643202187518}
+  - component: {fileID: 114144774351618164}
   m_Layer: 0
   m_Name: Arcane_RelayCog
   m_TagString: Untagged
@@ -1317,6 +1318,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114144774351618164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951451056961398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff5b0d6c3ea84a4d9bd131798b2387c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 3
+  m_TargetType: 1
 --- !u!114 &114238958811556158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1377,29 +1391,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RelayRange: 2
---- !u!114 &114844726275843192
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1951451056961398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d7e2dd550997444788b8331da2c058f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Cost: 15
-  m_buildRange: 2
-  m_HoldingTile: {fileID: 0}
-  m_initialhp: 4
-  m_hp: 4
-  m_conflictParticles: {fileID: 198880128735544306}
-  m_Sprite: {fileID: 21300000, guid: 7ae7c2f45925dc9499b1029c609c51aa, type: 3}
-  m_spin: 0
-  m_Description: Can be built 1 tile further than your structure. Connects to other
-    nearby Relay Cogs to function remotely.
-  m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
-  m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114890100249540940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1443,6 +1434,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114981567561140672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951451056961398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aea30009f963f24e91f523ea65da8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Cost: 15
+  m_buildRange: 2
+  m_HoldingTile: {fileID: 0}
+  m_initialhp: 4
+  m_hp: 4
+  m_conflictParticles: {fileID: 198880128735544306}
+  m_Sprite: {fileID: 21300000, guid: 7ae7c2f45925dc9499b1029c609c51aa, type: 3}
+  m_spin: 0
+  m_Description: Can be built 1 tile further than your structure. Connects to other
+    nearby Relay Cogs to function remotely.
+  m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
+  m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
+  m_relayEffect: {fileID: 1438218175993472}
 --- !u!198 &198386343734137170
 ParticleSystem:
   m_ObjectHideFlags: 1
