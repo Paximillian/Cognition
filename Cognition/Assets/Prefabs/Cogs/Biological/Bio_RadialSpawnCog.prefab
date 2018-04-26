@@ -88,10 +88,9 @@ GameObject:
   - component: {fileID: 114281210845130708}
   - component: {fileID: 114615133138620420}
   - component: {fileID: 114720832928875724}
-  - component: {fileID: 114241943550292860}
   - component: {fileID: 114370746861424246}
   m_Layer: 0
-  m_Name: Bio_IncubatorCog
+  m_Name: Bio_RadialSpawnCog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -370,7 +369,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ef6485dba60f84543828bcea211e7190, type: 2}
+  - {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -432,20 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795ec2ad569117d40b13ce740f7928fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114241943550292860
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295058665275452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88882c3c6f270c4b82f802b5ce27ae1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Keyword: 1
-  m_TargetType: 0
-  m_ResourceAmount: 50
 --- !u!114 &114281210845130708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -523,7 +508,7 @@ MonoBehaviour:
   m_initialhp: 4
   m_hp: 4
   m_conflictParticles: {fileID: 198949925887819904}
-  m_Sprite: {fileID: 21300000, guid: 80ab37a9e4f49c842903bb43bdd7bcd2, type: 3}
+  m_Sprite: {fileID: 21300026, guid: 5b32c2d36abe44540bed74c1f787033b, type: 3}
   m_spin: 0
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
@@ -555,22 +540,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 141
-    i1: 110
-    i2: 205
-    i3: 95
-    i4: 61
-    i5: 8
-    i6: 179
-    i7: 164
-    i8: 248
-    i9: 238
-    i10: 161
-    i11: 98
-    i12: 208
-    i13: 149
-    i14: 62
-    i15: 228
+    i0: 86
+    i1: 249
+    i2: 251
+    i3: 43
+    i4: 235
+    i5: 46
+    i6: 2
+    i7: 36
+    i8: 249
+    i9: 216
+    i10: 119
+    i11: 167
+    i12: 18
+    i13: 241
+    i14: 83
+    i15: 109
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!198 &198098979324599054

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Treasure : CogAbility
+public class ResourceGift : CogAbility
 {
     [SerializeField]
     private int m_ResourceAmount = 100;
