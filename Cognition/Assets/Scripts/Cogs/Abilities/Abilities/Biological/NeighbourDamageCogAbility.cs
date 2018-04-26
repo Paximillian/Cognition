@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VegamYarashta : CogAbility
+public class NeighbourDamageCogAbility : CogAbility
 {
+    [SerializeField]
+    private float m_Damage;
+
     public override string Description
     {
         get
         {
-            return base.Description + "Leeches resources from nearby destroyed cogs";
+            return base.Description + "Damages any cogs built next to this one";
         }
     }
 
@@ -20,10 +23,11 @@ public class VegamYarashta : CogAbility
 
     protected override void triggerLogic(Cog invokingCog)
     {
-        (TriggeringCog as PlayableCog).OwningPlayer.Resources += invokingCog.Cost;
+        invokingCog.DealDamage(m_Damage);
     }
 
     protected override void triggerVisuals(Cog invokingCog)
     {
+        invokingCog.ShowConflictEffect(invokingCog.transform.position);
     }
 }
