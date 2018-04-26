@@ -44,11 +44,13 @@ public class CogAbilityManager : NetworkBehaviour
     #region UnityMethods
     private void OnEnable()
     {
+        m_CogAbilities = null;
         var temp = CogAbilities;
     }
 
     private void OnValidate()
     {
+        m_CogAbilities = null;
         var temp = CogAbilities;
     }
     #endregion UnityMethods
