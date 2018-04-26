@@ -22,8 +22,8 @@ public class PlayableCog : Cog
     /// <summary>
     /// Do this PlayableCog and the requesting cog have the same owner? Is false for non-playable cogs
     /// </summary>
-    public override Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) =>
-                                                (OwningPlayer.Equals((i_AskingCog as PlayableCog)?.OwningPlayer)));
+    public override Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) => i_AskingCog == null ? false :
+                                                                            (OwningPlayer.Equals((i_AskingCog as PlayableCog)?.OwningPlayer)));
 
     [SerializeField]
     private Material m_Player1Material, m_Player2Material;
