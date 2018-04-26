@@ -517,6 +517,8 @@ GameObject:
   - component: {fileID: 114802339875147002}
   - component: {fileID: 114901643202187518}
   - component: {fileID: 114144774351618164}
+  - component: {fileID: 114194025750973942}
+  - component: {fileID: 114550043980526074}
   m_Layer: 0
   m_Name: Arcane_RelayCog
   m_TagString: Untagged
@@ -1331,6 +1333,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Keyword: 3
   m_TargetType: 1
+--- !u!114 &114194025750973942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951451056961398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2549dc5844c22a543a57ce5f97f5ce77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 8
+  m_TargetType: 0
 --- !u!114 &114238958811556158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1345,6 +1360,19 @@ MonoBehaviour:
   m_Keyword: 6
   m_TargetType: 0
   m_conflictDamage: 1
+--- !u!114 &114550043980526074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951451056961398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2549dc5844c22a543a57ce5f97f5ce77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 4
+  m_TargetType: 0
 --- !u!114 &114757124058599192
 MonoBehaviour:
   m_ObjectHideFlags: 1

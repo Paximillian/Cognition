@@ -357,6 +357,8 @@ public abstract class Cog : NetworkBehaviour
 
     IEnumerator DestroyCogAfterFrame() {
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
         DestroyCog();
     }
 

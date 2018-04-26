@@ -28,7 +28,7 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// <summary>
     /// A list of populated neighbours of this cog.
     /// </summary>
-    protected virtual IEnumerable<Cog> Neighbors => Cog.HoldingTile.PopulatedNeighbors;
+    public virtual IEnumerable<Cog> Neighbors => Cog.HoldingTile.PopulatedNeighbors;
         
     /// <summary>
     /// A list of cogs that are neighbours of both this cog and the given cog.

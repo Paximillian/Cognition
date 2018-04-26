@@ -287,7 +287,7 @@ public class NetworkPlayer : NetworkBehaviour
                 cog.PropagationStrategy.InitializePropagation(placingPlayer, null);
 
                 //Invokes abilities based on building of this cog.
-                foreach (Cog neighbour in cog.Neighbors)
+                foreach (Cog neighbour in cog.PropagationStrategy.Neighbors)
                 {
                     neighbour.InvokeConnectionAbilities(cog);
                 }

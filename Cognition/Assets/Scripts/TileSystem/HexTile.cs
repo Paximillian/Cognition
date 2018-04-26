@@ -146,7 +146,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
             }
 
             //Triggers breakdown abilities
-            foreach (Cog neighbour in ResidentCog.Neighbors)
+            foreach (Cog neighbour in ResidentCog.PropagationStrategy.Neighbors)
             {
                 neighbour.InvokeDisconnectionAbilities(ResidentCog);
             }

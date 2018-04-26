@@ -11,7 +11,7 @@ public class RelayCogPropagationStrategy : PlayableCogPropagationStrategy
     /// <summary>
     /// Takes the neighbours of the cog as well as any other relay cogs in a larger range.
     /// </summary>
-    protected override IEnumerable<Cog> Neighbors => Cog.HoldingTile.PopulatedNeighborsInRadius(m_RelayRange)
+    public override IEnumerable<Cog> Neighbors => Cog.HoldingTile.PopulatedNeighborsInRadius(m_RelayRange)
                                                                       .Where(neighbour => neighbour.PropagationStrategy.GetType().Equals(typeof(RelayCogPropagationStrategy)))
                                                                       .Union(base.Neighbors);
 
