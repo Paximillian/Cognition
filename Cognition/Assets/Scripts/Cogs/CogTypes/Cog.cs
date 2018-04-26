@@ -39,6 +39,7 @@ public abstract class Cog : NetworkBehaviour
     public int BuildRange { get { return m_buildRange; } }
 
     [SerializeField]
+    [ReadOnly]
     private HexTile m_HoldingTile;
     public HexTile HoldingTile { get { return m_HoldingTile; } set { m_HoldingTile = value; } }
 
@@ -80,17 +81,17 @@ public abstract class Cog : NetworkBehaviour
     /// <summary>
     /// The cogs that are placed in neighbouring hex cells to this one.
     /// </summary>
-    public List<Cog> Neighbors => HoldingTile.PopulatedNeighbors; 
+    public IEnumerable<Cog> Neighbors => HoldingTile.PopulatedNeighbors; 
 
     /// <summary>
     /// The cogs that are neighbours both for this tile as well as the given tile.
     /// </summary>
-    public Func<Cog, List<Cog>> IntersectingNeighborsFor => ((cog) => cog.Neighbors.Intersect(Neighbors).ToList());
+    public Func<Cog, IEnumerable<Cog>> IntersectingNeighborsFor => ((cog) => cog.Neighbors.Intersect(Neighbors));
 
     /// <summary>
     /// Do this cog and the requesting cog have the same owner? Is false for non-playable cogs
     /// </summary>
-    //public virtual Func<Cog, bool> HasSameOwner => ((i_AskingCog) => false);
+    public virtual Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) => false);
 
     /// <summary>
     /// The strategy this cog takes when dealing with propagating the spin of the machine.
@@ -179,10 +180,10 @@ public abstract class Cog : NetworkBehaviour
     {
         get
         {
-            return "";// string.Join(Environment.NewLine, 
-                               //CogAbilityManager.CogAbilities
-                                                //.Where(ability => !(ability is IGameMechanicAbility))
-                                                //.Select(ability => ability.Description));
+            return string.Join(Environment.NewLine, 
+                               CogAbilityManager.CogAbilities
+                                                .Where(ability => !(ability is IGameMechanicAbility))
+                                                .Select(ability => ability.Description));
         }
     }
     #endregion Variables
