@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConflictEngagedVisualEffect : CogEffect
+public class ConflictEngagedVisualEffect : CogAbility
 {
 
-    protected override string Description
+    public override string Description
     {
         get
         {

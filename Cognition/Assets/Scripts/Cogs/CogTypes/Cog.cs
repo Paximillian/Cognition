@@ -372,12 +372,13 @@ public abstract class Cog : NetworkBehaviour
         ShowConflictEffect(conflictingCogPos);
     }
 
-    public void ShowConflictEffect(Vector3 conflictingCogPos)
+    public void ShowConflictEffect(Vector3 conflictingCogPos, bool showOnClient = false)
     {
         if (!m_conflictParticles) return;
         m_conflictParticles.gameObject.transform.position = (transform.position + conflictingCogPos) / 2f;
         m_conflictParticles.gameObject.SetActive(true);
         m_conflictParticles?.Play();
+        if (showOnClient) { Rpc_ShowConflictEffect(conflictingCogPos); }
     }
 
     public void StopConflicted()

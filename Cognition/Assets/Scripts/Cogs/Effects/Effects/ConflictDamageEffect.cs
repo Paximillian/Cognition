@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConflictDamageEffect : CogEffect
+public class ConflictDamageEffect : CogAbility
 {
 
     /// <summary>
@@ -13,7 +13,7 @@ public class ConflictDamageEffect : CogEffect
     [Tooltip("How much damage is dealt per second of conflict?")]
     private float m_conflictDamage = 1f;
 
-    protected override string Description
+    public override string Description
     {
         get
         {
