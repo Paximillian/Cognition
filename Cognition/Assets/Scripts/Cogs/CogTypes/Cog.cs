@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [DisallowMultipleComponent]
-[RequireComponent(typeof(CogEffectManager))]
+[RequireComponent(typeof(CogAbilityManager))]
 public abstract class Cog : NetworkBehaviour
 {
     #region Variables
@@ -58,18 +58,24 @@ public abstract class Cog : NetworkBehaviour
 
     [SerializeField]
     float m_spin = 0f;
-    public float Spin { get { return m_spin; }
+    public float Spin
+    {
+        get { return m_spin; }
         set
         {
-            if (value == 0f)
-            {
-                StopConflicted();
-            }
+            if (m_spin == 0 && value != 0 && isServer) { InvokeWindupAbilities(); }
+            if (m_spin != 0 && value == 0 && isServer) { InvokeWinddownAbilities(); }
+
             m_spin = value;
         }
     }
 
     protected bool IsActive { get { return Spin != 0f; } }
+
+    /// <summary>
+    /// Has the build process of this cog completed?
+    /// </summary>
+    protected bool IsInitialized { get; private set; }
     
     /// <summary>
     /// The cogs that are placed in neighbouring hex cells to this one.
@@ -165,17 +171,29 @@ public abstract class Cog : NetworkBehaviour
     #endregion OccupyingPlayersSyncing
 
     /// <summary>
-    /// The cog effect manager gathers all cog effects on this cog and gives us one centralized point of access to the effect system.
+    /// The cog ability manager gathers all cog abilities on this cog and gives us one centralized point of access to the abilities system.
     /// </summary>
-    protected CogEffectManager CogEffectManager { get; private set; }
+    protected CogAbilityManager CogAbilityManager { get; private set; }
+
+    public string Description
+    {
+        get
+        {
+            return string.Join(Environment.NewLine, 
+                               CogAbilityManager.CogAbilities
+                                                .Where(ability => !(ability is IGameMechanicAbility))
+                                                .Select(ability => ability.Description));
+        }
+    }
     #endregion Variables
 
     #region UnityMethods
     protected virtual void Awake()
     {
+        name += $"_{s_CogIndex++}";
         Animator = GetComponentInChildren<Animator>();
         PropagationStrategy = GetComponent<PropagationStrategy>();
-        CogEffectManager = GetComponent<CogEffectManager>();
+        CogAbilityManager = GetComponent<CogAbilityManager>();
     }
 
     [ServerCallback]
@@ -183,11 +201,11 @@ public abstract class Cog : NetworkBehaviour
     {
         if (Spin != 0)
         {
-            InvokeSpinEffects();
+            InvokeSpinAbilities();
 
             if (m_Conflicted)
             {
-                InvokeConflictedEffects();
+                InvokeConflictedAbilities();
             }
         }
     }
@@ -209,67 +227,96 @@ public abstract class Cog : NetworkBehaviour
 
     #region CogEventHooks
     /// <summary>
-    /// Bootup is the keyword indicating an effect that happens when a cog enters play.
+    /// Bootup is the keyword indicating an ability that happens when a cog enters play.
     /// </summary>
     [Server]
-    public void InvokeBootupEffects()
+    public void InvokeBootupAbilities()
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Bootup);
+        CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Bootup);
+
+        IsInitialized = true;
     }
 
     /// <summary>
-    /// Breakdown is the keyword indicating an effect that happens when this cog is destroyed.
+    /// Breakdown is the keyword indicating an ability that happens when this cog is destroyed.
     /// </summary>
     [Server]
-    public void InvokeBreakdownEffects()
+    public void InvokeBreakdownAbilities()
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Breakdown);
+        CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Breakdown);
     }
 
     /// <summary>
-    /// Spin is the keyword indicating a constant effect that triggers every frame, the cog effect itself can determine the actual time between triggers by filtering invocations in its CanTrigger method
+    /// Spin is the keyword indicating a constant ability that triggers every frame, the cog ability itself can determine the actual time between triggers by filtering invocations in its CanTrigger method
     /// </summary>
     [Server]
-    public void InvokeSpinEffects()
+    public void InvokeSpinAbilities()
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Spin);
+        CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Spin);
     }
 
     /// <summary>
-    /// Connection is the keyword indicating an effect that happens when ANOTHER cog is built adjacently to this one.
+    /// Connection is the keyword indicating an ability that happens when ANOTHER cog is built adjacently to this one.
     /// Connection is NOT invoked on this cog when this cog itself is built next to another existing cog.
     /// </summary>
     [Server]
-    public void InvokeConnectionEffects(Cog connectedCog)
+    public void InvokeConnectionAbilities(Cog connectedCog)
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Connection, connectedCog);
+        CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Connection, connectedCog);
     }
 
     /// <summary>
-    /// Disconnection is the keyword indicating an effect that happens when ANOTHER neighbouring cog is destroyed.
+    /// Disconnection is the keyword indicating an ability that happens when ANOTHER neighbouring cog is destroyed.
     /// Disconnection is NOT invoked on this cog when this cog itself is destroyed next to another cog.
     /// </summary>
     [Server]
-    public void InvokeDisconnectionEffects(Cog disconnectedCog)
+    public void InvokeDisconnectionAbilities(Cog disconnectedCog)
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Disconnection, disconnectedCog);
+        CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Disconnection, disconnectedCog);
     }
 
     /// <summary>
-    /// Confliction is the keyword indicating an effect that happens when this cog has entered a conflict.
+    /// Confliction is the keyword indicating an ability that happens when this cog has entered a conflict.
     /// </summary>
     [Server]
-    public void InvokeConflictionEffects(Cog conflicterCog)
+    public void InvokeConflictionAbilities()
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Confliction, conflicterCog);
+        CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Confliction);
     }
 
     /// <summary>
-    /// Conflicted is the keyword indicating an effect that constantly happens when this cog is conflicted.
+    /// Conflicted is the keyword indicating an ability that constantly happens when this cog is conflicted.
     /// </summary>
-    private void InvokeConflictedEffects()
+    [Server]
+    private void InvokeConflictedAbilities()
     {
-        CogEffectManager.TriggerEffects(eCogEffectKeyword.Conflicted);
+        CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Conflicted);
+    }
+
+    /// <summary>
+    /// Windup is the keyword indicating an ability that happens when a cog starts spinning from a stopped state.
+    /// This does NOT trigger on build.
+    /// </summary>
+    [Server]
+    private void InvokeWindupAbilities()
+    {
+        if (IsInitialized)
+        {
+            CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Windup);
+        }
+    }
+
+    /// <summary>
+    /// Winddown is the keyword indicating an ability that happens when a cog stops spinning from a spinning state.
+    /// This does NOT trigger on destruction.
+    /// </summary>
+    [Server]
+    private void InvokeWinddownAbilities()
+    {
+        if (IsInitialized)
+        {
+            CogAbilityManager.TriggerAbilities(eCogAbilityKeyword.Winddown);
+        }
     }
     #endregion CogEventHooks
 
@@ -286,19 +333,21 @@ public abstract class Cog : NetworkBehaviour
         }
     }
 
+    [Server]
     public void ResetCog()
     {
-        name += $"_{s_CogIndex++}";
+        IsInitialized = false;
         m_hp = m_initialhp;
         StopConflicted();
-        Rpc_UpdateSpin(Spin = 0f);
+
+        UpdateSpin(Spin = 0f);
     }
     
     public void UpdateSpin(float spin)
     {
         Spin = spin;
 
-        Animator?.SetFloat("Spin", m_spin);
+        Animator?.SetFloat("Spin", Spin);
     }
     
     virtual public void MakeConflicted(Cog i_ConflictingCog)
@@ -307,13 +356,13 @@ public abstract class Cog : NetworkBehaviour
         {
             m_Conflicted = true;
 
-            //ShowConflictEffect(i_ConflictingCog.transform.position);
-            //Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
+            ShowConflictEffect(i_ConflictingCog.transform.position);
+            Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
 
-            //StartCoroutine(dealConflictDamage());
+            StartCoroutine(dealConflictDamage());
             i_ConflictingCog.PropagationStrategy.CheckConflict(this);
 
-            InvokeConflictionEffects(i_ConflictingCog);
+            InvokeConflictionAbilities();
         }
     }
 
@@ -323,13 +372,12 @@ public abstract class Cog : NetworkBehaviour
         ShowConflictEffect(conflictingCogPos);
     }
 
-    public void ShowConflictEffect(Vector3 conflictingCogPos, bool showOnClient = false)
+    public void ShowConflictEffect(Vector3 conflictingCogPos)
     {
         if (!m_conflictParticles) return;
         m_conflictParticles.gameObject.transform.position = (transform.position + conflictingCogPos) / 2f;
         m_conflictParticles.gameObject.SetActive(true);
         m_conflictParticles?.Play();
-        if (showOnClient) { Rpc_ShowConflictEffect(conflictingCogPos); }
     }
 
     public void StopConflicted()
