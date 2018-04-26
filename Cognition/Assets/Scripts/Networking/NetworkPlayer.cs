@@ -117,6 +117,11 @@ public class NetworkPlayer : NetworkBehaviour
         Cmd_SetReady();
         Cmd_SetNickname(PlayerPrefs.GetString("Nickname", "Nope"));
         NamesManager.Instance.LocalName = m_Nickname;
+
+        if (isServer)
+        {
+            Rpc_SetServerPlayer();
+        }
     }
     #endregion UnityMethods
 
@@ -212,8 +217,17 @@ public class NetworkPlayer : NetworkBehaviour
         NamesManager.Instance.OpponentName = m_Nickname;
     }
     #endregion PrivateMethods
-        
+
     #region UNETMethods
+    /// <summary>
+    /// Sets this as the server player.
+    /// </summary>
+    [ClientRpc]
+    private void Rpc_SetServerPlayer()
+    {
+        Server = this;
+    }
+
     /// <summary>
     /// Requests from the server to build a cog on the board.
     /// </summary>

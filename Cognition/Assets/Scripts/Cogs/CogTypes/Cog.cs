@@ -203,7 +203,7 @@ public abstract class Cog : NetworkBehaviour
         get
         {
             return $"{m_Description}{Environment.NewLine}" +
-                      string.Join(Environment.NewLine, 
+                      string.Join($"{Environment.NewLine}{Environment.NewLine}", 
                                    CogAbilityManager.CogAbilities
                                                     .Where(ability => !(ability is IGameMechanicAbility))
                                                     .Select(ability => ability.Description));
