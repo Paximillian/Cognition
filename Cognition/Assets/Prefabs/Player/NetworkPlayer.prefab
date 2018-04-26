@@ -85,3 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Resources: 100
+  m_UpdateCountdownTextMessages: {fileID: 11400000, guid: 27c4d9199f6cd3f4483b3d8d458dee8d,
+    type: 2}
+  m_UpdateResourcesTextMessages: {fileID: 11400000, guid: 51d751a964b7a5c43be368d09382faaa,
+    type: 2}

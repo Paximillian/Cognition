@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RadialMenuController : MonoBehaviour
+public class RadialMenuController : Singleton<RadialMenuController>
 {
     #region Variables
     /// <summary>
@@ -60,11 +60,18 @@ public class RadialMenuController : MonoBehaviour
     /// The array index of the menu item that was last hovered upon.
     /// </summary>
     private int? m_HoveredItemIndex;
+
+    /// <summary>
+    /// Should we cancel the tooltip timer that's currently ongoing?
+    /// </summary>
+    private bool m_CancelTooltip;
     #endregion Variables
 
     #region UnityMethods
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (Instance == null)
         {
             Instance = this;
@@ -75,12 +82,21 @@ public class RadialMenuController : MonoBehaviour
         }
     }
 
-    void Start ()
+    private void Start ()
     {
         setupItems();
+    }
 
+    private void OnEnable()
+    {
         NetworkPlayer.LocalPlayer.ResourcesChanged += LocalPlayer_OnResourcesChanged;
         NetworkPlayer.LocalPlayer.CogBuilt += LocalPlayer_OnCogBuilt;
+    }
+
+    private void OnDisable()
+    {
+        NetworkPlayer.LocalPlayer.ResourcesChanged -= LocalPlayer_OnResourcesChanged;
+        NetworkPlayer.LocalPlayer.CogBuilt -= LocalPlayer_OnCogBuilt;
     }
     #endregion UnityMethods
 
@@ -239,13 +255,17 @@ public class RadialMenuController : MonoBehaviour
     private IEnumerator showTooltipDelayed()
     {
         int? selectedCogIndex = m_HoveredItemIndex;
+        m_CancelTooltip = false;
 
         yield return new WaitForSeconds(k_TooltipShowDelay);
 
-        if (selectedCogIndex == m_HoveredItemIndex && selectedCogIndex.HasValue)
+        if (!m_CancelTooltip)
         {
-            Tooltip.Instance.Show();
-            Tooltip.Instance.SetText(m_Items[selectedCogIndex.Value].Description);
+            if (selectedCogIndex == m_HoveredItemIndex && selectedCogIndex.HasValue)
+            {
+                Tooltip.Instance.Show();
+                Tooltip.Instance.SetText(m_Items[selectedCogIndex.Value].Description);
+            }
         }
     }
 
@@ -255,7 +275,7 @@ public class RadialMenuController : MonoBehaviour
     private void unlightAll()
     {
         Tooltip.Instance.Hide();
-        StopAllCoroutines();
+        m_CancelTooltip = true;
         m_HoveredItemIndex = null;
         turnOffAllItemsHightlight();
     }
@@ -273,7 +293,7 @@ public class RadialMenuController : MonoBehaviour
         if (m_HoveredItemIndex != lastSelectedIndex)
         {
             Tooltip.Instance.Hide();
-            StopAllCoroutines();
+            m_CancelTooltip = true;
             StartCoroutine(showTooltipDelayed());
         }
     }
@@ -303,14 +323,14 @@ public class RadialMenuController : MonoBehaviour
         else
         {
             Tooltip.Instance.Hide();
-            StopAllCoroutines();
+            m_CancelTooltip = true;
         }
     }
 
     public void OnPointerUp(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
         Tooltip.Instance.Hide();
-        StopAllCoroutines();
+        m_CancelTooltip = true;
 
         if (Input.touchCount > 1)
         {
@@ -338,7 +358,7 @@ public class RadialMenuController : MonoBehaviour
         {
             cancelBuild();
             Tooltip.Instance.Hide();
-            StopAllCoroutines();
+            m_CancelTooltip = true;
         }
         else
         {
@@ -371,7 +391,7 @@ public class RadialMenuController : MonoBehaviour
         {
             cancelBuild();
             Tooltip.Instance.Hide();
-            StopAllCoroutines();
+            m_CancelTooltip = true;
         }
         else
         {

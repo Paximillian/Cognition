@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ public class NetworkPlayer : NetworkBehaviour
 {
     #region Variables
     public static NetworkPlayer LocalPlayer { get; private set; }
-
+    public static NetworkPlayer Server { get; private set; }
+    
     /// <summary>
     /// Called when the amount of resources this player collected changes.
     /// </summary>
@@ -46,12 +48,7 @@ public class NetworkPlayer : NetworkBehaviour
 
         if (isLocalPlayer)
         {
-            if (m_ResourcesUIText == null)
-            {
-                m_ResourcesUIText = GameObject.FindGameObjectWithTag("ResourcesUIText")?.GetComponent<Text>();
-            }
-
-            m_ResourcesUIText.text = m_Resources.ToString();
+            ResourceCountLabel.Instance.Label.text = m_Resources.ToString();
 
             ResourcesChanged?.Invoke(m_Resources);
         }
@@ -62,7 +59,18 @@ public class NetworkPlayer : NetworkBehaviour
     /// </summary>
     public HashSet<Cog> OwnedCogs { get; private set; } = new HashSet<Cog>();
 
-    private Text m_ResourcesUIText;
+    /// <summary>
+    /// Has the game started already?
+    /// </summary>
+    public bool GameStarted { get { return m_GameStarted; } private set { m_GameStarted = value; } }
+    [SyncVar]
+    private bool m_GameStarted = false;
+    
+    /// <summary>
+    /// The text displayed on the countdown.
+    /// </summary>
+    [SyncVar(hook = "onCountdownTextChanged")]
+    private string m_CountdownText;
 
     [SyncVar(hook = "onPlayerNicknameChanged")]
     private string m_Nickname = "Nope";
@@ -113,6 +121,31 @@ public class NetworkPlayer : NetworkBehaviour
     #endregion UnityMethods
 
     #region PrivateMethods
+    private void onCountdownTextChanged(string i_Text)
+    {
+        m_CountdownText = i_Text;
+        CountdownLabel.Instance.Label.text = m_CountdownText;
+    }
+
+    /// <summary>
+    /// Starts the game 3 seconds after both players connect.
+    /// </summary>
+    private IEnumerator countDownToGameStart()
+    {
+        for (int i = 3; i > 0; --i)
+        {
+            m_CountdownText = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+
+        m_CountdownText = "Go!";
+        GameStarted = true;
+
+        yield return new WaitForSeconds(1f);
+
+        m_CountdownText = string.Empty;
+    }
+
     /// <summary>
     /// Initializes the player in a valid starting position and sets up their initial cog.
     /// </summary>
@@ -152,6 +185,11 @@ public class NetworkPlayer : NetworkBehaviour
             else
             {
                 Debug.LogError("Couldn't find tile to put the player cog on");
+            }
+
+            if (s_LoadedPlayers == NetworkManager.singleton.matchSize)
+            {
+                StartCoroutine(countDownToGameStart());
             }
         }
     }
