@@ -13,7 +13,7 @@ public class ResourceGift : CogAbility
     {
         get
         {
-            return base.Description + "Test";
+            return "Gives you a boost of resources when it dies.";
         }
     }
 
