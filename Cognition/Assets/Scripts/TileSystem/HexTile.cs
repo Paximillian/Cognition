@@ -210,8 +210,11 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     #region UIInteractivity
     public void OnPointerDown(PointerEventData eventData)
     {
-        eventData.position = Camera.main.WorldToScreenPoint(transform.Find("tile_cog_connection").position);
-        RadialMenuController.Instance.OnPointerDown(eventData, this);
+        if (NetworkPlayer.Server?.GameStarted ?? false)
+        {
+            eventData.position = Camera.main.WorldToScreenPoint(transform.Find("tile_cog_connection").position);
+            RadialMenuController.Instance.OnPointerDown(eventData, this);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)

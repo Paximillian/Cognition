@@ -10,14 +10,12 @@ public class RadialCogSpawn : CogAbility
     [SerializeField]
     [Tooltip("The cog this effect should build")]
     private Cog m_spawnedCogPrefab;
-
-
-
+    
     public override string Description
     {
         get
         {
-            return "Spawns the specified cog in every tile around the invoking cog.";
+            return base.Description + "Spawns the specified cog in every tile around the invoking cog.";
         }
     }
 

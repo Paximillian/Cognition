@@ -63,7 +63,7 @@ public class CogAbilityManagerEditor : Editor
 
                 foreach (CogAbility ability in (target as MonoBehaviour).GetComponents<CogAbility>())
                 {
-                    m_ShowAbility.Add(ability, true);
+                    m_ShowAbility.Add(ability, !(ability is IGameMechanicAbility));
                     ability.hideFlags |= HideFlags.HideInInspector;
                 }
             }
@@ -261,7 +261,9 @@ public class CogAbilityManagerEditor : Editor
     {
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
         {
-            if (ShowAbility[ability] = EditorGUILayout.Foldout(ShowAbility[ability], ability.GetType().GetDisplayName().Replace("Cog Ability", string.Empty)))
+            if (ShowAbility[ability] = EditorGUILayout.Foldout(ShowAbility[ability],
+                                                               ability.GetType().GetDisplayName().Replace("Cog Ability", string.Empty) +
+                                                                    ((ability is IGameMechanicAbility) ? " (Game Mechanic)" : String.Empty)))
             {
                 EditorGUI.indentLevel++;
                 Editor.CreateEditor(abilityOnAllSelectedManagers).OnInspectorGUI();

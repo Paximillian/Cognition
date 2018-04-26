@@ -17,7 +17,7 @@ public class ConflictDamageCogAbility : CogAbility, IGameMechanicAbility
     {
         get
         {
-            return "Causes damage to this cog while it is in a conflict.";
+            return base.Description + "Causes damage to this cog while it is in a conflict.";
         }
     }
 

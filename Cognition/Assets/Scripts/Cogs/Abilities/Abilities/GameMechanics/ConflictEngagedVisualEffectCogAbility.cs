@@ -9,7 +9,7 @@ public class ConflictEngagedVisualEffectCogAbility : CogAbility, IGameMechanicAb
     {
         get
         {
-            return "Activates the visual representation of a conflict.";
+            return base.Description + "Activates the visual representation of a conflict.";
         }
     }
 
