@@ -179,10 +179,10 @@ public abstract class Cog : NetworkBehaviour
     {
         get
         {
-            return string.Join(Environment.NewLine, 
-                               CogAbilityManager.CogAbilities
-                                                .Where(ability => !(ability is IGameMechanicAbility))
-                                                .Select(ability => ability.Description));
+            return "";// string.Join(Environment.NewLine, 
+                               //CogAbilityManager.CogAbilities
+                                                //.Where(ability => !(ability is IGameMechanicAbility))
+                                                //.Select(ability => ability.Description));
         }
     }
     #endregion Variables
@@ -356,10 +356,10 @@ public abstract class Cog : NetworkBehaviour
         {
             m_Conflicted = true;
 
-            ShowConflictEffect(i_ConflictingCog.transform.position);
-            Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
-
-            StartCoroutine(dealConflictDamage());
+            //ShowConflictEffect(i_ConflictingCog.transform.position);
+            //Rpc_ShowConflictEffect(i_ConflictingCog.transform.position);
+            //
+            //StartCoroutine(dealConflictDamage());
             i_ConflictingCog.PropagationStrategy.CheckConflict(this);
 
             InvokeConflictionAbilities();

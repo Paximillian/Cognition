@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 114252493326281612}
   - component: {fileID: 114964429541232958}
   m_Layer: 0
-  m_Name: Cog_Player
+  m_Name: Placeholder_PlayerCog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 2
+  m_TargetType: 0
   m_Cooldown: 1
   m_ResourcesPerGeneration: 1
 --- !u!114 &114973134474964664
