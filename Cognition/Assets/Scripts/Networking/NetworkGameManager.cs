@@ -23,9 +23,12 @@ public class NetworkGameManager : NetworkManager
     /// <summary>
     /// If this is checked, we'll run the game in debug mode in a way that we won't clash with other developers' test runs.
     /// </summary>
+    public bool DebugMode { get { return m_DebugMode; } set { m_DebugMode = value; } }
+
     [Tooltip("If this is checked, we'll run the game in debug mode in a way that we won't clash with other developers' test runs.")]
     [SerializeField]
     private bool m_DebugMode = false;
+
 
     /// <summary>
     /// Events to fire off when we start looking for a match, use this to update your UI to indicate that match is actively being looked for.
