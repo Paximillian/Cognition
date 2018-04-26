@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44329423, g: 0.49254668, b: 0.5722033, a: 1}
+  m_IndirectSpecularColor: {r: 0.44329378, g: 0.49254596, b: 0.5722023, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8825,25 +8825,28 @@ MonoBehaviour:
   - InnerList:
     - {fileID: 1787226716998062, guid: a0b24a414abc61a4a9cd16b989e47449, type: 2}
   - InnerList:
-    - {fileID: 1295058665275452, guid: ab6bff6004da5014e90dcaa2f31f9a82, type: 2}
+    - {fileID: 1670331429034538, guid: 8e81a051077ff104699978953ad40c54, type: 2}
   - InnerList:
-    - {fileID: 1295058665275452, guid: 8d6ecd5f3d08b3a4f8eea162d0953ee4, type: 2}
+    - {fileID: 1295058665275452, guid: ab6bff6004da5014e90dcaa2f31f9a82, type: 2}
   - InnerList:
     - {fileID: 1951451056961398, guid: 5abb273eda923ce46a8ecde3a144c0ca, type: 2}
   - InnerList:
-    - {fileID: 1295058665275452, guid: 56f9fb2beb2e0224f9d877a712f1536d, type: 2}
+    - {fileID: 1583108104991436, guid: 0205ee7f45a04a944800c538eaa13322, type: 2}
   - InnerList:
-    - {fileID: 1670331429034538, guid: 8e81a051077ff104699978953ad40c54, type: 2}
+    - {fileID: 1295058665275452, guid: 8d6ecd5f3d08b3a4f8eea162d0953ee4, type: 2}
+  - InnerList:
+    - {fileID: 1295058665275452, guid: 56f9fb2beb2e0224f9d877a712f1536d, type: 2}
   - InnerList:
     - {fileID: 1295058665275452, guid: cbb61cefcc2d34e4091be49974ea4224, type: 2}
   ObjectPoolNames:
   - Neutral_BasicCog
   - Cog_Player
-  - Arcane_Telecog
-  - Bio_IncubatorCog
-  - Arcane_RelayCog
-  - Bio_RadialSpawnCog
   - Arcane_BasicCog
+  - Arcane_Telecog
+  - Arcane_RelayCog
+  - Bio_BasicCog
+  - Bio_IncubatorCog
+  - Bio_RadialSpawnCog
   - Bio_LeechingCog
   ObjectPoolStartAmounts:
   - InnerList: 1e000000
@@ -8854,7 +8857,8 @@ MonoBehaviour:
   - InnerList: 02000000
   - InnerList: 02000000
   - InnerList: 02000000
-  SubListSizes: 0100000001000000010000000100000001000000010000000100000001000000
+  - InnerList: 02000000
+  SubListSizes: 010000000100000001000000010000000100000001000000010000000100000001000000
 --- !u!114 &1252734263
 MonoBehaviour:
   m_ObjectHideFlags: 0
