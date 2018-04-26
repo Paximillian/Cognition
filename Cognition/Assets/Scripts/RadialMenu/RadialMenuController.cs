@@ -255,6 +255,7 @@ public class RadialMenuController : MonoBehaviour
     private void unlightAll()
     {
         Tooltip.Instance.Hide();
+        StopAllCoroutines();
         m_HoveredItemIndex = null;
         turnOffAllItemsHightlight();
     }
@@ -302,12 +303,14 @@ public class RadialMenuController : MonoBehaviour
         else
         {
             Tooltip.Instance.Hide();
+            StopAllCoroutines();
         }
     }
 
     public void OnPointerUp(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
         Tooltip.Instance.Hide();
+        StopAllCoroutines();
 
         if (Input.touchCount > 1)
         {
@@ -335,6 +338,7 @@ public class RadialMenuController : MonoBehaviour
         {
             cancelBuild();
             Tooltip.Instance.Hide();
+            StopAllCoroutines();
         }
         else
         {
@@ -367,6 +371,7 @@ public class RadialMenuController : MonoBehaviour
         {
             cancelBuild();
             Tooltip.Instance.Hide();
+            StopAllCoroutines();
         }
         else
         {

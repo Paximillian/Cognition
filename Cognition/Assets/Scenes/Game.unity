@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44329378, g: 0.49254596, b: 0.5722023, a: 1}
+  m_IndirectSpecularColor: {r: 0.44329423, g: 0.49254668, b: 0.5722033, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -7953,6 +7953,12 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114172675719953182, guid: 218d6ab8c53934e41bf8fdf4c937a869,
+        type: 2}
+      propertyPath: m_Items.Array.data[3]
+      value: 
+      objectReference: {fileID: 114642738028500110, guid: c868c262dc0a7e24dbafa1e202ddaed4,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 218d6ab8c53934e41bf8fdf4c937a869, type: 2}
   m_IsPrefabParent: 0
@@ -8733,17 +8739,21 @@ MonoBehaviour:
     - {fileID: 1295058665275452, guid: ab6bff6004da5014e90dcaa2f31f9a82, type: 2}
   - InnerList:
     - {fileID: 1295058665275452, guid: 8d6ecd5f3d08b3a4f8eea162d0953ee4, type: 2}
+  - InnerList:
+    - {fileID: 1295058665275452, guid: c868c262dc0a7e24dbafa1e202ddaed4, type: 2}
   ObjectPoolNames:
   - Mec_BasicCog
   - Cog_Player
   - Arcane_Telecog
   - Bio_IncubatorCog
+  - Arcane_RelayCog
   ObjectPoolStartAmounts:
   - InnerList: 1e000000
   - InnerList: 02000000
   - InnerList: 02000000
   - InnerList: 02000000
-  SubListSizes: 01000000010000000100000001000000
+  - InnerList: 02000000
+  SubListSizes: 0100000001000000010000000100000001000000
 --- !u!114 &1252734263
 MonoBehaviour:
   m_ObjectHideFlags: 0

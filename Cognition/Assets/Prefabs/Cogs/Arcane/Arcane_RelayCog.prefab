@@ -84,12 +84,12 @@ GameObject:
   - component: {fileID: 114642738028500110}
   - component: {fileID: 114783200862515592}
   - component: {fileID: 114472116153118004}
-  - component: {fileID: 114211795047338420}
+  - component: {fileID: 114409448215686966}
   - component: {fileID: 114281210845130708}
   - component: {fileID: 114615133138620420}
   - component: {fileID: 114720832928875724}
   m_Layer: 0
-  m_Name: Mec_BasicCog
+  m_Name: Arcane_RelayCog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,17 +419,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114211795047338420
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295058665275452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795ec2ad569117d40b13ce740f7928fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114281210845130708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -441,6 +430,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114409448215686966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295058665275452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86deb52f2766e6d4dae0961e5e633438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RelayRange: 2
 --- !u!114 &114472116153118004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -487,14 +488,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cost: 10
-  m_buildRange: 1
+  m_buildRange: 2
   m_HoldingTile: {fileID: 0}
   m_initialhp: 4
   m_hp: 4
   m_conflictParticles: {fileID: 198949925887819904}
-  m_Sprite: {fileID: 21300000, guid: 0a8a9c54610d206479f0993b82ba97b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ae7c2f45925dc9499b1029c609c51aa, type: 3}
   m_spin: 0
-  m_Description: A basic cog. Boring.
+  m_Description: Can be built 1 tile further than your structure. Connects to other
+    nearby Relay Cogs to function remotely.
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114720832928875724
@@ -526,21 +528,21 @@ MonoBehaviour:
     m_Value: 0
   m_AssetId:
     i0: 200
-    i1: 230
-    i2: 54
-    i3: 201
-    i4: 28
-    i5: 95
-    i6: 141
-    i7: 68
-    i8: 232
-    i9: 161
-    i10: 179
-    i11: 149
-    i12: 51
-    i13: 57
-    i14: 124
-    i15: 254
+    i1: 104
+    i2: 194
+    i3: 98
+    i4: 220
+    i5: 10
+    i6: 126
+    i7: 36
+    i8: 219
+    i9: 175
+    i10: 161
+    i11: 226
+    i12: 2
+    i13: 221
+    i14: 174
+    i15: 212
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!198 &198098979324599054

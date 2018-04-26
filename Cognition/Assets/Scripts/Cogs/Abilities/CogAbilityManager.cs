@@ -20,11 +20,11 @@ public class CogAbilityManager : NetworkBehaviour
     /// <summary>
     /// The abilities of the given keyword that can be triggered on this cog.
     /// </summary>
-    public Func<eCogAbilityKeyword, List<CogAbility>> CogAbilitiesFor
+    public Func<eCogAbilityKeyword, IEnumerable<CogAbility>> CogAbilitiesFor
     {
         get
         {
-            return (keyword) => CogAbilities.Where(ability => ability?.Keyword == keyword).ToList();
+            return (keyword) => CogAbilities.Where(ability => ability?.Keyword == keyword);
         }
     }
     #endregion Variables

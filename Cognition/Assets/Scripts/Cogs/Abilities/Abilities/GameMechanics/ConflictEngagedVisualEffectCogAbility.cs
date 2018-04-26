@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConflictEngagedVisualEffect : CogAbility
+public class ConflictEngagedVisualEffectCogAbility : CogAbility, IGameMechanicAbility
 {
 
     public override string Description

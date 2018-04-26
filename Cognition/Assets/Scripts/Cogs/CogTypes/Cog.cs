@@ -39,6 +39,7 @@ public abstract class Cog : NetworkBehaviour
     public int BuildRange { get { return m_buildRange; } }
 
     [SerializeField]
+    [ReadOnly]
     private HexTile m_HoldingTile;
     public HexTile HoldingTile { get { return m_HoldingTile; } set { m_HoldingTile = value; } }
 
@@ -80,17 +81,17 @@ public abstract class Cog : NetworkBehaviour
     /// <summary>
     /// The cogs that are placed in neighbouring hex cells to this one.
     /// </summary>
-    public List<Cog> Neighbors => HoldingTile.PopulatedNeighbors; 
+    public IEnumerable<Cog> Neighbors => HoldingTile.PopulatedNeighbors; 
 
     /// <summary>
     /// The cogs that are neighbours both for this tile as well as the given tile.
     /// </summary>
-    public Func<Cog, List<Cog>> IntersectingNeighborsFor => ((cog) => cog.Neighbors.Intersect(Neighbors).ToList());
+    public Func<Cog, IEnumerable<Cog>> IntersectingNeighborsFor => ((cog) => cog.Neighbors.Intersect(Neighbors));
 
     /// <summary>
     /// Do this cog and the requesting cog have the same owner? Is false for non-playable cogs
     /// </summary>
-    //public virtual Func<Cog, bool> HasSameOwner => ((i_AskingCog) => false);
+    public virtual Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) => false);
 
     /// <summary>
     /// The strategy this cog takes when dealing with propagating the spin of the machine.
@@ -173,16 +174,39 @@ public abstract class Cog : NetworkBehaviour
     /// <summary>
     /// The cog ability manager gathers all cog abilities on this cog and gives us one centralized point of access to the abilities system.
     /// </summary>
-    protected CogAbilityManager CogAbilityManager { get; private set; }
+    protected CogAbilityManager CogAbilityManager
+    {
+        get
+        {
+            if (m_CogAbilityManager == null)
+            {
+                m_CogAbilityManager = GetComponent<CogAbilityManager>();
+            }
 
+            return m_CogAbilityManager;
+        }
+    }
+    protected CogAbilityManager m_CogAbilityManager;
+
+    /// <summary>
+    /// A textual description of the functionality of this cog.
+    /// </summary>
+    [Tooltip("A textual description of the functionality of this cog.")]
+    [SerializeField]
+    private string m_Description;
+
+    /// <summary>
+    /// The text used to display information about this cog to the player.
+    /// </summary>
     public string Description
     {
         get
         {
-            return "";// string.Join(Environment.NewLine, 
-                               //CogAbilityManager.CogAbilities
-                                                //.Where(ability => !(ability is IGameMechanicAbility))
-                                                //.Select(ability => ability.Description));
+            return $"{m_Description}{Environment.NewLine}" +
+                      string.Join(Environment.NewLine, 
+                                   CogAbilityManager.CogAbilities
+                                                    .Where(ability => !(ability is IGameMechanicAbility))
+                                                    .Select(ability => ability.Description));
         }
     }
     #endregion Variables
@@ -193,7 +217,7 @@ public abstract class Cog : NetworkBehaviour
         name += $"_{s_CogIndex++}";
         Animator = GetComponentInChildren<Animator>();
         PropagationStrategy = GetComponent<PropagationStrategy>();
-        CogAbilityManager = GetComponent<CogAbilityManager>();
+        m_CogAbilityManager = GetComponent<CogAbilityManager>();
     }
 
     [ServerCallback]
@@ -219,7 +243,7 @@ public abstract class Cog : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void Rpc_UpdateSpin(float i_SpinAmount)
+    private void Rpc_UpdateSpin(float i_SpinAmount)
     {
         UpdateSpin(i_SpinAmount);
     }
@@ -350,10 +374,29 @@ public abstract class Cog : NetworkBehaviour
 
         UpdateSpin(Spin = 0f);
     }
-    
+
+    /// <summary>
+    /// Requests the spin direction of the cog to be changed on the clients.
+    /// </summary>
+    /// <param name="i_SpinAmount"></param>
+    [Server]
+    public void RequestUpdateSpin(float i_SpinAmount)
+    {
+        Spin = i_SpinAmount;
+
+        Rpc_UpdateSpin(i_SpinAmount);
+    }
+
+    /// <summary>
+    /// Changes the spin direction of the cog on the client.
+    /// </summary>
+    [Client]
     public void UpdateSpin(float spin)
     {
-        Spin = spin;
+        if (!isServer)
+        {
+            Spin = spin;
+        }
 
         Animator?.SetFloat("Spin", Spin);
     }
