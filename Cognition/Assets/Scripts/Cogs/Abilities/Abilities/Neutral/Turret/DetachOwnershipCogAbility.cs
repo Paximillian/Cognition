@@ -23,7 +23,9 @@ public class DetachOwnershipCogAbility : CogAbility
     //If no players are occupying the cog, or if it's a tie, then ownership of this cog goes back to neutral.
     protected override void triggerLogic(Cog invokingCog)
     {
-        IEnumerable connectedPlayers = TriggeringCog.Neighbors.Select(cog => (cog as PlayableCog).OwningPlayer).Distinct();
+        IEnumerable connectedPlayers = TriggeringCog.Neighbors.Where(cog => cog != invokingCog)
+                                                              .Select(cog => (cog as PlayableCog).OwningPlayer)
+                                                              .Distinct();
         Dictionary<NetworkPlayer, int> ownerPowers = new Dictionary<NetworkPlayer, int>();
 
         foreach (NetworkPlayer player in connectedPlayers)
