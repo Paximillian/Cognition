@@ -1165,6 +1165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cost: 10
+  m_Cooldown: 5
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
   m_initialhp: 4

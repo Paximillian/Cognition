@@ -139,7 +139,7 @@ public class NetworkPlayer : NetworkBehaviour
     private IEnumerator countDownToGameStart()
     {
         Rpc_SetServerPlayer();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         for (int i = 3; i > 0; --i)
         {

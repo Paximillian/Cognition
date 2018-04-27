@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
     /// <summary>
     /// The items to choose from in the radial menu
     /// </summary>
+    [Tooltip("The items to choose from in the radial menu")]
     [SerializeField]
     private Cog[] m_Items;
 
@@ -30,14 +32,16 @@ public class RadialMenuController : Singleton<RadialMenuController>
     /// <summary>
     /// The GameObject that will hold all the segment clones
     /// </summary>
+    [Tooltip("The GameObject that will hold all the segment clones")]
     [SerializeField]
     private GameObject m_MenuParent;
 
     /// <summary>
-    /// This is the background, might not use this at all
+    /// This is the background
     /// </summary>
+    [Tooltip("A prefab of the segment of the circle that will be drawn for each object")]
     [SerializeField]
-    private GameObject m_CircleImage;
+    private GameObject m_SegmentPrefab;
     
     [Tooltip("The minimum distance you need to move the finger from center to make an item highlighted")]
     [SerializeField]
@@ -79,12 +83,38 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
     private void OnDisable()
     {
+        m_HoveredItemIndex = null;
+        m_CurrentlySelectedCog = null;
         NetworkPlayer.LocalPlayer.ResourcesChanged -= LocalPlayer_OnResourcesChanged;
         NetworkPlayer.LocalPlayer.CogBuilt -= LocalPlayer_OnCogBuilt;
     }
     #endregion UnityMethods
 
     #region PrivateMethods
+    /// <summary>
+    /// Counts the cooldown for the given item.
+    /// </summary>
+    private IEnumerator cooldownCountFor(int? m_HoveredItemIndex)
+    {
+        if (m_HoveredItemIndex.HasValue)
+        {
+            float time = Time.time;
+            float timeAtLastFrame = time;
+            float fullFillAmount = m_menuSegments[m_HoveredItemIndex.Value].DisabledBackgroundImage.fillAmount = m_menuSegments[m_HoveredItemIndex.Value].BackgroundImage.fillAmount;
+            m_menuSegments[m_HoveredItemIndex.Value].CurrentState = m_menuSegments[m_HoveredItemIndex.Value].CurrentState.AddState(RadialMenuSegment.eSegmentState.Coooldown);
+            m_menuSegments[m_HoveredItemIndex.Value].CurrentState = m_menuSegments[m_HoveredItemIndex.Value].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.Highlighted);
+
+            for (float t = 0; t < m_Items[m_HoveredItemIndex.Value].Cooldown; t += Time.time - timeAtLastFrame)
+            {
+                timeAtLastFrame = Time.time;
+                m_menuSegments[m_HoveredItemIndex.Value].DisabledBackgroundImage.fillAmount = fullFillAmount * (1 - (t / m_Items[m_HoveredItemIndex.Value].Cooldown));
+                yield return null;
+            }
+
+            m_menuSegments[m_HoveredItemIndex.Value].CurrentState = m_menuSegments[m_HoveredItemIndex.Value].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.Coooldown);
+        }
+    }
+
     /// <summary>
     /// Sets up the items represented by the radial menu for selection and building.
     /// </summary>
@@ -102,15 +132,18 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
         for (int i = 0; i < m_numOfItems; i++)
         {
-            GameObject newSegment = Instantiate(m_CircleImage, m_MenuParent.transform);
+            GameObject newSegment = Instantiate(m_SegmentPrefab, m_MenuParent.transform);
             newSegment.transform.localPosition = new Vector2(0, 0);
             RadialMenuSegment newSegImg = newSegment.GetComponent<RadialMenuSegment>();
             Image icon = newSegImg.ItemIcon;
+            TMP_Text cost = newSegImg.CostText;
 
             m_cutAngles[i] = oneSegment * i;
+            newSegImg.DisabledBackgroundImage.fillMethod = newSegImg.BackgroundImage.fillMethod = Image.FillMethod.Radial360;
             newSegImg.BackgroundImage.fillAmount = 1 / (360 / (oneSegment - (m_SpaceBetweenSegments / 2)));
-            newSegImg.BackgroundImage.fillMethod = Image.FillMethod.Radial360;
+            newSegImg.DisabledBackgroundImage.fillAmount = 0;
             icon.sprite = m_Items[i].Sprite;
+            cost.text = m_Items[i].Cost.ToString();
 
             float startPos = 0;
             float endPos = 0;
@@ -140,6 +173,9 @@ public class RadialMenuController : Singleton<RadialMenuController>
             m_segmentStartEndAngles[i] = new Vector2(startPos, (endPos > 360) ? endPos - 360 : endPos);
 
             icon.transform.RotateAround(transform.position, Vector3.forward, -oneSegment);
+
+            icon.transform.eulerAngles = Vector3.zero;
+            cost.transform.eulerAngles = Vector3.zero;
         }
     }
 
@@ -292,7 +328,8 @@ public class RadialMenuController : Singleton<RadialMenuController>
             {
                 if (i == index)
                 {
-                    if (m_menuSegments[i].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Available))
+                    if (m_menuSegments[i].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Available) ||
+                        m_menuSegments[i].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Coooldown))
                     {
                         m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.AddState(RadialMenuSegment.eSegmentState.Highlighted);
                         m_CurrentlySelectedCog = m_Items[i];
@@ -328,9 +365,12 @@ public class RadialMenuController : Singleton<RadialMenuController>
                 m_isChoosing = false;
                 m_MenuParent.SetActive(false);
 
-                if (m_CurrentlySelectedCog)
+                if (m_CurrentlySelectedCog &&
+                    !m_menuSegments[m_HoveredItemIndex.Value].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Coooldown))
                 {
                     NetworkPlayer.LocalPlayer.BuildCog(i_SelectedTile, m_CurrentlySelectedCog);
+                    
+                    StartCoroutine(cooldownCountFor(m_HoveredItemIndex));
                 }
             }
         }
