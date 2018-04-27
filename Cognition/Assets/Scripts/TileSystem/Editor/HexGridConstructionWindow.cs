@@ -16,7 +16,8 @@ public class HexGridConstructionWindow : EditorWindow
         Tile,
         ResourceCog,
         GoalCog,
-        StartingPosition
+        StartingPosition,
+        TurretCog
     }
     private ePlacementType m_CurrentPlacementType = ePlacementType.Tile;
 
@@ -357,23 +358,27 @@ public class HexGridConstructionWindow : EditorWindow
         {
             Handles.color = Color.white;
         }
-        else if (i_Tile.ResidentCog.GetType().Equals(s_HexGrid.ResourceCogPrefab.GetType()))
+        else if (PrefabUtility.GetPrefabObject(i_Tile.ResidentCog)?.Equals(s_HexGrid.TurretCogPrefab) ?? false)
+        {
+            Handles.color = Color.black;
+        }
+        else if (PrefabUtility.GetPrefabObject(i_Tile.ResidentCog)?.Equals(s_HexGrid.ResourceCogPrefab) ?? false)
         {
             Handles.color = Color.green;
         }
-        else if (i_Tile.ResidentCog.GetType().Equals(s_HexGrid.GoalCogPrefab.GetType()))
+        else if (PrefabUtility.GetPrefabObject(i_Tile.ResidentCog)?.Equals(s_HexGrid.GoalCogPrefab) ?? false)
         {
             ++m_GoalsDrawnThisFrame;
             Handles.color = Color.yellow;
         }
-        else if (i_Tile.ResidentCog.GetType().Equals(s_HexGrid.PlayerInitialCogPrefab.GetType()))
+        else if (PrefabUtility.GetPrefabObject(i_Tile.ResidentCog)?.Equals(s_HexGrid.PlayerInitialCogPrefab) ?? false)
         {
             if (++m_PlayerStartPosesDrawnThisFrame <= 2)
             {
                 Handles.color = Color.red;
             }
         }
-        else if (i_Tile.ResidentCog.GetType().Equals(s_HexGrid.PlayerInitialCogPrefab.GetType()))
+        else if (PrefabUtility.GetPrefabObject(i_Tile.ResidentCog)?.Equals(s_HexGrid.PlayerInitialCogPrefab) ?? false)
         {
             Handles.color = Color.blue;
         }
@@ -415,6 +420,9 @@ public class HexGridConstructionWindow : EditorWindow
                         {
                             case ePlacementType.ResourceCog:
                                 cogToBuild = s_HexGrid.ResourceCogPrefab;
+                                break;
+                            case ePlacementType.TurretCog:
+                                cogToBuild = s_HexGrid.TurretCogPrefab;
                                 break;
                             case ePlacementType.GoalCog:
                                 cogToBuild = s_HexGrid.GoalCogPrefab;
@@ -488,6 +496,10 @@ public class HexGridConstructionWindow : EditorWindow
             case ePlacementType.ResourceCog:
                 GUI.color = Color.green;
                 break;
+            case ePlacementType.TurretCog:
+                GUI.color = Color.black;
+                GUI.contentColor = Color.white;
+                break;
             case ePlacementType.StartingPosition:
                 GUI.color = Color.red;
                 break;
@@ -511,6 +523,12 @@ public class HexGridConstructionWindow : EditorWindow
                 if (GUILayout.Button("Resource"))
                 {
                     m_CurrentPlacementType = ePlacementType.ResourceCog;
+                }
+
+                GUI.enabled = true; if (m_CurrentPlacementType == ePlacementType.TurretCog) { GUI.enabled = false; }
+                if (GUILayout.Button("Turret"))
+                {
+                    m_CurrentPlacementType = ePlacementType.TurretCog;
                 }
 
                 GUI.enabled = true; if (m_CurrentPlacementType == ePlacementType.GoalCog) { GUI.enabled = false; }

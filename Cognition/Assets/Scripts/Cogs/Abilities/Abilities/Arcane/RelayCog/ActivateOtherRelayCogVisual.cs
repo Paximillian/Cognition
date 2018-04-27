@@ -26,6 +26,6 @@ public class ActivateOtherRelayCogVisual : CogAbility, IGameMechanicAbility
 
     protected override void triggerVisuals(Cog invokingCog)
     {
-        //Camera.main.backgroundColor = new Color(Random.value, Random.value, Random.value);
+        Camera.main.backgroundColor = new Color(Random.value, Random.value, Random.value);
     }
 }

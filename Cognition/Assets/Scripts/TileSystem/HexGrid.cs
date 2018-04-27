@@ -13,6 +13,10 @@ public class HexGrid : Singleton<HexGrid>
     public Cog ResourceCogPrefab { get { return m_ResourceCogPrefab; } }
 
     [SerializeField]
+    private Cog m_TurretCogPrefab;
+    public Cog TurretCogPrefab { get { return m_TurretCogPrefab; } }
+
+    [SerializeField]
     private Cog m_GoalCogPrefab;
     public Cog GoalCogPrefab { get { return m_GoalCogPrefab; } }
 
