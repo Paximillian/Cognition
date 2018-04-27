@@ -3680,7 +3680,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114009440462723094
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845364352075228}
@@ -3690,11 +3690,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 6
-  m_Cooldown: 1
+  m_TargetType: 0
   m_conflictDamage: 1
 --- !u!114 &114203629619386496
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845364352075228}
@@ -3704,6 +3704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 5
+  m_TargetType: 0
 --- !u!114 &114464535102737104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3718,14 +3719,15 @@ MonoBehaviour:
   m_Cost: 5
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
-  m_initialhp: 10
-  m_hp: 10
+  m_initialhp: 200
+  m_hp: 200
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_Description: 
 --- !u!114 &114618643385761260
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845364352075228}
@@ -3735,6 +3737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Keyword: 2
+  m_TargetType: 0
   m_Cooldown: 5
   m_DelayBetweenPlayers: 0.25
   m_ResourcesPerGeneration: 10

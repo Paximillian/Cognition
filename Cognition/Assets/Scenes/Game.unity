@@ -10542,6 +10542,11 @@ Prefab:
       propertyPath: m_HoldingTile
       value: 
       objectReference: {fileID: 1269454929}
+    - target: {fileID: 114598300715649784, guid: 9e14ac95ded09774185ea75d513fea03,
+        type: 2}
+      propertyPath: m_Damage
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9e14ac95ded09774185ea75d513fea03, type: 2}
   m_IsPrefabParent: 0

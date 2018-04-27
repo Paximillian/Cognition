@@ -5,16 +5,16 @@ AnimatorOverrideController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Override_Arcane_Basic_Cog
+  m_Name: Override_Biological_Incubator_Cog
   m_Controller: {fileID: 9100000, guid: 4bdbf878662edfe4c84e2fc4119c4791, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400008, guid: 6a45017822059ee4e815148d14260d6d, type: 3}
-    m_OverrideClip: {fileID: 7400002, guid: ee65907003ce1d245a00afd2a1e31914, type: 3}
+    m_OverrideClip: {fileID: 7400002, guid: c5c39ebb64de97641ad50a29d517e81f, type: 3}
   - m_OriginalClip: {fileID: 7400002, guid: 6a45017822059ee4e815148d14260d6d, type: 3}
-    m_OverrideClip: {fileID: 7400004, guid: ee65907003ce1d245a00afd2a1e31914, type: 3}
+    m_OverrideClip: {fileID: 7400004, guid: c5c39ebb64de97641ad50a29d517e81f, type: 3}
   - m_OriginalClip: {fileID: 7400004, guid: 6a45017822059ee4e815148d14260d6d, type: 3}
-    m_OverrideClip: {fileID: 7400006, guid: ee65907003ce1d245a00afd2a1e31914, type: 3}
+    m_OverrideClip: {fileID: 7400006, guid: c5c39ebb64de97641ad50a29d517e81f, type: 3}
   - m_OriginalClip: {fileID: 7400006, guid: 6a45017822059ee4e815148d14260d6d, type: 3}
-    m_OverrideClip: {fileID: 7400008, guid: ee65907003ce1d245a00afd2a1e31914, type: 3}
+    m_OverrideClip: {fileID: 7400008, guid: c5c39ebb64de97641ad50a29d517e81f, type: 3}
   - m_OriginalClip: {fileID: 7400010, guid: 6a45017822059ee4e815148d14260d6d, type: 3}
-    m_OverrideClip: {fileID: 7400000, guid: ee65907003ce1d245a00afd2a1e31914, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: c5c39ebb64de97641ad50a29d517e81f, type: 3}
