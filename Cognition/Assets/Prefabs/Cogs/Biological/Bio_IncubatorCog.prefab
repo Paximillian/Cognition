@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 114615133138620420}
   - component: {fileID: 114720832928875724}
   - component: {fileID: 114241943550292860}
-  - component: {fileID: 114370746861424246}
   m_Layer: 0
   m_Name: Bio_IncubatorCog
   m_TagString: Untagged
@@ -492,7 +491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &114241943550292860
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -515,21 +514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114370746861424246
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295058665275452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a165aafee43876447b035745cf343b4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Keyword: 1
-  m_TargetType: 0
-  m_spawnedCogPrefab: {fileID: 114642738028500110, guid: c8e636c91c5f8d44e8a1b39533397cfe,
-    type: 2}
 --- !u!114 &114472116153118004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -553,7 +537,7 @@ MonoBehaviour:
   m_InterpolateMovement: 1
 --- !u!114 &114615133138620420
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -588,7 +572,7 @@ MonoBehaviour:
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114720832928875724
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}

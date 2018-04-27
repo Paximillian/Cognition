@@ -1,0 +1,304 @@
+fileFormatVersion: 2
+guid: 2ea151ccb288ecd4c82f5b0aa9c3c856
+timeCreated: 1524786201
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Arcane_TeleCog
+    100002: //RootNode
+    100004: Cog_A
+    100006: Cog_B
+    100008: Cog_C
+    100010: Cog_D
+    100012: Cog_E
+    100014: Cog_F
+    100016: CrystlHousing
+    100018: jnt_Cog_A
+    100020: jnt_Cog_A_end
+    100022: jnt_Cog_B
+    100024: jnt_Cog_B_end
+    100026: jnt_Cog_Base
+    100028: jnt_Cog_C
+    100030: jnt_Cog_C_end
+    100032: jnt_Cog_D
+    100034: jnt_Cog_D_end
+    100036: jnt_Cog_E
+    100038: jnt_Cog_E_end
+    100040: jnt_Cog_F
+    100042: jnt_Cog_F_end
+    100044: Sphere
+    400000: Arcane_TeleCog
+    400002: //RootNode
+    400004: Cog_A
+    400006: Cog_B
+    400008: Cog_C
+    400010: Cog_D
+    400012: Cog_E
+    400014: Cog_F
+    400016: CrystlHousing
+    400018: jnt_Cog_A
+    400020: jnt_Cog_A_end
+    400022: jnt_Cog_B
+    400024: jnt_Cog_B_end
+    400026: jnt_Cog_Base
+    400028: jnt_Cog_C
+    400030: jnt_Cog_C_end
+    400032: jnt_Cog_D
+    400034: jnt_Cog_D_end
+    400036: jnt_Cog_E
+    400038: jnt_Cog_E_end
+    400040: jnt_Cog_F
+    400042: jnt_Cog_F_end
+    400044: Sphere
+    2100000: Mat_Arcane_Relay_01
+    2300000: Cog_A
+    2300002: Cog_B
+    2300004: Cog_C
+    2300006: Cog_D
+    2300008: Cog_E
+    2300010: Cog_F
+    2300012: CrystlHousing
+    2300014: Sphere
+    3300000: Cog_A
+    3300002: Cog_B
+    3300004: Cog_C
+    3300006: Cog_D
+    3300008: Cog_E
+    3300010: Cog_F
+    3300012: CrystlHousing
+    3300014: Sphere
+    4300000: Sphere
+    4300002: CrystlHousing
+    4300004: Cog_F
+    7400000: Arcane_TeleCog_Engage
+    7400002: Arcane_TeleCog_Idle
+    7400004: Arcane_TeleCog_Rotate_CCW
+    7400006: Arcane_TeleCog_Rotate_CW
+    7400008: Arcane_TeleCog_Spawn
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Arcane_Relay_01
+    second: {fileID: 2100000, guid: de7c8da57db159543892acd6c6a9e96a, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Arcane_TeleCog_Engage
+      takeName: Arcane_TeleCog|Engage
+      firstFrame: 0
+      lastFrame: 11
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Arcane_TeleCog_Idle
+      takeName: Arcane_TeleCog|Idle
+      firstFrame: 0
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Arcane_TeleCog_Rotate_CCW
+      takeName: Arcane_TeleCog|Rotate_CCW
+      firstFrame: 0
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Arcane_TeleCog_Rotate_CW
+      takeName: Arcane_TeleCog|Rotate_CW
+      firstFrame: 0
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Arcane_TeleCog_Spawn
+      takeName: Arcane_TeleCog|Spawn
+      firstFrame: 0
+      lastFrame: 22
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -20,7 +20,6 @@ public class RelayCog : PlayableCog
 
     public void DeactivateRelayEffect(Cog i_activatingCog)
     {
-        Debug.Log("Deactivating with  " + (i_activatingCog?.ToString() ?? "null"));
         if (i_activatingCog?.Equals(m_connectedRelay) ?? true)
         {
             m_connectedRelay = null;

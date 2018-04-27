@@ -34,6 +34,5 @@ public class ConflictDamageCogAbility : CogAbility, IGameMechanicAbility
     protected override void triggerVisuals(Cog invokingCog)
     {
         //Empty on purpose
-        TriggeringCog.ShowConflictEffect(invokingCog.transform.position);
     }
 }

@@ -108,7 +108,7 @@ public abstract class PropagationStrategy : MonoBehaviour
             isConflicted = true;
         }
 
-        foreach (Cog neighbour in Neighbors.Where(cog => !(cog is NullCog)))
+        foreach (Cog neighbour in Cog.Neighbors.Where(cog => !(cog is NullCog)))
         {
             foreach (Cog conflictingCog in IntersectingNeighborsFor(neighbour))
             {
