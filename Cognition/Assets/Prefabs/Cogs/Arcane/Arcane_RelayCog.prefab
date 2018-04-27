@@ -1487,13 +1487,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aea30009f963f24e91f523ea65da8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Cost: 15
+  m_Cost: 20
   m_buildRange: 2
   m_HoldingTile: {fileID: 0}
   m_initialhp: 4
   m_hp: 4
   m_conflictParticles: {fileID: 198880128735544306}
-  m_Sprite: {fileID: 21300000, guid: 7ae7c2f45925dc9499b1029c609c51aa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f421d62751f516489f8fb114139c261, type: 3}
   m_spin: 0
   m_Description: Can be built 1 tile further than your structure. Connects to other
     nearby Relay Cogs to function remotely.

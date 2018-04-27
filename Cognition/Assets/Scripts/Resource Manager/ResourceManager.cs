@@ -11,14 +11,4 @@ public class ResourceManager : MonoBehaviour {
     private float m_TimeBetweenPaycheck = 10f;
 
     public float m_income { private set; get; }
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

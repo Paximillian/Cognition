@@ -3734,8 +3734,8 @@ MonoBehaviour:
   m_Cost: 5
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
-  m_initialhp: 10
-  m_hp: 10
+  m_initialhp: 200
+  m_hp: 200
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0

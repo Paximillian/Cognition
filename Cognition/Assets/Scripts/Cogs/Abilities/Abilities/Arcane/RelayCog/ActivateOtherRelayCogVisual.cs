@@ -37,6 +37,7 @@ public class ActivateOtherRelayCogVisual : CogAbility, IGameMechanicAbility
         //Yes we need this! Without it the cogs salute
         yield return null;
         yield return null;
+        yield return null;
         if (invokingCog.HasSameOwnerAs(TriggeringCog))
         {
             (invokingCog as RelayCog)?.ActivateRelayEffect(TriggeringCog);

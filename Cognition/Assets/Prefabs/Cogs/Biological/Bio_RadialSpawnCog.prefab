@@ -558,7 +558,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1357237373677826}
-  m_LocalRotation: {x: -0.18301268, y: 0.68301284, z: -0.6830127, w: -0.18301257}
+  m_LocalRotation: {x: -0.18301266, y: 0.6830128, z: -0.68301266, w: -0.18301256}
   m_LocalPosition: {x: -0.0032033697, y: -0.0011016935, z: -0.005548399}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
   m_Children:
@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_initialhp: 4
   m_hp: 4
   m_conflictParticles: {fileID: 198949925887819904}
-  m_Sprite: {fileID: 21300026, guid: 5b32c2d36abe44540bed74c1f787033b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3a36c524e2752c84d9eb34208074a3fe, type: 3}
   m_spin: 0
   m_Description: 
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
