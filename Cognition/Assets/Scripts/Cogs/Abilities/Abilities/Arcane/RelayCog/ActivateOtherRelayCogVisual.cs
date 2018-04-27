@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,13 +20,23 @@ public class ActivateOtherRelayCogVisual : CogAbility, IGameMechanicAbility
 
     protected override void triggerLogic(Cog invokingCog)
     {
-        //if (invokingCog.HasSameOwnerAs(TriggeringCog)) {
-            (invokingCog as RelayCog)?.ActivateRelayEffect(TriggeringCog);
-        //}
     }
 
     protected override void triggerVisuals(Cog invokingCog)
     {
-        Camera.main.backgroundColor = new Color(Random.value, Random.value, Random.value);
+        StartCoroutine(waitForOwnership(invokingCog));
+    }
+
+    private IEnumerator waitForOwnership(Cog invokingCog)
+    {
+        while ((invokingCog as PlayableCog).OwningPlayer == null)
+        {
+            yield return null;
+        }
+
+        if (invokingCog.HasSameOwnerAs(TriggeringCog))
+        {
+            (invokingCog as RelayCog)?.ActivateRelayEffect(TriggeringCog);
+        }
     }
 }

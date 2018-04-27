@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -32,6 +33,26 @@ public abstract class CogAbility : NetworkBehaviour
     [Tooltip("Who does this ability affect? (This does NOT affect the ability's logic in any way, it's only used to display the keyword name for this ability in appropriate coloration.")]
     [DualFactionConditionalHide(nameof(m_Keyword), true)]
     private eTargetType m_TargetType = eTargetType.All;
+
+    /// <summary>
+    /// The name of the function that serves as our Rpc.
+    /// More on this in the comment on Rpc_TriggerVisuals().
+    /// </summary>
+    private string m_RpcTriggerVisualsName;
+    /// <summary>
+    /// A unique ID identifying this RPC amongst all other RPCs of the same signature on different instances of the same type on this object.
+    /// We'll be using the index of this instance amongst the components of this object.
+    /// More on this in the comment on Rpc_TriggerVisuals().
+    /// </summary>
+    private int m_RpcId;
+    /// <summary>
+    /// A unique identifier for the RPC we want to trigger.
+    /// </summary>
+    private int m_RpcTriggerVisualsHash;
+    /// <summary>
+    /// A NetworkWriter used to pass data to our RPC.
+    /// </summary>
+    private NetworkWriter m_RpcTriggerVisualsWriter = new NetworkWriter();
 
     /// <summary>
     /// The cog that triggered the activation of this ability.
@@ -102,19 +123,73 @@ public abstract class CogAbility : NetworkBehaviour
     public void Trigger(Cog invokingCog = null)
     {
         triggerLogic(invokingCog ?? TriggeringCog);
-
-        Rpc_TriggerVisuals(invokingCog?.netId ?? TriggeringCog.netId);
+        
+        //Sends a custom RPC message.
+        m_RpcTriggerVisualsWriter.StartMessage(MsgType.Rpc);
+        m_RpcTriggerVisualsWriter.WritePackedUInt32((uint)m_RpcTriggerVisualsHash); //The unique identifier of the handler we registered in OnStartClient().
+        m_RpcTriggerVisualsWriter.Write(netId); //The netId of the object that contains this handler.
+        m_RpcTriggerVisualsWriter.Write(invokingCog?.netId ?? TriggeringCog.netId); //Additional data. In this case it's a NetworkInstanceId, because the original signature of the method
+                                                                                    //we want to invoke is Rpc_TriggerVisuals(NetworkInstanceId invokerNetId)
+        m_RpcTriggerVisualsWriter.FinishMessage();
+        SendRPCInternal(m_RpcTriggerVisualsWriter, 0, m_RpcTriggerVisualsName);
     }
     #endregion EntryPoints
 
+    #region PrivateMethods
+    /// <summary>
+    /// Sets up the visual effects RPC sender.
+    /// More on this in the comment on Rpc_TriggerVisuals().
+    /// </summary>
+    private void setupRpcDispatchFields()
+    {
+        //We'll be using the index of this instance amongst the components of this object as the unique ID for this Rpc.
+        m_RpcId = 0;
+        foreach (CogAbility ability in GetComponents<CogAbility>())
+        {
+            if (ability == this) { break; }
+            else { m_RpcId++; }
+        }
+
+        m_RpcTriggerVisualsName = nameof(Rpc_TriggerVisuals) + m_RpcId.ToString() + netId.ToString();
+        m_RpcTriggerVisualsHash = m_RpcTriggerVisualsName.GetHashCode();
+    }
+    #endregion PrivateMethods
+
     #region NetworkMethods
+    /// <summary>
+    /// Sets up the visual effects RPC sender.
+    /// More on this in the comment on Rpc_TriggerVisuals().
+    /// </summary>
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        setupRpcDispatchFields();
+        RegisterRpcDelegate(GetType(), m_RpcTriggerVisualsHash, Rpc_TriggerVisuals);
+    }
+
+    /// <summary>
+    /// Sets up the visual effects RPC sender.
+    /// More on this in the comment on Rpc_TriggerVisuals().
+    /// </summary>
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        setupRpcDispatchFields();
+    }
+
     /// <summary>
     /// Activates any visual effects pertaining to this ability.
     /// </summary>
-    [ClientRpc]
-    private void Rpc_TriggerVisuals(NetworkInstanceId invokerNetId)
+    //This is actually an RPC, but because of Unity bugs, we needed to implement this in another method.
+    //Because we have multiple scripts on the same object that all inherit from the same script and all have the same RPC, Unity mixes up the RPCs and activates the ones on the wrong scripts of the object.
+    //So instead of using an RPC, we're using the LLAPI's NetworkReader and NetworkWriter to send an RPC of our own.
+    //The actual signature of this method should be: private void Rpc_TriggerVisuals(NetworkInstanceId invokerNetId)
+    private void Rpc_TriggerVisuals(NetworkBehaviour obj, NetworkReader reader)
     {
-        Cog invokingCog = ClientScene.FindLocalObject(invokerNetId).GetComponent<Cog>(); //Is this really necessary?
+        NetworkInstanceId invokerNetId = reader.ReadNetworkId();
+        Cog invokingCog = ClientScene.FindLocalObject(invokerNetId).GetComponent<Cog>();
 
         triggerVisuals(invokingCog);
     }
