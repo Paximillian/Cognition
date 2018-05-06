@@ -522,7 +522,7 @@ MonoBehaviour:
   m_InterpolateMovement: 1
 --- !u!114 &114615133138620420
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -545,6 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cost: 10
+  m_Cooldown: 5
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
   m_initialhp: 4
@@ -557,7 +558,7 @@ MonoBehaviour:
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114720832928875724
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -583,22 +584,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 200
-    i1: 230
-    i2: 54
-    i3: 201
-    i4: 28
-    i5: 95
-    i6: 141
-    i7: 68
-    i8: 232
-    i9: 161
-    i10: 179
-    i11: 149
-    i12: 51
-    i13: 57
-    i14: 124
-    i15: 254
+    i0: 237
+    i1: 118
+    i2: 161
+    i3: 182
+    i4: 98
+    i5: 77
+    i6: 211
+    i7: 244
+    i8: 137
+    i9: 252
+    i10: 151
+    i11: 19
+    i12: 163
+    i13: 9
+    i14: 79
+    i15: 57
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!198 &198098979324599054

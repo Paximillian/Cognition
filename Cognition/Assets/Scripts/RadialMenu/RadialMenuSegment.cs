@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,8 @@ public class RadialMenuSegment : MonoBehaviour
         Available = 0,
         NotEnoughResources = 1,
         OutOfRange = 2,
-        Highlighted = 4
+        Highlighted = 4,
+        Coooldown = 8
     }
     #endregion ExtraDefinitions
 
@@ -36,6 +38,14 @@ public class RadialMenuSegment : MonoBehaviour
     [SerializeField]
     private Image m_ItemIcon;
     public Image ItemIcon { get { return m_ItemIcon; } }
+
+    [SerializeField]
+    private Image m_DisabledBackgroundImage;
+    public Image DisabledBackgroundImage { get { return m_DisabledBackgroundImage; } }
+
+    [SerializeField]
+    private TMP_Text m_CostText;
+    public TMP_Text CostText { get { return m_CostText; } }
     #endregion Variables
 
     #region PublicMethods
@@ -53,11 +63,15 @@ public class RadialMenuSegment : MonoBehaviour
         {
             BackgroundImage.color = Color.red;
         }
-        else if (i_NewState.CheckState(eSegmentState.Highlighted))
+        else if (i_NewState.CheckState(eSegmentState.Highlighted) && !i_NewState.CheckState(eSegmentState.Coooldown))
         {
             BackgroundImage.color = Color.blue;
         }
-        else if (i_NewState.CheckState(eSegmentState.Available))
+        else if (i_NewState.CheckState(eSegmentState.Highlighted) && i_NewState.CheckState(eSegmentState.Coooldown))
+        {
+            BackgroundImage.color = Color.gray;
+        }
+        else if (i_NewState.CheckState(eSegmentState.Available) || i_NewState.CheckState(eSegmentState.Coooldown))
         {
             BackgroundImage.color = Color.white;
         }

@@ -68,7 +68,7 @@ MonoBehaviour:
   m_SpaceBetweenSegments: 10
   m_Offset: -1
   m_MenuParent: {fileID: 1000853202122656}
-  m_CircleImage: {fileID: 1405925258684032, guid: e4342bf51cb47cd4fafafe2136841859,
+  m_SegmentPrefab: {fileID: 1114355668151072, guid: e4342bf51cb47cd4fafafe2136841859,
     type: 2}
   m_MinLineDrawDistance: 110
 --- !u!114 &114431205070830986

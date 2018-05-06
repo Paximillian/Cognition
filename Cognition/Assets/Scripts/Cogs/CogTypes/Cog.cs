@@ -29,6 +29,11 @@ public abstract class Cog : NetworkBehaviour
     private int m_Cost = 5;
     public int Cost { get { return m_Cost; } }
 
+    [SerializeField]
+    [Tooltip("The time in seconds you need to wait between builds of this cog")]
+    private float m_Cooldown = 5;
+    public float Cooldown { get { return m_Cooldown; } }
+
     /// <summary>
     /// Maximum build range away from other cogs beloning to the same player
     /// </summary>

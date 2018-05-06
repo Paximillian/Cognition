@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ShockCog_Mask_Top
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: ResourceHolder
+    m_Weight: 1
+  - m_Path: ResourceHolder/MainRotator
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/Tooth_03
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/ToothCoverBase.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/ToothCoverBase.001/Tooth_03.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/ToothCoverBase.001/ToothCoverBase.001_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/toothCoverEnd.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/toothCoverEnd.001/Tooth_03.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/toothCoverEnd.001/toothCoverEnd.001_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/ToothCoverMid.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/ToothCoverMid.001/Tooth_03.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.001/ToothCoverMid.001/ToothCoverMid.001_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/Tooth_02
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/ToothCoverBase.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/ToothCoverBase.002/Tooth_02.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/ToothCoverBase.002/ToothCoverBase.002_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/toothCoverEnd.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/toothCoverEnd.002/Tooth_02.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/toothCoverEnd.002/toothCoverEnd.002_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/ToothCoverMid.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/ToothCoverMid.002/Tooth_02.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.002/ToothCoverMid.002/ToothCoverMid.002_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/Tooth_01
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/ToothCoverBase.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/ToothCoverBase.003/Tooth_01.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/ToothCoverBase.003/ToothCoverBase.003_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/toothCoverEnd.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/toothCoverEnd.003/Tooth_01.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/toothCoverEnd.003/toothCoverEnd.003_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/ToothCoverMid.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/ToothCoverMid.003/Tooth_01.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.003/ToothCoverMid.003/ToothCoverMid.003_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/Tooth_05
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/ToothCoverBase.004
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/ToothCoverBase.004/Tooth_05.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/ToothCoverBase.004/ToothCoverBase.004_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/toothCoverEnd.004
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/toothCoverEnd.004/Tooth_05.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/toothCoverEnd.004/toothCoverEnd.004_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/ToothCoverMid.004
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/ToothCoverMid.004/Tooth_05.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.004/ToothCoverMid.004/ToothCoverMid.004_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/Tooth_06
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/ToothCoverBase.005
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/ToothCoverBase.005/Tooth_06.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/ToothCoverBase.005/ToothCoverBase.005_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/toothCoverEnd.005
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/toothCoverEnd.005/Tooth_06.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/toothCoverEnd.005/toothCoverEnd.005_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/ToothCoverMid.005
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/ToothCoverMid.005/Tooth_06.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.005/ToothCoverMid.005/ToothCoverMid.005_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/Tooth_04
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/ToothCoverBase.006
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/ToothCoverBase.006/Tooth_04.001
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/ToothCoverBase.006/ToothCoverBase.006_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/toothCoverEnd.006
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/toothCoverEnd.006/Tooth_04.003
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/toothCoverEnd.006/toothCoverEnd.006_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/ToothCoverMid.006
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/ToothCoverMid.006/Tooth_04.002
+    m_Weight: 0
+  - m_Path: ResourceHolder/MainRotator/Tooth.006/ToothCoverMid.006/ToothCoverMid.006_end
+    m_Weight: 0
+  - m_Path: ResourceHolder/ResourceMain
+    m_Weight: 0
+  - m_Path: ResourceHolder/Stomper
+    m_Weight: 1
+  - m_Path: ResourceHolder/Stomper/Jet
+    m_Weight: 1
+  - m_Path: ResourceHolder/Stomper/Jet/Jet_end
+    m_Weight: 1
+  - m_Path: ResourceHolder/Stomper/Jet/JetMesh
+    m_Weight: 1
+  - m_Path: ResourceHolder/Stomper/StomperMesh
+    m_Weight: 1

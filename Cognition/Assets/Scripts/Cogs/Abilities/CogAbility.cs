@@ -25,7 +25,7 @@ public abstract class CogAbility : NetworkBehaviour
     [SerializeField]
     [Tooltip("The name of the ability type will be used to categorize it's trigger time by making it into a keyword.")]
     private eCogAbilityKeyword m_Keyword;
-
+    
     /// <summary>
     /// Who does this ability affect? (This does NOT affect the ability's logic in any way, it's only used to display the keyword name for this ability in appropriate coloration.
     /// </summary>
