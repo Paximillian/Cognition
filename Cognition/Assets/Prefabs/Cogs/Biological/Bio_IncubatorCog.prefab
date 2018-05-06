@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 114615133138620420}
   - component: {fileID: 114720832928875724}
   - component: {fileID: 114241943550292860}
+  - component: {fileID: 114361961784926866}
   m_Layer: 0
   m_Name: Bio_IncubatorCog
   m_TagString: Untagged
@@ -1160,6 +1161,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd96a7f423d374143b5020dfa3b037ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114361961784926866
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295058665275452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c8dbf68a19a2499d04dc58113e7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 8
+  m_TargetType: 0
 --- !u!114 &114472116153118004
 MonoBehaviour:
   m_ObjectHideFlags: 1
