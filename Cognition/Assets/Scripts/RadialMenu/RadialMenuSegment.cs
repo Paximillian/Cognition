@@ -46,6 +46,13 @@ public class RadialMenuSegment : MonoBehaviour
     [SerializeField]
     private TMP_Text m_CostText;
     public TMP_Text CostText { get { return m_CostText; } }
+
+    [SerializeField]
+    private Image m_CostIcon;
+    public Image CostIcon { get { return m_CostIcon; } }
+
+    [SerializeField]
+    private Color m_CostIconAvailableColor, m_CostIconNoResourcesColor;
     #endregion Variables
 
     #region PublicMethods
@@ -62,6 +69,7 @@ public class RadialMenuSegment : MonoBehaviour
         else if (i_NewState.CheckState(eSegmentState.NotEnoughResources))
         {
             BackgroundImage.color = Color.red;
+            CostIcon.color = m_CostIconNoResourcesColor;
         }
         else if (i_NewState.CheckState(eSegmentState.Highlighted) && !i_NewState.CheckState(eSegmentState.Coooldown))
         {
@@ -74,6 +82,11 @@ public class RadialMenuSegment : MonoBehaviour
         else if (i_NewState.CheckState(eSegmentState.Available) || i_NewState.CheckState(eSegmentState.Coooldown))
         {
             BackgroundImage.color = Color.white;
+        }
+
+        if (!i_NewState.CheckState(eSegmentState.NotEnoughResources))
+        {
+            CostIcon.color = m_CostIconAvailableColor;
         }
     }
     #endregion PublicMethods

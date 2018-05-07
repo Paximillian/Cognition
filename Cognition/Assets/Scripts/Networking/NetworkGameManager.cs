@@ -102,6 +102,7 @@ public class NetworkGameManager : NetworkManager
     #region UnityMethods
     private void Start()
     {
+        Screen.sleepTimeout = SleepTimeout.SystemSetting;
         StartMatchMaker();
     }
 
@@ -118,6 +119,8 @@ public class NetworkGameManager : NetworkManager
 
     public override void OnClientConnect(NetworkConnection conn)
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         base.OnClientConnect(conn);
 
         Debug.Log("Connected: " + conn.connectionId);
@@ -126,6 +129,8 @@ public class NetworkGameManager : NetworkManager
 
     public override void OnServerConnect(NetworkConnection conn)
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         m_SpawnPlayers = false;
         base.OnServerConnect(conn);
 

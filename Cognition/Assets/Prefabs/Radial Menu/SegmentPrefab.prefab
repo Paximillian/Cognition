@@ -305,6 +305,9 @@ MonoBehaviour:
   m_ItemIcon: {fileID: 114345276664210538}
   m_DisabledBackgroundImage: {fileID: 114941113738707304}
   m_CostText: {fileID: 114440379886026338}
+  m_CostIcon: {fileID: 114376234802005996}
+  m_CostIconAvailableColor: {r: 0.44705883, g: 0.52156866, b: 1, a: 1}
+  m_CostIconNoResourcesColor: {r: 0.9117647, g: 0.3352076, b: 0.3352076, a: 1}
 --- !u!114 &114941113738707304
 MonoBehaviour:
   m_ObjectHideFlags: 1
