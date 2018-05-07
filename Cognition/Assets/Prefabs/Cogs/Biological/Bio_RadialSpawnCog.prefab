@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 114203716819608566}
   - component: {fileID: 114071602997291880}
   - component: {fileID: 114243322393808914}
+  - component: {fileID: 114062923823080050}
   m_Layer: 0
   m_Name: Bio_RadialSpawnCog
   m_TagString: Untagged
@@ -1125,6 +1126,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114062923823080050
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295058665275452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c8dbf68a19a2499d04dc58113e7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 8
+  m_TargetType: 0
 --- !u!114 &114071602997291880
 MonoBehaviour:
   m_ObjectHideFlags: 3

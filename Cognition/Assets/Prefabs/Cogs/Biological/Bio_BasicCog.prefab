@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 114494997201909354}
   - component: {fileID: 114496515361831890}
   - component: {fileID: 114119121024089996}
+  - component: {fileID: 114542594231575270}
   m_Layer: 0
   m_Name: Bio_BasicCog
   m_TagString: Untagged
@@ -1320,6 +1321,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795ec2ad569117d40b13ce740f7928fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114542594231575270
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583108104991436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c8dbf68a19a2499d04dc58113e7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 8
+  m_TargetType: 0
 --- !u!198 &198420189845067630
 ParticleSystem:
   m_ObjectHideFlags: 1

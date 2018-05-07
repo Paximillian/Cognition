@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114720832928875724}
   - component: {fileID: 114842139161372810}
   - component: {fileID: 114000391186879136}
+  - component: {fileID: 114989851257362000}
   m_Layer: 0
   m_Name: Bio_LeechingCog
   m_TagString: Untagged
@@ -632,6 +633,19 @@ MonoBehaviour:
   m_Keyword: 4
   m_TargetType: 1
   m_HealAmount: 1
+--- !u!114 &114989851257362000
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1295058665275452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6c8dbf68a19a2499d04dc58113e7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 8
+  m_TargetType: 0
 --- !u!198 &198098979324599054
 ParticleSystem:
   m_ObjectHideFlags: 1
