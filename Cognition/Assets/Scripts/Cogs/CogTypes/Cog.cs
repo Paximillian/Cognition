@@ -54,7 +54,14 @@ public abstract class Cog : NetworkBehaviour
 
     [SerializeField]
     private float m_hp = 10f;
-    public float HP { get { return m_hp; } }
+    public float HP
+    {
+        get { return m_hp; }
+        private set
+        {
+            m_hp = value;
+        }
+    }
 
     [SerializeField] private ParticleSystem m_conflictParticles;
 
@@ -193,6 +200,9 @@ public abstract class Cog : NetworkBehaviour
     }
     protected CogAbilityManager m_CogAbilityManager;
 
+    [SerializeField]
+    private string m_CogName;
+
     /// <summary>
     /// A textual description of the functionality of this cog.
     /// </summary>
@@ -207,7 +217,7 @@ public abstract class Cog : NetworkBehaviour
     {
         get
         {
-            return $"{m_Description}{Environment.NewLine}" +
+            return $"<b>{m_CogName}</b>{Environment.NewLine}{m_Description}{Environment.NewLine}" +
                       string.Join($"{Environment.NewLine}{Environment.NewLine}", 
                                    CogAbilityManager.CogAbilities
                                                     .Where(ability => !(ability is IGameMechanicAbility))
@@ -224,7 +234,7 @@ public abstract class Cog : NetworkBehaviour
         PropagationStrategy = GetComponent<PropagationStrategy>();
         m_CogAbilityManager = GetComponent<CogAbilityManager>();
     }
-
+    
     [ServerCallback]
     protected virtual void Update()
     {
@@ -353,14 +363,14 @@ public abstract class Cog : NetworkBehaviour
     [Server]
     public void Heal(int healAmount)
     {
-        m_hp = Mathf.Min(m_initialhp, m_hp + healAmount);
+        HP = Mathf.Min(m_initialhp, HP + healAmount);
     }
 
     [Server]
     public void DealDamage(float damage)
     {
-        m_hp -= damage;
-        if (m_hp <= 0f)
+        HP -= damage;
+        if (HP <= 0f)
         {
             StartCoroutine(DestroyCogAfterFrame());
             transform.position = Vector3.one * -1337;
@@ -383,7 +393,7 @@ public abstract class Cog : NetworkBehaviour
     public void ResetCog()
     {
         IsInitialized = false;
-        m_hp = m_initialhp;
+        HP = m_initialhp;
         StopConflicted();
 
         UpdateSpin(Spin = 0f);
