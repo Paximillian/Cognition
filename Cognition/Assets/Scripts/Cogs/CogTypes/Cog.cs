@@ -60,6 +60,12 @@ public abstract class Cog : NetworkBehaviour
         private set
         {
             m_hp = value;
+
+            //TODO: Change to appropriate implementation when Amir's damage shader is ready.
+            foreach (Renderer rend in GetComponentsInChildren<Renderer>())
+            {
+                rend.material.SetFloat("_DamageAmount", Mathf.Clamp(1 - m_hp / m_initialhp, 0, 1));
+            }
         }
     }
 
