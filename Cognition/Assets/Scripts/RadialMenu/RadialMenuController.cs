@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -361,6 +362,9 @@ public class RadialMenuController : Singleton<RadialMenuController>
         {
             if (i_pointerData.button == PointerEventData.InputButton.Left)
             {
+                //TODO: Change to actual code once Amir adds an outline to the tile's shader.
+                m_CurrentlySelectedTile?.transform.GetComponentsInChildren<Transform>(true).First(trans => trans.gameObject.name.Equals("Outline")).gameObject.SetActive(false);
+
                 m_CurrentlySelectedTile = null;
                 m_isChoosing = false;
                 m_MenuParent.SetActive(false);
@@ -404,6 +408,9 @@ public class RadialMenuController : Singleton<RadialMenuController>
             turnOffAllItemsHightlight();
             m_mouseStartPos = i_pointerData.position;
             m_MenuParent.transform.localPosition = m_mouseStartPos - new Vector2(Screen.width / 2, Screen.height / 2);
+
+            //TODO: Change to actual code once Amir adds an outline to the tile's shader.
+            m_CurrentlySelectedTile.transform.GetComponentsInChildren<Transform>(true).First(trans => trans.gameObject.name.Equals("Outline")).gameObject.SetActive(true);
 
             checkAllCogBuildingLimitations();
         }

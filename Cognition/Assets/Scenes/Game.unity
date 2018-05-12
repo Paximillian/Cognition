@@ -1195,6 +1195,7 @@ MonoBehaviour:
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_CogName: 
   m_Description: 
 --- !u!114 &135806020
 MonoBehaviour:
@@ -3984,6 +3985,7 @@ MonoBehaviour:
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_CogName: 
   m_Description: 
 --- !u!114 &596070929
 MonoBehaviour:
@@ -6733,6 +6735,7 @@ MonoBehaviour:
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_CogName: 
   m_Description: 
 --- !u!114 &947374290
 MonoBehaviour:
@@ -7915,6 +7918,11 @@ Prefab:
         type: 2}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687132811367930, guid: 218d6ab8c53934e41bf8fdf4c937a869,
+        type: 2}
+      propertyPath: m_UiScaleMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 218d6ab8c53934e41bf8fdf4c937a869, type: 2}
@@ -12623,6 +12631,7 @@ MonoBehaviour:
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_CogName: 
   m_Description: 
 --- !u!114 &1749692588
 MonoBehaviour:
@@ -13773,6 +13782,7 @@ MonoBehaviour:
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_CogName: 
   m_Description: 
 --- !u!114 &1908670600
 MonoBehaviour:
@@ -15698,6 +15708,7 @@ MonoBehaviour:
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_CogName: 
   m_Description: 
 --- !u!114 &2119683323
 MonoBehaviour:
