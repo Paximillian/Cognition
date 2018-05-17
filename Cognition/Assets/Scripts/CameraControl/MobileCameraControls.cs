@@ -12,6 +12,8 @@ public class MobileCameraControls : ICameraControls
     private Vector3 m_LastTouchPosition;
     private float m_LastZoomFingerDistance;
 
+    public CameraModes Mode;
+
     public Vector2 GetPosition()
     {
         return new Vector2(Input.touches.Average(touch => touch.position.x),
@@ -20,25 +22,58 @@ public class MobileCameraControls : ICameraControls
 
     public Vector2 GetPanDelta()
     {
-        Vector2 delta = Vector2.zero;
-
-        Vector3 currentPos = Input.touchCount > 0 ? GetPosition()
-                                                  : Vector2.zero;
-
-        if (Input.touchCount == 2 && Input.GetTouch(1).phase != TouchPhase.Began)
+        if (Mode == CameraModes.Regular)
         {
-            Vector3 currWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(currentPos.x, currentPos.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
-            Vector3 lastPos = Camera.main.ScreenToWorldPoint(new Vector3(m_LastTouchPosition.x, m_LastTouchPosition.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
+            Vector2 delta = Vector2.zero;
 
-            delta = new Vector2((currWorldPos - lastPos).x, (currWorldPos - lastPos).z);
+            Vector3 currentPos = Input.touchCount > 0 ? GetPosition()
+                                                      : Vector2.zero;
+
+            if (Input.touchCount == 2 && Input.GetTouch(1).phase != TouchPhase.Began)
+            {
+                Vector3 currWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(currentPos.x, currentPos.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
+                Vector3 lastPos = Camera.main.ScreenToWorldPoint(new Vector3(m_LastTouchPosition.x, m_LastTouchPosition.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
+
+                delta = new Vector2((currWorldPos - lastPos).x, (currWorldPos - lastPos).z);
+            }
+
+            m_LastTouchPosition = currentPos;
+
+            return -delta; //Dragging in the moving direction was driving me crazy :) 
         }
+        else if(Mode == CameraModes.SingleFinger){
+            if (RadialMenuController.Instance.RadialMenuActive) { return Vector2.zero; }
+            Vector2 delta = Vector2.zero;
 
-        m_LastTouchPosition = currentPos;
+            Vector3 currentPos = Input.touchCount > 0 ? Input.GetTouch(0).position
+                                                      : Vector2.zero;
 
-        return delta;
+            if (Input.touchCount == 1 && Input.GetTouch(0).phase != TouchPhase.Began)
+            {
+                Vector3 currWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(currentPos.x, currentPos.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
+                Vector3 lastPos = Camera.main.ScreenToWorldPoint(new Vector3(m_LastTouchPosition.x, m_LastTouchPosition.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
+
+                delta = new Vector2((currWorldPos - lastPos).x, (currWorldPos - lastPos).z);
+            }
+
+            m_LastTouchPosition = currentPos;
+
+            return -delta; 
+        }
+        //else if (Mode == CameraModes.Joystick)
+        //{
+        //    
+        //}
+        //else if (Mode == CameraModes.ModeSwitch)
+        //{
+        //    
+        //}
+        //
+
+        return Vector2.zero;
     }
 
-    public float GetZoomDelta()
+        public float GetZoomDelta()
     {
         float delta = 0;
 
@@ -58,5 +93,17 @@ public class MobileCameraControls : ICameraControls
         }
         
         return delta * k_ZoomSensitivity;
+    }
+
+    public void SetMode(CameraModes mode)
+    {
+        this.Mode = mode;
+        if (mode == CameraModes.SingleFinger)
+        {
+            CameraController.radialMenuDelay = 0.2f;
+        }
+        else {
+            CameraController.radialMenuDelay = 0f;
+        }
     }
 }

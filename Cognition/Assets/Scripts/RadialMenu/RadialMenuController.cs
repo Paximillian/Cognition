@@ -49,6 +49,8 @@ public class RadialMenuController : Singleton<RadialMenuController>
     private float m_MinLineDrawDistance;
     
     private bool m_isChoosing = false;
+
+    public bool RadialMenuActive { get { return m_isChoosing; } }
     private Vector2 m_mouseStartPos;
 
     private RadialMenuSegment[] m_menuSegments;
@@ -396,11 +398,14 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
     private IEnumerator delayedShowMenu(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(CameraController.radialMenuDelay);
+        yield return new WaitForEndOfFrame(); //Why is this needed?
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
 
-        if (i_pointerData.button == PointerEventData.InputButton.Left && Input.touchCount <= 1)
+        
+        if (i_pointerData.button == PointerEventData.InputButton.Left && Input.touchCount <= 1 
+            && Vector2.Distance(Input.GetTouch(0).position, i_pointerData.position) < m_MinLineDrawDistance)
         {
             m_CurrentlySelectedTile = i_SelectedTile;
             m_isChoosing = true;

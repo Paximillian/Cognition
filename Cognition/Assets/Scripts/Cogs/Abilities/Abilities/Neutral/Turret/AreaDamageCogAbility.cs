@@ -29,5 +29,6 @@ public class AreaDamageCogAbility : CooldownableCogAbility
 
     protected override void triggerVisuals(Cog invokingCog)
     {
+        TriggeringCog.Animator.SetTrigger("Drop");
     }
 }
