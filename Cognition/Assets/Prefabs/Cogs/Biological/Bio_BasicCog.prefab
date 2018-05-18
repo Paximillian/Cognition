@@ -1271,7 +1271,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114119121024089996
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1583108104991436}
@@ -1316,7 +1316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cost: 7
-  m_Cooldown: 5
+  m_Cooldown: 1
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
   m_initialhp: 3
@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &114496515361831890
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1583108104991436}
@@ -1397,7 +1397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &114542594231575270
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1583108104991436}

@@ -10553,7 +10553,22 @@ Prefab:
     - target: {fileID: 114598300715649784, guid: 9e14ac95ded09774185ea75d513fea03,
         type: 2}
       propertyPath: m_Damage
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198100987441226884, guid: 9e14ac95ded09774185ea75d513fea03,
+        type: 2}
+      propertyPath: randomSeed
+      value: 863973319
+      objectReference: {fileID: 0}
+    - target: {fileID: 198100987441226884, guid: 9e14ac95ded09774185ea75d513fea03,
+        type: 2}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 198100987441226884, guid: 9e14ac95ded09774185ea75d513fea03,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9e14ac95ded09774185ea75d513fea03, type: 2}
