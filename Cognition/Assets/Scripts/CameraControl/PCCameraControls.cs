@@ -9,6 +9,8 @@ public class PCCameraControls : ICameraControls
 
     private Vector3 m_LastMousePosition = Vector3.zero;
 
+    public CameraModes Mode;
+
     public Vector2 GetPosition()
     {
         return Input.mousePosition;
@@ -28,11 +30,16 @@ public class PCCameraControls : ICameraControls
 
         m_LastMousePosition = Input.mousePosition;
 
-        return delta;
+        return - delta; //Dragging in the moving direction was driving me crazy :)
     }
 
     public float GetZoomDelta()
     {
         return Input.mouseScrollDelta.y * k_ScrollSensitivity;
+    }
+
+    public void SetMode(CameraModes mode)
+    {
+        this.Mode = mode;
     }
 }

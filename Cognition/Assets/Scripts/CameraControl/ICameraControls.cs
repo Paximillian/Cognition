@@ -7,4 +7,5 @@ public interface ICameraControls
     float GetZoomDelta();
     Vector2 GetPosition();
     Vector2 GetPanDelta();
+    void SetMode(CameraModes mode);
 }

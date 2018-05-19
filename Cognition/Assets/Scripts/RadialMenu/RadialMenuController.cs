@@ -13,7 +13,13 @@ public class RadialMenuController : Singleton<RadialMenuController>
     /// <summary>
     /// If floating over a menu item for a greater amount of seconds than this, a tooltip would show up to give details of the selected cog.
     /// </summary>
-    private float k_TooltipShowDelay = 1;
+    private const float k_TooltipShowDelay = 1;
+
+    /// <summary>
+    /// A short delay between the time a tile is selected and the time when the radial menu opens over it.
+    /// This is to avoid conflict with camera related gestures.
+    /// </summary>
+    private const float k_RadialMenuOpenDelay = 0.2f;
 
     /// <summary>
     /// The items to choose from in the radial menu
@@ -46,10 +52,11 @@ public class RadialMenuController : Singleton<RadialMenuController>
     
     [Tooltip("The minimum distance you need to move the finger from center to make an item highlighted")]
     [SerializeField]
-    private float m_MinLineDrawDistance;
+    private float m_MinItemSelectionDistance = 110;
     
-    private bool m_isChoosing = false;
-    private Vector2 m_mouseStartPos;
+    private bool m_isChoosingCogType = false;
+
+    private Vector2 m_PointerStartPos;
 
     private RadialMenuSegment[] m_menuSegments;
 
@@ -68,6 +75,12 @@ public class RadialMenuController : Singleton<RadialMenuController>
     /// Should we cancel the tooltip timer that's currently ongoing?
     /// </summary>
     private bool m_CancelTooltip;
+    private bool m_MenuStartCancelled;
+
+    /// <summary>
+    /// Is the radial menu currently being used.
+    /// </summary>
+    public bool IsActive { get { return m_isChoosingCogType; } }
     #endregion Variables
 
     #region UnityMethods
@@ -122,7 +135,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
     private void setupItems()
     {
         turnOffAllItemsHightlight();
-        m_isChoosing = false;
+        m_isChoosingCogType = false;
         m_MenuParent.SetActive(false);
         m_numOfItems = m_Items.Length;
         m_segmentStartEndAngles = new Vector2[m_numOfItems];
@@ -180,6 +193,11 @@ public class RadialMenuController : Singleton<RadialMenuController>
         }
     }
 
+    internal void OnStay(PointerEventData eventData, HexTile hexTile)
+    {
+        throw new NotImplementedException();
+    }
+
     private void turnOffAllItemsHightlight()
     {
         if (m_menuSegments == null) return;
@@ -193,7 +211,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
     private void setPosition()
     {
-        m_MenuParent.transform.position = m_mouseStartPos;
+        m_MenuParent.transform.position = m_PointerStartPos;
     }
 
     /// <summary>
@@ -265,7 +283,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
     private void cancelBuild()
     {
         m_CurrentlySelectedTile = null;
-        m_isChoosing = false;
+        m_isChoosingCogType = false;
         m_CurrentlySelectedCog = null;
         m_MenuParent.SetActive(false);
     }
@@ -366,7 +384,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
                 m_CurrentlySelectedTile?.transform.GetComponentsInChildren<Transform>(true).First(trans => trans.gameObject.name.Equals("Outline")).gameObject.SetActive(false);
 
                 m_CurrentlySelectedTile = null;
-                m_isChoosing = false;
+                m_isChoosingCogType = false;
                 m_MenuParent.SetActive(false);
 
                 if (m_CurrentlySelectedCog &&
@@ -396,18 +414,19 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
     private IEnumerator delayedShowMenu(PointerEventData i_pointerData, HexTile i_SelectedTile)
     {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
+        m_MenuStartCancelled = false;
+        m_PointerStartPos = i_pointerData.position;
+        yield return new WaitForSeconds(k_RadialMenuOpenDelay);
 
-        if (i_pointerData.button == PointerEventData.InputButton.Left && Input.touchCount <= 1)
+        //Check if we're still trying to show the menu, meaning still only 1 touch is made and it was fairly static during the delay before showing the menu.
+        if (i_pointerData.button == PointerEventData.InputButton.Left && Input.touchCount <= 1 && !m_MenuStartCancelled)
         {
             m_CurrentlySelectedTile = i_SelectedTile;
-            m_isChoosing = true;
+            m_isChoosingCogType = true;
             m_MenuParent.SetActive(true);
             turnOffAllItemsHightlight();
-            m_mouseStartPos = i_pointerData.position;
-            m_MenuParent.transform.localPosition = m_mouseStartPos - new Vector2(Screen.width / 2, Screen.height / 2);
+            m_PointerStartPos = i_pointerData.position;
+            m_MenuParent.transform.localPosition = Camera.main.WorldToScreenPoint(m_CurrentlySelectedTile.transform.position) - new Vector3(Screen.width / 2, Screen.height / 2);
 
             //TODO: Change to actual code once Amir adds an outline to the tile's shader.
             m_CurrentlySelectedTile.transform.GetComponentsInChildren<Transform>(true).First(trans => trans.gameObject.name.Equals("Outline")).gameObject.SetActive(true);
@@ -428,15 +447,15 @@ public class RadialMenuController : Singleton<RadialMenuController>
         {
             if (i_pointerData.button == PointerEventData.InputButton.Left)
             {
-                if (m_isChoosing)
+                if (m_isChoosingCogType)
                 {
-                    Vector2 v = i_pointerData.position - m_mouseStartPos;
+                    Vector2 v = i_pointerData.position - m_PointerStartPos;
                     float angleRadians = Mathf.Atan2(v.y, v.x);
                     float angleDegrees = angleRadians * Mathf.Rad2Deg;
 
                     if (angleDegrees < 0) angleDegrees += 360;
 
-                    float distance = Vector2.Distance(m_mouseStartPos, i_pointerData.position);
+                    float distance = Vector2.Distance(m_PointerStartPos, i_pointerData.position);
 
                     for (int i = 0; i < m_numOfItems; i++)
                     {
@@ -444,7 +463,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
                         {
                             if (angleDegrees > m_segmentStartEndAngles[i].x && angleDegrees < m_segmentStartEndAngles[i].y)
                             {
-                                if (distance > m_MinLineDrawDistance)
+                                if (distance > m_MinItemSelectionDistance)
                                 {
                                     highlightItem(i);
                                 }
@@ -456,7 +475,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
                         }
                         else if ((angleDegrees > m_segmentStartEndAngles[i].x && angleDegrees <= 360) || (angleDegrees < m_segmentStartEndAngles[i].y && angleDegrees >= 0))
                         {
-                            if (distance > m_MinLineDrawDistance)
+                            if (distance > m_MinItemSelectionDistance)
                             {
                                 highlightItem(i);
                             }
@@ -465,6 +484,13 @@ public class RadialMenuController : Singleton<RadialMenuController>
                                 unlightAll();
                             }
                         }
+                    }
+                }
+                else
+                {
+                    if (Vector3.Distance(m_PointerStartPos, i_pointerData.position) >= m_MinItemSelectionDistance)
+                    {
+                        m_MenuStartCancelled = true;
                     }
                 }
             }

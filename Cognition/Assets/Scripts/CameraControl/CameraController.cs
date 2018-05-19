@@ -3,19 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CameraModes { Regular, SingleFinger, Joystick, ModeSwitch}
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
     #region Variables
     private Camera m_Camera;
+    private Camera m_mainCamera;
 
     private ICameraControls m_GestureHandler;
     #endregion Variables
+
+    public void SetMode(int modeNum) {
+        m_GestureHandler.SetMode((CameraModes)modeNum);
+    }
 
     #region UnityMethods
     private void Awake()
     {
         m_Camera = GetComponent<Camera>();
+        m_mainCamera = Camera.main;
 
 #if UNITY_EDITOR
         if (UnityEditor.EditorApplication.isRemoteConnected)
@@ -32,6 +39,8 @@ public class CameraController : MonoBehaviour
         {
             m_GestureHandler = new PCCameraControls();
         }
+
+        m_GestureHandler.SetMode(CameraModes.Regular);
     }
 
     private void Update()
@@ -50,10 +59,10 @@ public class CameraController : MonoBehaviour
         Rect normalizedRectRange = new Rect(0, 0, 1, 1);
         int seenPoints = 0;
 
-        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryRight.position))) { seenPoints++; }
-        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryLeft.position))) { seenPoints++; }
-        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryTop.position))) { seenPoints++; }
-        if (normalizedRectRange.Contains(Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryBottom.position))) { seenPoints++; }
+        if (normalizedRectRange.Contains(m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryRight.position))) { seenPoints++; }
+        if (normalizedRectRange.Contains(m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryLeft.position))) { seenPoints++; }
+        if (normalizedRectRange.Contains(m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryTop.position))) { seenPoints++; }
+        if (normalizedRectRange.Contains(m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryBottom.position))) { seenPoints++; }
 
         return seenPoints;
     }
@@ -98,14 +107,14 @@ public class CameraController : MonoBehaviour
 
         if (panDelta.x > 0)
         {
-            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryRight.position).x > 1)
+            if (m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryRight.position).x > 1)
             {
                 transform.position += Vector3.right * panDelta.x;
             }
         }
         else if (panDelta.x < 0)
         {
-            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryLeft.position).x < 0)
+            if (m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryLeft.position).x < 0)
             {
                 transform.position += Vector3.right * panDelta.x;
             }
@@ -113,14 +122,14 @@ public class CameraController : MonoBehaviour
 
         if (panDelta.y > 0)
         {
-            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryTop.position).y > 1)
+            if (m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryTop.position).y > 1)
             {
                 transform.position += Vector3.forward * panDelta.y;
             }
         }
         else if (panDelta.y < 0)
         {
-            if (Camera.main.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryBottom.position).y < 0)
+            if (m_mainCamera.WorldToViewportPoint(HexGrid.Instance.CameraBoundaryBottom.position).y < 0)
             {
                 transform.position += Vector3.forward * panDelta.y;
             }

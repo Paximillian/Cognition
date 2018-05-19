@@ -17,14 +17,12 @@ public class AreaDamageCogAbility : CooldownableCogAbility
     [SerializeField]
     private float m_Damage = 1;
 
-    private Animator m_Animator;
     private ParticleSystem m_SplashRingParticle;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_Animator = GetComponentInChildren<Animator>();
         m_SplashRingParticle = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(particles => particles.name.Equals("SplashRing"));
     }
 
@@ -46,6 +44,6 @@ public class AreaDamageCogAbility : CooldownableCogAbility
         mainParticleModule.startLifetime = 0.3f * m_DamageRange;
         mainParticleModule.startSize = 10 + (m_DamageRange - 1) * 7;
 
-        m_Animator.SetTrigger("Drop");
+        TriggeringCog.Animator.SetTrigger("Drop");
     }
 }
