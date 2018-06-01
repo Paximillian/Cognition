@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
 #if UNITY_EDITOR
         if (UnityEditor.EditorApplication.isRemoteConnected)
         {
-            m_GestureHandler = new MobileCameraControls();
+            m_GestureHandler = new EditorCameraControls();
         }
         else
 #endif
@@ -39,8 +39,15 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        checkZoom();
-        checkPan();
+        if (!RadialMenuController.Instance.IsActive)
+        {
+            checkZoom();
+            checkPan();
+        }
+        else
+        {
+            m_GestureHandler.CancelGesture();
+        }
     }
     #endregion UnityMethods
 

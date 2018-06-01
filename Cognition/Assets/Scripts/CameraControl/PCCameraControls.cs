@@ -18,7 +18,7 @@ public class PCCameraControls : ICameraControls
     {
         Vector2 delta = Vector2.zero;
 
-        if (Input.GetMouseButton(2) && !Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButton(0) && !Input.GetMouseButtonDown(0) && Input.touchCount == 0) //For whatever reason, mouse button 0 is being registered as true when touching the screen.
         {
             Vector3 currentPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
             Vector3 lastPos = Camera.main.ScreenToWorldPoint(new Vector3(m_LastMousePosition.x, m_LastMousePosition.y, Vector3.Distance(Camera.main.transform.position, Vector3.zero)));
@@ -28,11 +28,16 @@ public class PCCameraControls : ICameraControls
 
         m_LastMousePosition = Input.mousePosition;
 
-        return - delta; //Dragging in the moving direction was driving me crazy :)
+        return -delta;
     }
 
     public float GetZoomDelta()
     {
         return Input.mouseScrollDelta.y * k_ScrollSensitivity;
+    }
+
+    public void CancelGesture()
+    {
+        m_LastMousePosition = Vector3.zero;
     }
 }

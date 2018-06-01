@@ -192,12 +192,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
             cost.transform.eulerAngles = Vector3.zero;
         }
     }
-
-    internal void OnStay(PointerEventData eventData, HexTile hexTile)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     private void turnOffAllItemsHightlight()
     {
         if (m_menuSegments == null) return;
@@ -371,6 +366,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
     {
         Tooltip.Instance.Hide();
         m_CancelTooltip = true;
+        m_MenuStartCancelled = true;
 
         if (Input.touchCount > 1)
         {
