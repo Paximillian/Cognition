@@ -14,10 +14,6 @@ public class CameraController : MonoBehaviour
     private ICameraControls m_GestureHandler;
     #endregion Variables
 
-    public void SetMode(int modeNum) {
-        m_GestureHandler.SetMode((CameraModes)modeNum);
-    }
-
     #region UnityMethods
     private void Awake()
     {
@@ -39,8 +35,6 @@ public class CameraController : MonoBehaviour
         {
             m_GestureHandler = new PCCameraControls();
         }
-
-        m_GestureHandler.SetMode(CameraModes.Regular);
     }
 
     private void Update()
