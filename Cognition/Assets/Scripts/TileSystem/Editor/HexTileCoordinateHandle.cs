@@ -68,7 +68,7 @@ public class HexTileCoordinateHandle : Editor
                                           (tile.transform.position.y + selectedTile.transform.position.y) / 2,
                                           (tile.transform.position.z + selectedTile.transform.position.z) / 2)
                                           + Vector3.up,
-                              HexGrid.Instance.GetDistanceBetween(tile, selectedTile).ToString(),
+                              tile.DistanceTo(selectedTile).ToString(),
                               EditorStyles.boldLabel);
             }
         }

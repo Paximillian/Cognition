@@ -50,12 +50,7 @@ public class HexGrid : Singleton<HexGrid>
     /// A mapping between a coordinate to a tile.
     /// </summary>
     public Dictionary<Vector2Int, HexTile> Grid { get; private set; } = new Dictionary<Vector2Int, HexTile>();
-
-    /// <summary>
-    /// A mapping between a tile to a coordinate.
-    /// </summary>
-    private Dictionary<HexTile, Vector2Int> m_ReverseGrid = new Dictionary<HexTile, Vector2Int>();
-
+    
     private void Start()
     {
         if (Grid.Count == 0)
@@ -87,7 +82,7 @@ public class HexGrid : Singleton<HexGrid>
         }
 
         Grid.Add(i_Coordinates, i_Tile);
-        m_ReverseGrid.Add(i_Tile, i_Coordinates);
+        i_Tile.Coordinates = i_Coordinates;
 
         mapTile(i_Tile.PositiveZNeighbour, i_Coordinates + Vector2Int.up);
         mapTile(i_Tile.NegativeZNeighbour, i_Coordinates - Vector2Int.up);
@@ -95,28 +90,5 @@ public class HexGrid : Singleton<HexGrid>
         mapTile(i_Tile.NegativeXNeighbour, i_Coordinates - Vector2Int.right);
         mapTile(i_Tile.PositiveYNeighbour, i_Coordinates - Vector2Int.right + Vector2Int.up);
         mapTile(i_Tile.NegativeYNeighbour, i_Coordinates + Vector2Int.right - Vector2Int.up);
-    }
-
-    /// <summary>
-    /// Gets the coordinates of the given tile.
-    /// </summary>
-    public Vector2Int GetCoordinatesFor(HexTile i_Tile)
-    {
-        return m_ReverseGrid[i_Tile];
-    }
-
-    /// <summary>
-    /// Gets the distance between the 2 given tiles.
-    /// </summary>
-    public int GetDistanceBetween(HexTile i_Tile1, HexTile i_Tile2)
-    {
-        //To properly calculate the distance, we need to use the z coordinate as well, which we're emitting with our hex system.
-        //However, in this system, x+y+z=0, so the z coordinate can be derived from the x and y values.
-        Vector3Int coordsTile1 = new Vector3Int(i_Tile1.Coordinates.x, i_Tile1.Coordinates.y, -i_Tile1.Coordinates.x - i_Tile1.Coordinates.y);
-        Vector3Int coordsTile2 = new Vector3Int(i_Tile2.Coordinates.x, i_Tile2.Coordinates.y, -i_Tile2.Coordinates.x - i_Tile2.Coordinates.y);
-
-        return Mathf.Max(Mathf.Abs(coordsTile2.x - coordsTile1.x), 
-                         Mathf.Abs(coordsTile2.y - coordsTile1.y), 
-                         Mathf.Abs(coordsTile2.z - coordsTile1.z));
     }
 }

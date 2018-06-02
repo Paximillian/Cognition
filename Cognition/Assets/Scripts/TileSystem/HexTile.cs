@@ -68,7 +68,29 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     /// <summary>
     /// The coordinates of this tile on the grid.
     /// </summary>
-    public Vector2Int Coordinates => HexGrid.Instance.GetCoordinatesFor(this);
+    public Vector2Int Coordinates { get; set; }
+
+    /// <summary>
+    /// To properly calculate the distance, we need to use the z coordinate as well, which we're emitting with our hex system.
+    /// However, in this system, x+y+z=0, so the z coordinate can be derived from the x and y values.
+    /// </summary>
+    private Vector3Int FullCoordinates => new Vector3Int(Coordinates.x, Coordinates.y, -Coordinates.x - Coordinates.y);
+
+    /// <summary>
+    /// Gets the distance between the 2 given tiles.
+    /// </summary>
+    public Func<HexTile, int> DistanceTo
+    {
+        get
+        {
+            return (tile) =>
+            {
+                return Mathf.Max(Mathf.Abs(FullCoordinates.x - tile.FullCoordinates.x),
+                                 Mathf.Abs(FullCoordinates.y - tile.FullCoordinates.y),
+                                 Mathf.Abs(FullCoordinates.z - tile.FullCoordinates.z));
+            };
+        }
+    }
 
     /// <summary>
     /// The tiles neighbouring this tile.
@@ -128,7 +150,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     /// </summary>
     public Func<int, IEnumerable<Cog>> PopulatedNeighborsInDistance =>
         ((distance) => PopulatedNeighborsInRadius(distance)
-                         .Where(cog => HexGrid.Instance.GetDistanceBetween(this, cog.HoldingTile) <= distance));
+                         .Where(cog => this.DistanceTo(cog.HoldingTile) <= distance));
 
     /// <summary>
     /// The cogs on the tiles neighbouring this tile.
