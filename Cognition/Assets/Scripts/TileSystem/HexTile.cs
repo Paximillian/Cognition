@@ -66,6 +66,11 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     private List<HexTile> m_Neighbors;
 
     /// <summary>
+    /// The coordinates of this tile on the grid.
+    /// </summary>
+    public Vector2Int Coordinates => HexGrid.Instance.GetCoordinatesFor(this);
+
+    /// <summary>
     /// The tiles neighbouring this tile.
     /// </summary>
     public List<HexTile> Neighbors 
@@ -108,10 +113,22 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         return resTiles;
     }
 
+    /// <summary>
+    /// Gets all the cogs that are within the given radius from this tile.
+    /// This is different than finding cogs by distance, which only finds cogs that can be reached by an existing path.
+    /// </summary>
     public Func<int, IEnumerable<Cog>> PopulatedNeighborsInRadius =>
         ((radius) => GetHexTilesInRadius(radius - 1)
                         .SelectMany((neighbor) => neighbor.PopulatedNeighbors)
                         .Where(cog => !cog.Equals(ResidentCog)));
+
+    /// <summary>
+    /// Gets all the cogs that are reachable from this cog in the given distance.
+    /// This is different than finding cogs by radius, which can travel over missing tiles.
+    /// </summary>
+    public Func<int, IEnumerable<Cog>> PopulatedNeighborsInDistance =>
+        ((distance) => PopulatedNeighborsInRadius(distance)
+                         .Where(cog => HexGrid.Instance.GetDistanceBetween(this, cog.HoldingTile) <= distance));
 
     /// <summary>
     /// The cogs on the tiles neighbouring this tile.
