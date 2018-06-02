@@ -66,6 +66,33 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     private List<HexTile> m_Neighbors;
 
     /// <summary>
+    /// The coordinates of this tile on the grid.
+    /// </summary>
+    public Vector2Int Coordinates { get; set; }
+
+    /// <summary>
+    /// To properly calculate the distance, we need to use the z coordinate as well, which we're emitting with our hex system.
+    /// However, in this system, x+y+z=0, so the z coordinate can be derived from the x and y values.
+    /// </summary>
+    private Vector3Int FullCoordinates => new Vector3Int(Coordinates.x, Coordinates.y, -Coordinates.x - Coordinates.y);
+
+    /// <summary>
+    /// Gets the distance between the 2 given tiles.
+    /// </summary>
+    public Func<HexTile, int> DistanceTo
+    {
+        get
+        {
+            return (tile) =>
+            {
+                return Mathf.Max(Mathf.Abs(FullCoordinates.x - tile.FullCoordinates.x),
+                                 Mathf.Abs(FullCoordinates.y - tile.FullCoordinates.y),
+                                 Mathf.Abs(FullCoordinates.z - tile.FullCoordinates.z));
+            };
+        }
+    }
+
+    /// <summary>
     /// The tiles neighbouring this tile.
     /// </summary>
     public List<HexTile> Neighbors 
@@ -108,10 +135,22 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
         return resTiles;
     }
 
+    /// <summary>
+    /// Gets all the cogs that are within the given radius from this tile.
+    /// This is different than finding cogs by distance, which only finds cogs that can be reached by an existing path.
+    /// </summary>
     public Func<int, IEnumerable<Cog>> PopulatedNeighborsInRadius =>
         ((radius) => GetHexTilesInRadius(radius - 1)
                         .SelectMany((neighbor) => neighbor.PopulatedNeighbors)
                         .Where(cog => !cog.Equals(ResidentCog)));
+
+    /// <summary>
+    /// Gets all the cogs that are reachable from this cog in the given distance.
+    /// This is different than finding cogs by radius, which can travel over missing tiles.
+    /// </summary>
+    public Func<int, IEnumerable<Cog>> PopulatedNeighborsInDistance =>
+        ((distance) => PopulatedNeighborsInRadius(distance)
+                         .Where(cog => this.DistanceTo(cog.HoldingTile) <= distance));
 
     /// <summary>
     /// The cogs on the tiles neighbouring this tile.
