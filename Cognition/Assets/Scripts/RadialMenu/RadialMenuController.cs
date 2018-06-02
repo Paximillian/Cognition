@@ -336,29 +336,32 @@ public class RadialMenuController : Singleton<RadialMenuController>
     #region PublicMethods
     public void SetItemHighlight(int? index)
     {
-        if (index.HasValue)
+        if (IsActive)
         {
-            for (int i = 0; i < m_menuSegments.Length; i++)
+            if (index.HasValue)
             {
-                if (i == index)
+                for (int i = 0; i < m_menuSegments.Length; i++)
                 {
-                    if (m_menuSegments[i].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Available) ||
-                        m_menuSegments[i].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Coooldown))
+                    if (i == index)
                     {
-                        m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.AddState(RadialMenuSegment.eSegmentState.Highlighted);
-                        m_CurrentlySelectedCog = m_Items[i];
+                        if (m_menuSegments[i].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Available) ||
+                            m_menuSegments[i].CurrentState.CheckState(RadialMenuSegment.eSegmentState.Coooldown))
+                        {
+                            m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.AddState(RadialMenuSegment.eSegmentState.Highlighted);
+                            m_CurrentlySelectedCog = m_Items[i];
+                        }
+                    }
+                    else
+                    {
+                        m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.Highlighted);
                     }
                 }
-                else
-                {
-                    m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.Highlighted);
-                }
             }
-        }
-        else
-        {
-            Tooltip.Instance.Hide();
-            m_CancelTooltip = true;
+            else
+            {
+                Tooltip.Instance.Hide();
+                m_CancelTooltip = true;
+            }
         }
     }
 
@@ -392,6 +395,8 @@ public class RadialMenuController : Singleton<RadialMenuController>
                 }
             }
         }
+
+        m_CurrentlySelectedCog = null;
     }
 
     public void OnPointerDown(PointerEventData i_pointerData, HexTile i_SelectedTile)
