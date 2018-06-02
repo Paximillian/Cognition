@@ -7,6 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Grid system reference: http://keekerdc.com/2011/03/hexagon-grids-coordinate-systems-and-distance-calculations/
 /// </summary>
+[ExecuteInEditMode]
 public class HexGrid : Singleton<HexGrid>
 {
     [SerializeField]
@@ -57,7 +58,10 @@ public class HexGrid : Singleton<HexGrid>
 
     private void Start()
     {
-        setupGridCoordinates();
+        if (Grid.Count == 0)
+        {
+            setupGridCoordinates();
+        }
     }
 
     private void setupGridCoordinates()
