@@ -92,7 +92,7 @@ Material:
     - _LightPositionX: 1
     - _LightPositionY: 1
     - _LightPositionZ: -0.5
-    - _Light_X: 1
+    - _Light_X: 0
     - _Light_Y: 1
     - _Light_Z: -1
     - _Metallic: 0
