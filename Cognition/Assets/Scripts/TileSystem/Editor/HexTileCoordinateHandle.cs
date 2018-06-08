@@ -31,7 +31,7 @@ public class HexTileCoordinateHandle : Editor
             if (tile.Coordinates.x % renderDistance == 0)
             {
                 Handles.color = Color.black;
-                Handles.Label(tile.transform.position + Vector3.left, tile.Coordinates.ToString());
+                Handles.Label(tile.transform.position + Vector3.left, tile.Coordinates.ToString(), EditorStyles.label);
             }
         }
     }

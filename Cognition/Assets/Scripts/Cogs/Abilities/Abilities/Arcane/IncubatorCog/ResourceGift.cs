@@ -1,13 +1,26 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ResourceGift : CogAbility
 {
+    [Tooltip("How many resources does this give if blown immediately")]
     [SerializeField]
-    private int m_ResourceAmount = 100;
+    private int m_BaseResourceAmount = 1;
+
+    [Tooltip("A text object representing how many resources this cog gives at the moment")]
+    [SerializeField]
+    private TMP_Text m_CurrentResourceCountDisplay;
+
+    private int m_ResourceAmount;
+    public int ResourceAmount
+    {
+        get { return m_ResourceAmount; }
+        private set { m_CurrentResourceCountDisplay.text = (m_ResourceAmount = value).ToString(); }
+    }
 
     public override string Description
     {
@@ -17,6 +30,16 @@ public class ResourceGift : CogAbility
         }
     }
 
+    private void OnEnable()
+    {
+        ResourceAmount = m_BaseResourceAmount;
+    }
+
+    public void AddResources(int i_ResourceGainPerTick)
+    {
+        ResourceAmount += i_ResourceGainPerTick;
+    }
+
     protected override bool canTrigger()
     {
         return true;
@@ -24,7 +47,7 @@ public class ResourceGift : CogAbility
 
     protected override void triggerLogic(Cog invokingCog)
     {
-        (TriggeringCog as PlayableCog).OwningPlayer.Resources += m_ResourceAmount;
+        (TriggeringCog as PlayableCog).OwningPlayer.Resources += ResourceAmount;
     }
 
     protected override void triggerVisuals(Cog invokingCog)
