@@ -53,7 +53,11 @@ public class RadialMenuController : Singleton<RadialMenuController>
     [Tooltip("The minimum distance you need to move the finger from center to make an item highlighted")]
     [SerializeField]
     private float m_MinItemSelectionDistance = 110;
-    
+
+    [Tooltip("The line renderer object used to point from the menu to the tile it's about to build on")]
+    [SerializeField]
+    private LineRenderer m_LineRenderer;
+
     private bool m_isChoosingCogType = false;
 
     private Vector2 m_PointerStartPos;
@@ -147,6 +151,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
         for (int i = 0; i < m_numOfItems; i++)
         {
             GameObject newSegment = Instantiate(m_SegmentPrefab, m_MenuParent.transform);
+            newSegment.transform.SetAsFirstSibling();
             newSegment.transform.localPosition = new Vector2(0, 0);
             RadialMenuSegment newSegImg = newSegment.GetComponent<RadialMenuSegment>();
             Image icon = newSegImg.ItemIcon;
@@ -426,8 +431,34 @@ public class RadialMenuController : Singleton<RadialMenuController>
             m_isChoosingCogType = true;
             m_MenuParent.SetActive(true);
             turnOffAllItemsHightlight();
-            m_PointerStartPos = i_pointerData.position;
             m_MenuParent.transform.localPosition = Camera.main.WorldToScreenPoint(m_CurrentlySelectedTile.transform.position) - new Vector3(Screen.width / 2, Screen.height / 2);
+            Vector3 tilePosition = m_MenuParent.transform.position;
+
+            //Fixes the menu position to fit inside the screen.
+            Rect normalizedRectRange = new Rect(0, 0, 1, 1);
+            Vector3[] corners = new Vector3[4];
+            (m_MenuParent.transform as RectTransform).GetWorldCorners(corners);
+            corners = corners.Select(corner => Camera.main.ScreenToViewportPoint(corner)).ToArray();
+
+            while (corners.Any(corner => !normalizedRectRange.Contains(corner)))
+            {
+                if (corners.Any(corner => corner.x < 0)) { m_MenuParent.transform.position += Vector3.right * 10; }
+                if (corners.Any(corner => corner.x > 1)) { m_MenuParent.transform.position += Vector3.left * 10; }
+                if (corners.Any(corner => corner.y < 0)) { m_MenuParent.transform.position += Vector3.up * 10; }
+                if (corners.Any(corner => corner.y > 1)) { m_MenuParent.transform.position += Vector3.down * 10; }
+
+                (m_MenuParent.transform as RectTransform).GetWorldCorners(corners);
+                corners = corners.Select(corner => Camera.main.ScreenToViewportPoint(corner)).ToArray();
+            }
+            
+            //Draws a line that shows us which tile is affected by the menu.
+            m_LineRenderer.SetPositions(new Vector3[] {
+                Camera.main.ScreenToWorldPoint(tilePosition),
+                Camera.main.ScreenToWorldPoint(m_MenuParent.transform.position)
+            });
+
+            m_PointerStartPos = new Vector3(m_MenuParent.transform.position.x, m_MenuParent.transform.position.y);
+            Debug.Log(m_PointerStartPos + " " + i_pointerData.position);
 
             //TODO: Change to actual code once Amir adds an outline to the tile's shader.
             m_CurrentlySelectedTile.transform.GetComponentsInChildren<Transform>(true).First(trans => trans.gameObject.name.Equals("Outline")).gameObject.SetActive(true);

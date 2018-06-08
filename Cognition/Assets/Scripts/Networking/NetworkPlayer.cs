@@ -177,7 +177,7 @@ public class NetworkPlayer : NetworkBehaviour
             } while (startPositions?.Length == 0);
 
             //Sets the player's position
-            startPositions[s_LoadedPlayers].gameObject.GetComponentInChildren<SetInGameNickname>().SetInGameName(isLocalPlayer);
+            startPositions[s_LoadedPlayers].gameObject.GetComponentInChildren<SetInGameNickname>(true).SetInGameName(isLocalPlayer);
             transform.position = startPositions[s_LoadedPlayers++].transform.position;
             m_PlayerId = s_LoadedPlayers;
 

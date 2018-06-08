@@ -9,6 +9,7 @@ public class ResourceGift : CogAbility
 {
     [Tooltip("How many resources does this give if blown immediately")]
     [SerializeField]
+    [Range(0, 100)]
     private int m_BaseResourceAmount = 1;
 
     [Tooltip("A text object representing how many resources this cog gives at the moment")]

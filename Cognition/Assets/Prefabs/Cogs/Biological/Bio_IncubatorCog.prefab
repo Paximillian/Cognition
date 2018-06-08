@@ -408,7 +408,6 @@ GameObject:
   - component: {fileID: 224455287244417664}
   - component: {fileID: 223837967922811414}
   - component: {fileID: 114761690878049884}
-  - component: {fileID: 114773168810270234}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -865,7 +864,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -133.1, y: 5.6429234, z: -14.581009}
+  m_LocalPosition: {x: 37.873203, y: -19.486124, z: -77.484375}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4257534565031414}
@@ -1501,22 +1500,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114773168810270234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1774383409567940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114783200862515592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1564,6 +1547,7 @@ MonoBehaviour:
   m_TargetType: 0
   m_Cooldown: 2
   m_ResourceGainPerTick: 1
+  m_MaxResources: 200
 --- !u!198 &198098979324599054
 ParticleSystem:
   m_ObjectHideFlags: 1

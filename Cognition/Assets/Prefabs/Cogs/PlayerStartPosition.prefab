@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1787226716998062
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Cost: 5
+  m_Cooldown: 5
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
   m_initialhp: 10
@@ -244,6 +245,8 @@ MonoBehaviour:
   m_conflictParticles: {fileID: 0}
   m_Sprite: {fileID: 0}
   m_spin: 0
+  m_CogName: 
+  m_Description: 
 --- !u!114 &114958315632530304
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,10 +9,12 @@ public class ResourceGiftAccumulator : CooldownableCogAbility
 
     [SerializeField]
     [Tooltip("The amount of resources added to this cog every time this effect is triggered")]
+    [Range(1, 10)]
     private int m_ResourceGainPerTick;
 
     [SerializeField]
     [Tooltip("The maximum amount of resources the cog can accumulate")]
+    [Range(10, 500)]
     private int m_MaxResources;
 
     public override string Description
