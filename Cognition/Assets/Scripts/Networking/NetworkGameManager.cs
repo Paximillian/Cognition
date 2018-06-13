@@ -72,6 +72,11 @@ public class NetworkGameManager : NetworkManager
     private bool m_IsHostingMatch;
 
     /// <summary>
+    /// If true, whenever we fail to find a joinable match, we'll create one of our own automatically.
+    /// </summary>
+    private bool m_ShouldHostIfNoMatchesFound;
+
+    /// <summary>
     /// We keep this once we start hosting a match so that we can make sure we're not trying to join our own match.
     /// </summary>
     private ulong m_HostedMatchId;
@@ -160,20 +165,22 @@ public class NetworkGameManager : NetworkManager
 
     #region EntryPoints
     /// <summary>
+    /// Hosts a game.
+    /// </summary>
+    public void HostGame()
+    {
+        setupGameSearch();
+        
+        createMatch();
+    }
+
+    /// <summary>
     /// Initializes looking for a match.
     /// </summary>
-    public void LookForGame()
+    public void LookForGame(bool i_HostIfNoMatchesFound = true)
     {
-        if (matchMaker == null)
-        {
-            StartMatchMaker();
-        }
-
-        m_ActiveConnections.Clear();
-        m_HostedMatchId = (ulong)NetworkID.Invalid;
-        m_CancelledMatchmaking = false;
-        m_ShouldLookForMatchToJoin = true;
-        m_OnMatchSearchStarted?.Invoke();
+        setupGameSearch();
+        m_ShouldHostIfNoMatchesFound = i_HostIfNoMatchesFound;
 
         StartCoroutine(lookForGame());
     }
@@ -189,6 +196,23 @@ public class NetworkGameManager : NetworkManager
     #endregion EntryPoints
 
     #region PrivateMethods
+    /// <summary>
+    /// Sets up the parameters needed to look for a new game.
+    /// </summary>
+    private void setupGameSearch()
+    {
+        if (matchMaker == null)
+        {
+            StartMatchMaker();
+        }
+
+        m_ActiveConnections.Clear();
+        m_HostedMatchId = (ulong)NetworkID.Invalid;
+        m_CancelledMatchmaking = false;
+        m_ShouldLookForMatchToJoin = true;
+        m_OnMatchSearchStarted?.Invoke();
+    }
+
     /// <summary>
     /// We'll actively look for a match alongside creating one and waiting for someone to join ours.
     /// </summary>
@@ -218,10 +242,17 @@ public class NetworkGameManager : NetworkManager
         yield return new WaitForEndOfFrame();
         yield return null; yield return null;
 
-        yield return matchMaker.SetMatchAttributes(matchInfo.networkId, false, 0, Matchmaker_OnAttributeSet);
-        yield return matchMaker.DropConnection(matchInfo.networkId, NodeID.Invalid, 0, Matchmaker_OnConnectionDropped);
+        if (matchInfo != null)
+        {
+            yield return matchMaker.SetMatchAttributes(matchInfo.networkId, false, 0, Matchmaker_OnAttributeSet);
+            yield return matchMaker.DropConnection(matchInfo.networkId, NodeID.Invalid, 0, Matchmaker_OnConnectionDropped);
 
-        StopHost();
+            StopHost();
+
+            matchInfo = null;
+        }
+
+        m_OnMatchSearchFailed?.Invoke();
     }
 
     /// <summary>
@@ -272,7 +303,7 @@ public class NetworkGameManager : NetworkManager
                 closeHost();
                 StartClient(foundMatch);
             }
-            else
+            else if(m_ShouldHostIfNoMatchesFound)
             {
                 m_ShouldLookForMatchToJoin = true;
 
