@@ -68,7 +68,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _HighlightIntensity: 1
-    - _Light_X: 1
+    - _Light_X: 0
     - _Light_Y: 1
     - _Light_Z: -1
     - _Metallic: 0
