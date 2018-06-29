@@ -76,7 +76,7 @@ public abstract class CogAbility : NetworkBehaviour
     {
         TriggeringCog = GetComponent<Cog>();
     }
-
+    
 #if UNITY_EDITOR
     private void OnValidate()
     {
@@ -191,7 +191,7 @@ public abstract class CogAbility : NetworkBehaviour
         NetworkInstanceId invokerNetId = reader.ReadNetworkId();
         Cog invokingCog = ClientScene.FindLocalObject(invokerNetId).GetComponent<Cog>();
 
-        triggerVisuals(invokingCog);
+        (obj as CogAbility).triggerVisuals(invokingCog);
     }
     #endregion NetworkMethods
 

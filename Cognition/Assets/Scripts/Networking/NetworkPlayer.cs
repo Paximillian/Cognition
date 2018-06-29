@@ -102,6 +102,11 @@ public class NetworkPlayer : NetworkBehaviour
         StartCoroutine(updateInitialPosition());
     }
 
+    private void OnDestroy()
+    {
+        s_LoadedPlayers = 0;
+    }
+
     public override void OnStartClient()
     {
         base.OnStartClient();
