@@ -1993,7 +1993,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Keyword: 6
   m_TargetType: 0
-  m_conflictDamage: 1
+  m_Cooldown: 0.1
+  m_conflictDamage: 0.1
 --- !u!114 &114173501525364648
 MonoBehaviour:
   m_ObjectHideFlags: 1

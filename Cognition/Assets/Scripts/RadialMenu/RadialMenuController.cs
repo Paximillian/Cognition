@@ -458,7 +458,6 @@ public class RadialMenuController : Singleton<RadialMenuController>
             });
 
             m_PointerStartPos = new Vector3(m_MenuParent.transform.position.x, m_MenuParent.transform.position.y);
-            Debug.Log(m_PointerStartPos + " " + i_pointerData.position);
 
             //TODO: Change to actual code once Amir adds an outline to the tile's shader.
             m_CurrentlySelectedTile.transform.GetComponentsInChildren<Transform>(true).First(trans => trans.gameObject.name.Equals("Outline")).gameObject.SetActive(true);

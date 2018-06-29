@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConflictDamageCogAbility : CogAbility, IGameMechanicAbility
+public class ConflictDamageCogAbility : CooldownableCogAbility, IGameMechanicAbility
 {
-
-    /// <summary>
-    /// How many resources are generated each time.
-    /// </summary>
     [SerializeField]
     [Range(0, 10)]
-    [Tooltip("How much damage is dealt per second of conflict?")]
-    private float m_conflictDamage = 1f;
+    [Tooltip("How much damage is dealt per tick of conflict?")]
+    private double m_conflictDamage = 1f;
 
     public override string Description
     {
@@ -20,15 +16,10 @@ public class ConflictDamageCogAbility : CogAbility, IGameMechanicAbility
             return base.Description + "Causes damage to this cog while it is in a conflict.";
         }
     }
-
-    protected override bool canTrigger()
-    {
-        return true;
-    }
-
+    
     protected override void triggerLogic(Cog invokingCog)
     {
-        TriggeringCog.DealDamage(m_conflictDamage * Time.deltaTime);
+        TriggeringCog.DealDamage(m_conflictDamage);
     }
 
     protected override void triggerVisuals(Cog invokingCog)

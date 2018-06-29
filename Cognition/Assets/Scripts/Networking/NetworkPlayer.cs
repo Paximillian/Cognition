@@ -318,10 +318,11 @@ public class NetworkPlayer : NetworkBehaviour
             {
                 cog.gameObject.SetActive(false);
             }
-        }
-        if (i_Tile.DrivingCog)
-        {
-            cog.RequestUpdateSpin(1f);//TODO make this place a value in accordance to spin wanted
+
+            if (i_Tile.DrivingCog)
+            {
+                cog.RequestUpdateSpin(1f);//TODO make this place a value in accordance to spin wanted
+            }
         }
 
         return cog;

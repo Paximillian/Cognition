@@ -204,7 +204,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     {
         if (!isServer)
         {
-            ResidentCog.UpdateSpin(ResidentCog.Spin = 0);
+            ResidentCog?.UpdateSpin(ResidentCog.Spin = 0);
         }
 
         ResidentCog = null;
