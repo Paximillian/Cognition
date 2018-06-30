@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 public class ResourceGift : CogAbility
@@ -16,11 +17,17 @@ public class ResourceGift : CogAbility
     [SerializeField]
     private TMP_Text m_CurrentResourceCountDisplay;
 
+    [SyncVar(hook = "onResourceAmountChanged")]
     private int m_ResourceAmount;
     public int ResourceAmount
     {
         get { return m_ResourceAmount; }
-        private set { m_CurrentResourceCountDisplay.text = (m_ResourceAmount = value).ToString(); }
+        private set { m_ResourceAmount = value; }
+    }
+    private void onResourceAmountChanged(int i_NewResourceCount)
+    {
+        m_ResourceAmount = i_NewResourceCount;
+        m_CurrentResourceCountDisplay.text = m_ResourceAmount.ToString();
     }
 
     public override string Description

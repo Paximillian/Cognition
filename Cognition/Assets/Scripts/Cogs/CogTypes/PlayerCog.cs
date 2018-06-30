@@ -11,7 +11,10 @@ public class PlayerCog : PlayableCog
     {
         base.Start();
 
-        StartCoroutine(serverCheckConflictedCogsDestruction());
+        if (isServer)
+        {
+            StartCoroutine(serverCheckConflictedCogsDestruction());
+        }
     }
 
     /// <summary>
