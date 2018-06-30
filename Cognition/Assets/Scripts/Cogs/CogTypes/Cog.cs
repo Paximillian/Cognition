@@ -122,6 +122,11 @@ public abstract class Cog : NetworkBehaviour
     public PropagationStrategy PropagationStrategy { get; private set; }
 
     /// <summary>
+    /// This list holds all of the cogs that need to be destroyed after the next propagation pass.
+    /// </summary>
+    protected static HashSet<Cog> CogsMarkedForDestruction { get; private set; } = new HashSet<Cog>();
+
+    /// <summary>
     /// The players that are powering this cog.
     /// This is different than the OwningPlayer property by that this also applies to neutral cogs like the resources or the goal cogs.
     /// </summary>
@@ -249,6 +254,10 @@ public abstract class Cog : NetworkBehaviour
         {
             HP = InitialHP;
         }
+    }
+
+    protected virtual void Start()
+    {
     }
 
     [ServerCallback]
@@ -388,17 +397,8 @@ public abstract class Cog : NetworkBehaviour
         HP -= damage;
         if (HP <= 0 + k_FloatingPointError)
         {
-            StartCoroutine(DestroyCogAfterFrame());
-            transform.position = Vector3.one * -1337;
+            CogsMarkedForDestruction.Add(this);
         }
-    }
-
-    IEnumerator DestroyCogAfterFrame()
-    {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-
-        DestroyCog();
     }
 
     public void DestroyCog()
