@@ -1,0 +1,320 @@
+fileFormatVersion: 2
+guid: e6ed12bf94c5719479e212fee8ec296d
+timeCreated: 1530549932
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Bone
+    100002: Bone.003
+    100004: Bone.003_end
+    100006: Crystal_Eye_A
+    100008: Crystal_Eye_B
+    100010: Cube
+    100012: Cube.001
+    100014: Cube.002
+    100016: EarTooth.L
+    100018: EarTooth.L_end
+    100020: EarTooth.R
+    100022: EarTooth.R_end
+    100024: eye.L
+    100026: eye.L_end
+    100028: eye.R
+    100030: eye.R_end
+    100032: mainRotator
+    100034: //RootNode
+    100036: Thing_BottomMesh
+    100038: Thing_TopMesh
+    100040: Tooth
+    100042: Tooth.001
+    100044: Tooth.001_end
+    100046: Tooth.002
+    100048: Tooth.002_end
+    100050: Tooth.003
+    100052: Tooth.003_end
+    100054: Tooth.004
+    100056: Tooth.004_end
+    100058: Tooth.005
+    100060: Tooth.005_end
+    100062: Tooth_end
+    100064: Tooth_Mesh
+    100066: Tooth_Mesh.001
+    100068: Tooth_Mesh.002
+    100070: Tooth_Mesh.003
+    100072: Tooth_Mesh.004
+    400000: Bone
+    400002: Bone.003
+    400004: Bone.003_end
+    400006: Crystal_Eye_A
+    400008: Crystal_Eye_B
+    400010: Cube
+    400012: Cube.001
+    400014: Cube.002
+    400016: EarTooth.L
+    400018: EarTooth.L_end
+    400020: EarTooth.R
+    400022: EarTooth.R_end
+    400024: eye.L
+    400026: eye.L_end
+    400028: eye.R
+    400030: eye.R_end
+    400032: mainRotator
+    400034: //RootNode
+    400036: Thing_BottomMesh
+    400038: Thing_TopMesh
+    400040: Tooth
+    400042: Tooth.001
+    400044: Tooth.001_end
+    400046: Tooth.002
+    400048: Tooth.002_end
+    400050: Tooth.003
+    400052: Tooth.003_end
+    400054: Tooth.004
+    400056: Tooth.004_end
+    400058: Tooth.005
+    400060: Tooth.005_end
+    400062: Tooth_end
+    400064: Tooth_Mesh
+    400066: Tooth_Mesh.001
+    400068: Tooth_Mesh.002
+    400070: Tooth_Mesh.003
+    400072: Tooth_Mesh.004
+    2100000: Mat_Arcane_Basic
+    2300000: Crystal_Eye_A
+    2300002: Crystal_Eye_B
+    2300004: Cube
+    2300006: Cube.001
+    2300008: Cube.002
+    2300010: Thing_BottomMesh
+    2300012: Thing_TopMesh
+    2300014: Tooth_Mesh
+    2300016: Tooth_Mesh.001
+    2300018: Tooth_Mesh.002
+    2300020: Tooth_Mesh.003
+    2300022: Tooth_Mesh.004
+    3300000: Crystal_Eye_A
+    3300002: Crystal_Eye_B
+    3300004: Cube
+    3300006: Cube.001
+    3300008: Cube.002
+    3300010: Thing_BottomMesh
+    3300012: Thing_TopMesh
+    3300014: Tooth_Mesh
+    3300016: Tooth_Mesh.001
+    3300018: Tooth_Mesh.002
+    3300020: Tooth_Mesh.003
+    3300022: Tooth_Mesh.004
+    4300000: Thing_BottomMesh
+    4300002: Thing_TopMesh
+    4300004: Crystal_Eye_A
+    4300006: Tooth_Mesh.001
+    4300008: Crystal_Eye_B
+    4300010: Tooth_Mesh
+    4300012: Tooth_Mesh.004
+    4300014: Tooth_Mesh.003
+    4300016: Tooth_Mesh.002
+    4300018: Cube
+    4300020: Cube.001
+    4300022: Cube.002
+    7400000: arcane_Basic|Engage
+    7400002: arcane_Basic|Idle
+    7400004: arcane_Basic|rotate_CCW
+    7400006: arcane_Basic|rotate_CW
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Arcane_Basic
+    second: {fileID: 2100000, guid: 4d2fc643b69f0794c9e3772720ca3a50, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: arcane_Basic|Engage
+      takeName: arcane_Basic|Engage
+      firstFrame: 0
+      lastFrame: 9
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: arcane_Basic|Idle
+      takeName: arcane_Basic|Idle
+      firstFrame: 0
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: arcane_Basic|rotate_CCW
+      takeName: arcane_Basic|rotate_CCW
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: arcane_Basic|rotate_CW
+      takeName: arcane_Basic|rotate_CW
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
