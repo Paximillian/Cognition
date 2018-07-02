@@ -20,6 +20,5 @@ public class NamesManager : MonoBehaviour {
             Destroy(gameObject);
             Debug.LogWarning("Tried to make second instance of NamesManager, Game object destroyed.");
         }
-        DontDestroyOnLoad(gameObject);
     }
 }

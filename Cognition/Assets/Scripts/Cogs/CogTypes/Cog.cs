@@ -12,6 +12,11 @@ public abstract class Cog : NetworkBehaviour
 {
     #region Variables
     /// <summary>
+    /// Aggregating floating point values can sometime result in a very small error, but that error builds up and can result in missing calculations such as the death of a cog.
+    /// </summary>
+    private const double k_FloatingPointError = 0.1E-04;
+
+    /// <summary>
     /// The index of the next cog to be created.
     /// </summary>
     private static int s_CogIndex = 0;
@@ -39,7 +44,7 @@ public abstract class Cog : NetworkBehaviour
     /// </summary>
     [Tooltip("Maximum build range away from other cogs beloning to the same player")]
     [SerializeField]
-    [BuildRange(0,5)]
+    [BuildRange(0, 5)]
     private int m_buildRange = 1;
     public int BuildRange { get { return m_buildRange; } }
 
@@ -49,27 +54,27 @@ public abstract class Cog : NetworkBehaviour
     public HexTile HoldingTile { get { return m_HoldingTile; } set { m_HoldingTile = value; } }
 
     [SerializeField]
-    private float m_initialhp = 10f;
-    public float InitialHP { get { return m_initialhp; } }
+    private double m_initialhp = 10f;
+    public double InitialHP { get { return m_initialhp; } }
 
+    [SyncVar(hook = "onHpChanged")]
     [SerializeField]
-    private float m_hp = 10f;
-    public float HP
+    [ReadOnly]
+    private double m_hp = 10f;
+    public double HP { get { return m_hp; } private set { m_hp = value; } }
+    private void onHpChanged(double i_Hp)
     {
-        get { return m_hp; }
-        private set
-        {
-            m_hp = value;
+        m_hp = i_Hp;
 
-            //TODO: Change to appropriate implementation when Amir's damage shader is ready.
-            foreach (Renderer rend in GetComponentsInChildren<Renderer>())
-            {
-                rend.material.SetFloat("_DamageAmount", Mathf.Clamp(1 - m_hp / m_initialhp, 0, 1));
-            }
+        //TODO: Change to appropriate implementation when Amir's damage shader is ready.
+        foreach (Renderer rend in GetComponentsInChildren<Renderer>())
+        {
+            rend.material.SetFloat("_DamageAmount", Mathf.Clamp((float)(1 - m_hp / m_initialhp), 0, 1));
         }
     }
 
-    [SerializeField] private ParticleSystem m_conflictParticles;
+    [SerializeField]
+    private ParticleSystem m_conflictParticles;
 
     [SerializeField]
     private Sprite m_Sprite;
@@ -95,11 +100,11 @@ public abstract class Cog : NetworkBehaviour
     /// Has the build process of this cog completed?
     /// </summary>
     protected bool IsInitialized { get; private set; }
-    
+
     /// <summary>
     /// The cogs that are placed in neighbouring hex cells to this one.
     /// </summary>
-    public IEnumerable<Cog> Neighbors => HoldingTile.PopulatedNeighbors; 
+    public IEnumerable<Cog> Neighbors => HoldingTile.PopulatedNeighbors;
 
     /// <summary>
     /// The cogs that are neighbours both for this tile as well as the given tile.
@@ -115,6 +120,11 @@ public abstract class Cog : NetworkBehaviour
     /// The strategy this cog takes when dealing with propagating the spin of the machine.
     /// </summary>
     public PropagationStrategy PropagationStrategy { get; private set; }
+
+    /// <summary>
+    /// This list holds all of the cogs that need to be destroyed after the next propagation pass.
+    /// </summary>
+    protected static HashSet<Cog> CogsMarkedForDestruction { get; private set; } = new HashSet<Cog>();
 
     /// <summary>
     /// The players that are powering this cog.
@@ -141,9 +151,9 @@ public abstract class Cog : NetworkBehaviour
     /// Once the list changes, we'll convert it to a json, which will be synced as a syncvar, and once it's received, we'll deserialize it back to an actual list.
     /// </summary>
     #region OccupyingPlayersSyncing
-    [SyncVar(hook ="updateOccupyingPlayers")]
+    [SyncVar(hook = "updateOccupyingPlayers")]
     private string m_OccupyingPlayersString;
-    
+
     /// <summary>
     /// Converts the player list to a list of ids and converts it to a json that will be stored in the syncvar.
     /// </summary>
@@ -185,7 +195,7 @@ public abstract class Cog : NetworkBehaviour
             m_OccupyingPlayers = new HashSet<NetworkPlayer>(idList.Select(id => ClientScene.FindLocalObject(id)?.GetComponent<NetworkPlayer>()));
             yield return new WaitForEndOfFrame();
         }
-        while(m_OccupyingPlayers.Contains(null));
+        while (m_OccupyingPlayers.Contains(null));
     }
     #endregion OccupyingPlayersSyncing
 
@@ -224,7 +234,7 @@ public abstract class Cog : NetworkBehaviour
         get
         {
             return $"<b>{m_CogName}</b>{Environment.NewLine}{m_Description}{Environment.NewLine}" +
-                      string.Join($"{Environment.NewLine}{Environment.NewLine}", 
+                      string.Join($"{Environment.NewLine}{Environment.NewLine}",
                                    CogAbilityManager.CogAbilities
                                                     .Where(ability => !(ability is IGameMechanicAbility))
                                                     .Select(ability => ability.Description));
@@ -239,8 +249,17 @@ public abstract class Cog : NetworkBehaviour
         Animator = GetComponentInChildren<Animator>();
         PropagationStrategy = GetComponent<PropagationStrategy>();
         m_CogAbilityManager = GetComponent<CogAbilityManager>();
+
+        if (isServer)
+        {
+            HP = InitialHP;
+        }
     }
-    
+
+    protected virtual void Start()
+    {
+    }
+
     [ServerCallback]
     protected virtual void Update()
     {
@@ -369,28 +388,21 @@ public abstract class Cog : NetworkBehaviour
     [Server]
     public void Heal(int healAmount)
     {
-        HP = Mathf.Min(m_initialhp, HP + healAmount);
+        HP = Math.Min(m_initialhp, HP + healAmount);
     }
 
     [Server]
-    public void DealDamage(float damage)
+    public void DealDamage(double damage)
     {
         HP -= damage;
-        if (HP <= 0f)
+        if (HP <= 0 + k_FloatingPointError)
         {
-            StartCoroutine(DestroyCogAfterFrame());
-            transform.position = Vector3.one * -1337;
+            CogsMarkedForDestruction.Add(this);
         }
     }
 
-    IEnumerator DestroyCogAfterFrame() {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-
-        DestroyCog();
-    }
-
-    public void DestroyCog() {
+    public void DestroyCog()
+    {
         m_HoldingTile.DestroyCog();
         Rpc_KillCog();
     }
@@ -430,7 +442,7 @@ public abstract class Cog : NetworkBehaviour
 
         Animator?.SetFloat("Spin", Spin);
     }
-    
+
     virtual public void MakeConflicted(Cog i_ConflictingCog)
     {
         if (!m_Conflicted)
@@ -483,17 +495,4 @@ public abstract class Cog : NetworkBehaviour
         m_conflictParticles.gameObject.SetActive(false);
     }
     #endregion PublicMethods
-
-    #region PrivateMethods
-    private IEnumerator dealConflictDamage(float damage = 1f)
-    {
-        while (m_Conflicted)
-        {
-            DealDamage(Time.deltaTime * damage);
-            yield return new WaitForEndOfFrame();
-        }
-
-        StopConflicted();
-    }
-    #endregion PrivateMethods
 }

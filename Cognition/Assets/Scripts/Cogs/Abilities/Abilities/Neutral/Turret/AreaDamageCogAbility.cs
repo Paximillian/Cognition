@@ -15,7 +15,7 @@ public class AreaDamageCogAbility : CooldownableCogAbility
 
     [Tooltip("How much damage does this deal?")]
     [SerializeField]
-    private float m_Damage = 1;
+    private double m_Damage = 1;
 
     private ParticleSystem m_SplashRingParticle;
 

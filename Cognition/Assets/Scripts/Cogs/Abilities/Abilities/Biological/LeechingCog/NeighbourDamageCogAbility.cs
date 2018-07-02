@@ -6,7 +6,7 @@ using UnityEngine;
 public class NeighbourDamageCogAbility : CogAbility
 {
     [SerializeField]
-    private float m_Damage;
+    private double m_Damage;
 
     public override string Description
     {

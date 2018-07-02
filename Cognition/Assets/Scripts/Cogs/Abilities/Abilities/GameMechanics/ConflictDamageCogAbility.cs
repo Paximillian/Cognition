@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConflictDamageCogAbility : CogAbility, IGameMechanicAbility
+public class ConflictDamageCogAbility : CooldownableCogAbility, IGameMechanicAbility
 {
+    private const float k_DamageTickCooldown = 0.1f;
+    public static float DamageTickCooldown { get { return k_DamageTickCooldown; } }
 
-    /// <summary>
-    /// How many resources are generated each time.
-    /// </summary>
     [SerializeField]
     [Range(0, 10)]
-    [Tooltip("How much damage is dealt per second of conflict?")]
-    private float m_conflictDamage = 1f;
+    [Tooltip("How much damage is dealt per tick of conflict?")]
+    private double m_conflictDamage = 1f;
+    public double ConflictDamage { get { return m_conflictDamage; } }
+
+    protected new float Cooldown { get { return DamageTickCooldown; } }
 
     public override string Description
     {
@@ -21,14 +23,9 @@ public class ConflictDamageCogAbility : CogAbility, IGameMechanicAbility
         }
     }
 
-    protected override bool canTrigger()
-    {
-        return true;
-    }
-
     protected override void triggerLogic(Cog invokingCog)
     {
-        TriggeringCog.DealDamage(m_conflictDamage * Time.deltaTime);
+        TriggeringCog.DealDamage(m_conflictDamage);
     }
 
     protected override void triggerVisuals(Cog invokingCog)

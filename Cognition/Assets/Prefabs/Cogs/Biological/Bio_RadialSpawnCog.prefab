@@ -1200,7 +1200,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114062923823080050
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_TargetType: 0
 --- !u!114 &114071602997291880
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_TargetType: 0
 --- !u!114 &114203716819608566
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -1237,7 +1237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Keyword: 6
   m_TargetType: 0
-  m_conflictDamage: 1
+  m_Cooldown: 0.1
+  m_conflictDamage: 0.1
 --- !u!114 &114211795047338420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1251,7 +1252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &114243322393808914
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}

@@ -595,7 +595,7 @@ MonoBehaviour:
   m_InterpolateMovement: 1
 --- !u!114 &114615133138620420
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -622,7 +622,7 @@ MonoBehaviour:
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
   m_initialhp: 4
-  m_hp: 4
+  m_hp: 10
   m_conflictParticles: {fileID: 198949925887819904}
   m_Sprite: {fileID: 21300000, guid: 0a8a9c54610d206479f0993b82ba97b8, type: 3}
   m_spin: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114720832928875724
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -643,7 +643,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Keyword: 6
   m_TargetType: 0
-  m_conflictDamage: 1
+  m_Cooldown: 0.1
+  m_conflictDamage: 0.1
 --- !u!114 &114783200862515592
 MonoBehaviour:
   m_ObjectHideFlags: 1

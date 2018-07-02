@@ -555,7 +555,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114000391186879136
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_InterpolateMovement: 1
 --- !u!114 &114615133138620420
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114720832928875724
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -660,7 +660,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Keyword: 6
   m_TargetType: 0
-  m_conflictDamage: 1
+  m_Cooldown: 0.1
+  m_conflictDamage: 0.1
 --- !u!114 &114783200862515592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -695,7 +696,7 @@ MonoBehaviour:
   m_LocalPlayerAuthority: 0
 --- !u!114 &114842139161372810
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -709,7 +710,7 @@ MonoBehaviour:
   m_HealAmount: 1
 --- !u!114 &114989851257362000
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}

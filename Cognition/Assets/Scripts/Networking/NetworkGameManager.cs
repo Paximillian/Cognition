@@ -86,6 +86,11 @@ public class NetworkGameManager : NetworkManager
     /// </summary>
     private List<int> m_ActiveConnections = new List<int>();
 
+    /// <summary>
+    /// The name of the main menu scene to move back to when the game ends.
+    /// </summary>
+    private string m_MainMenuSceneName;
+
     public string LocalIP
     {
         get
@@ -107,6 +112,7 @@ public class NetworkGameManager : NetworkManager
     #region UnityMethods
     private void Start()
     {
+        m_MainMenuSceneName = SceneManager.GetActiveScene().name;
         Screen.sleepTimeout = SleepTimeout.SystemSetting;
         StartMatchMaker();
     }
@@ -161,9 +167,42 @@ public class NetworkGameManager : NetworkManager
 
         m_SpawnPlayers = true;
     }
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        base.OnServerDisconnect(conn);
+
+        QuitGame();
+    }
+
+    public override void OnClientDisconnect(NetworkConnection conn)
+    {
+        base.OnClientDisconnect(conn);
+
+        QuitGame();
+    }
     #endregion UnityMethods
 
     #region EntryPoints
+    public void QuitGame()
+    {
+        if (NetworkPlayer.LocalPlayer.isServer)
+        {
+            StopHost();
+        }
+        else
+        {
+            StopClient();
+        }
+        
+        foreach (DontDestroyOnGameLoad persistentObject in GameObject.FindObjectsOfType<DontDestroyOnGameLoad>())
+        {
+            Destroy(persistentObject.gameObject);
+        }
+
+        SceneManager.LoadScene(m_MainMenuSceneName);
+    }
+
     /// <summary>
     /// Hosts a game.
     /// </summary>

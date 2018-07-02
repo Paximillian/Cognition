@@ -8,9 +8,9 @@ public abstract class CooldownableCogAbility : CogAbility
 {
     #region Variables
     /// <summary>
-    /// When true, the next time this is invoked, we'll
+    /// When true, the next time this is ability is invoked, we'll let it pass through; Otherwise, it's still on cooldown.
     /// </summary>
-    private bool m_ReadyToTrigger = false;
+    private bool m_ReadyToTrigger = true;
 
     /// <summary>
     /// Amount of seconds between triggers of the effect.
@@ -23,10 +23,9 @@ public abstract class CooldownableCogAbility : CogAbility
     #endregion Variables
 
     #region UnityMethods
-    [ServerCallback]
-    protected virtual void Start()
+    private void OnEnable()
     {
-        StartCoroutine(cooldownTicker());
+        m_ReadyToTrigger = true;
     }
     #endregion UnityMethods
 
