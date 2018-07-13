@@ -95,26 +95,40 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
     private void OnEnable()
     {
-        NetworkPlayer.LocalPlayer.ResourcesChanged += LocalPlayer_OnResourcesChanged;
-        NetworkPlayer.LocalPlayer.CogBuilt += LocalPlayer_OnCogBuilt;
+        StartCoroutine(setupMenuEvents());
     }
 
     private void OnDisable()
     {
         m_HoveredItemIndex = null;
         m_CurrentlySelectedCog = null;
-        NetworkPlayer.LocalPlayer.ResourcesChanged -= LocalPlayer_OnResourcesChanged;
-        NetworkPlayer.LocalPlayer.CogBuilt -= LocalPlayer_OnCogBuilt;
+
+        if (NetworkPlayer.LocalPlayer)
+        {
+            NetworkPlayer.LocalPlayer.ResourcesChanged -= LocalPlayer_OnResourcesChanged;
+            NetworkPlayer.LocalPlayer.CogBuilt -= LocalPlayer_OnCogBuilt;
+        }
     }
     #endregion UnityMethods
 
     #region PrivateMethods
+    private IEnumerator setupMenuEvents()
+    {
+        while (NetworkPlayer.LocalPlayer == null)
+        {
+            yield return null;
+        }
+
+        NetworkPlayer.LocalPlayer.ResourcesChanged += LocalPlayer_OnResourcesChanged;
+        NetworkPlayer.LocalPlayer.CogBuilt += LocalPlayer_OnCogBuilt;
+    }
+
     /// <summary>
     /// Counts the cooldown for the given item.
     /// </summary>
     private IEnumerator cooldownCountFor(int? m_HoveredItemIndex)
     {
-        if (m_HoveredItemIndex.HasValue)
+        if (m_HoveredItemIndex.HasValue && m_Items[m_HoveredItemIndex.Value] != null)
         {
             float time = Time.time;
             float timeAtLastFrame = time;
@@ -159,10 +173,8 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
             m_cutAngles[i] = oneSegment * i;
             newSegImg.DisabledBackgroundImage.fillMethod = newSegImg.BackgroundImage.fillMethod = Image.FillMethod.Radial360;
-            newSegImg.BackgroundImage.fillAmount = 1 / (360 / (oneSegment - (m_SpaceBetweenSegments / 2)));
+            newSegImg.FillAmount = 1 / (360 / (oneSegment - (m_SpaceBetweenSegments / 2)));
             newSegImg.DisabledBackgroundImage.fillAmount = 0;
-            icon.sprite = m_Items[i].Sprite;
-            cost.text = m_Items[i].Cost.ToString();
 
             float startPos = 0;
             float endPos = 0;
@@ -194,13 +206,30 @@ public class RadialMenuController : Singleton<RadialMenuController>
             icon.transform.RotateAround(transform.position, Vector3.forward, -oneSegment);
 
             icon.transform.eulerAngles = Vector3.zero;
-            cost.transform.eulerAngles = Vector3.zero;
+
+            if (m_Items[i] != null)
+            {
+                icon.sprite = m_Items[i].Sprite;
+                cost.text = m_Items[i].Cost.ToString();
+
+                cost.transform.eulerAngles = Vector3.zero;
+            }
+            else
+            {
+                newSegImg.CostIcon.gameObject.SetActive(false);
+            }
+
+            newSegImg.FillAmount = newSegImg.FillAmount;
         }
     }
     
     private void turnOffAllItemsHightlight()
     {
-        if (m_menuSegments == null) return;
+        if (m_menuSegments == null)
+        {
+            return;
+        }
+
         foreach (RadialMenuSegment image in m_menuSegments)
         {
             image.CurrentState = image.CurrentState.RemoveState(RadialMenuSegment.eSegmentState.Highlighted);
@@ -239,13 +268,16 @@ public class RadialMenuController : Singleton<RadialMenuController>
     {
         for (int i = 0; i < m_menuSegments.Length; ++i)
         {
-            if (!NetworkPlayer.LocalPlayer.CanBuildCog(m_CurrentlySelectedTile, m_Items[i]))
+            if (m_Items[i] != null)
             {
-                m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.AddState(RadialMenuSegment.eSegmentState.OutOfRange);
-            }
-            else
-            {
-                m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.OutOfRange);
+                if (!NetworkPlayer.LocalPlayer.CanBuildCog(m_CurrentlySelectedTile, m_Items[i]))
+                {
+                    m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.AddState(RadialMenuSegment.eSegmentState.OutOfRange);
+                }
+                else
+                {
+                    m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.OutOfRange);
+                }
             }
         }
     }
@@ -257,13 +289,16 @@ public class RadialMenuController : Singleton<RadialMenuController>
     {
         for (int i = 0; i < m_menuSegments.Length; ++i)
         {
-            if (m_Items[i].Cost > i_NewResourceCount)
+            if (m_Items[i] != null)
             {
-                m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.AddState(RadialMenuSegment.eSegmentState.NotEnoughResources);
-            }
-            else
-            {
-                m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.NotEnoughResources);
+                if (m_Items[i].Cost > i_NewResourceCount)
+                {
+                    m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.AddState(RadialMenuSegment.eSegmentState.NotEnoughResources);
+                }
+                else
+                {
+                    m_menuSegments[i].CurrentState = m_menuSegments[i].CurrentState.RemoveState(RadialMenuSegment.eSegmentState.NotEnoughResources);
+                }
             }
         }
     }
@@ -302,8 +337,11 @@ public class RadialMenuController : Singleton<RadialMenuController>
         {
             if (selectedCogIndex == m_HoveredItemIndex && selectedCogIndex.HasValue)
             {
-                Tooltip.Instance.Show();
-                Tooltip.Instance.SetText(m_Items[selectedCogIndex.Value].Description);
+                if (m_Items[selectedCogIndex.Value] != null)
+                {
+                    Tooltip.Instance.Show();
+                    Tooltip.Instance.SetText(m_Items[selectedCogIndex.Value].Description);
+                }
             }
         }
     }

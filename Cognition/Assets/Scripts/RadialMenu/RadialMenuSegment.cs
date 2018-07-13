@@ -51,6 +51,8 @@ public class RadialMenuSegment : MonoBehaviour
     private Image m_CostIcon;
     public Image CostIcon { get { return m_CostIcon; } }
 
+    public float FillAmount { get { return m_BackgroundImage.fillAmount; } set { m_BackgroundImage.fillAmount = value; fixIconLocation(m_ItemIcon); fixIconLocation(m_CostIcon); } }
+    
     [SerializeField]
     private Color m_CostIconAvailableColor, m_CostIconNoResourcesColor;
     #endregion Variables
@@ -61,7 +63,8 @@ public class RadialMenuSegment : MonoBehaviour
     /// </summary>
     private void updateState(eSegmentState i_NewState)
     {
-        if (!BackgroundImage) { return;  }
+        if (!BackgroundImage || !CostIcon) { return;  }
+
         if (i_NewState.CheckState(eSegmentState.OutOfRange))
         {
             BackgroundImage.color = Color.black;
@@ -90,7 +93,35 @@ public class RadialMenuSegment : MonoBehaviour
         }
     }
     #endregion PublicMethods
+
+    #region PrivateMethods
+    private void fixIconLocation(Image icon)
+    {
+        float iconDistRadius = Vector3.Distance(transform.position, icon.transform.position);
+        icon.transform.position = transform.position;
+        Vector3 iconPlacementVector = Quaternion.AngleAxis(m_BackgroundImage.fillAmount / 2 * 360, Vector3.forward) * transform.right;
+
+        icon.transform.position += iconPlacementVector * iconDistRadius;
+    }
+    #endregion PrivateMethods
 }
+
+[UnityEditor.CustomEditor(typeof(RadialMenuSegment))]
+public class RadialMenuSegmentTest : UnityEditor.Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        if (GUILayout.Button("Fix"))
+        {
+            RadialMenuSegment segment = target as RadialMenuSegment;
+
+            segment.FillAmount = segment.FillAmount;
+        }
+    }
+}
+
 public static class SegmentStateExtensions
 {
     /// <summary>
