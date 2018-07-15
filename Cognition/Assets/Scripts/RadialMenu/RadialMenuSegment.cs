@@ -106,6 +106,7 @@ public class RadialMenuSegment : MonoBehaviour
     #endregion PrivateMethods
 }
 
+#if UNITY_EDITOR
 [UnityEditor.CustomEditor(typeof(RadialMenuSegment))]
 public class RadialMenuSegmentTest : UnityEditor.Editor
 {
@@ -121,6 +122,7 @@ public class RadialMenuSegmentTest : UnityEditor.Editor
         }
     }
 }
+#endif
 
 public static class SegmentStateExtensions
 {

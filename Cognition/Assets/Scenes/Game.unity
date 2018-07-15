@@ -13104,6 +13104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda2c14bd054898449a44a235f809e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ClosestZoom: 10
+  m_FurthestZoom: 40
+  m_ZoomOffsetMultiplier: 1
 --- !u!1001 &1449450887
 Prefab:
   m_ObjectHideFlags: 0
