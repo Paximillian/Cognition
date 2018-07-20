@@ -3864,6 +3864,7 @@ MonoBehaviour:
   m_spin: 0
   m_CogName: Basic
   m_Description: 
+  m_Renderer: {fileID: 23400588234683268}
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114239301480245250
@@ -3971,7 +3972,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -264417841
+  randomSeed: 1900064559
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14054,7 +14055,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1156426723
+  randomSeed: 589259259
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -20842,7 +20843,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -210399961
+  randomSeed: 719322498
   InitialModule:
     serializedVersion: 3
     enabled: 1
