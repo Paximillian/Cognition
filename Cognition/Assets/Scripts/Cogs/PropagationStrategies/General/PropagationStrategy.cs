@@ -67,7 +67,7 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// </summary>
     protected virtual bool CheckConfliction(Cog i_AskingCog)
     {
-        return i_AskingCog.Spin == Cog.Spin;
+        return i_AskingCog.Spin != - Cog.Spin;
     }
     #endregion AbstractMethods
 
@@ -100,8 +100,16 @@ public abstract class PropagationStrategy : MonoBehaviour
         bool isConflicted = false;
         HashSet<Cog> conflictingNeighbors = new HashSet<Cog>();
 
-        if (CheckConfliction(i_AskingCog) && ((Cog.Spin != 0f && i_AskingCog.Spin != 0) 
-            || ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog))))
+        //TODO: delete commented out code after regression test
+        //bool a = CheckConfliction(i_AskingCog);
+        //bool b = (Cog.Spin != 0f && i_AskingCog.Spin != 0);
+        //bool c = ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog));
+        //if (CheckConfliction(i_AskingCog) && 
+        //    ((Cog.Spin != 0f && i_AskingCog.Spin != 0)
+        //    || ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog))))
+        if (CheckConfliction(i_AskingCog) &&
+            ((Cog.Spin != 0f && i_AskingCog.Spin != 0) ||
+            ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog))))
         {
             i_AskingCog.MakeConflicted(Cog);
             Cog.MakeConflicted(i_AskingCog);
@@ -206,7 +214,7 @@ public abstract class PropagationStrategy : MonoBehaviour
         onCreateUpdateSpin();
 
         //BFS initialization.
-        frontier.Enqueue(new Tuple<Cog, Cog>(playerBaseCog, null));
+        frontier.Enqueue(new Tuple<Cog, Cog>(Cog, null));
 
         //BFS loop
         do

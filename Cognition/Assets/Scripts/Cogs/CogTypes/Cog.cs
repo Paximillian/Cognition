@@ -267,10 +267,11 @@ public abstract class Cog : NetworkBehaviour
         {
             InvokeSpinAbilities();
 
-            if (m_Conflicted)
-            {
-                InvokeConflictedAbilities();
-            }
+        }
+
+        if (m_Conflicted)
+        {
+            InvokeConflictedAbilities();
         }
     }
     #endregion UnityMethods
