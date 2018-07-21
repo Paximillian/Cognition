@@ -20,19 +20,18 @@ public class DeactivateRelayEffect : CogAbility, IGameMechanicAbility
 
     protected override void triggerLogic(Cog invokingCog)
     {
-        //if (invokingCog.HasSameOwnerAs(TriggeringCog)) {
-        if (Keyword == eCogAbilityKeyword.Winddown)
-        {
-            //(invokingCog as RelayCog)?.DeactivateRelayEffect(null);
-            (TriggeringCog as RelayCog)?.DeactivateRelayEffect(null);
-        }
-        else {
-            (TriggeringCog as RelayCog)?.DeactivateRelayEffect(invokingCog);
-        }
     }
 
     protected override void triggerVisuals(Cog invokingCog)
     {
-        //Camera.main.backgroundColor = new Color(Random.value, Random.value, Random.value);
+        Debug.Log("3 " + name + " " + Keyword);
+        if (Keyword == eCogAbilityKeyword.Winddown)
+        {
+            (TriggeringCog as RelayCog)?.DeactivateRelayEffect(null);
+        }
+        else if (invokingCog is RelayCog)
+        {
+            (TriggeringCog as RelayCog)?.DeactivateRelayEffect(invokingCog as RelayCog);
+        }
     }
 }

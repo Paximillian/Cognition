@@ -280,6 +280,15 @@ public abstract class Cog : NetworkBehaviour
     [ClientRpc]
     private void Rpc_KillCog()
     {
+        ClientKillCog();
+    }
+
+    /// <summary>
+    /// Visually kills the cog on the client's side.
+    /// </summary>
+    [Client]
+    protected virtual void ClientKillCog()
+    {
         gameObject.SetActive(false);
     }
 

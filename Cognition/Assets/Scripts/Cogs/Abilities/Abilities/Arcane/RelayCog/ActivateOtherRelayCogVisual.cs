@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ActivateOtherRelayCogVisual : CogAbility, IGameMechanicAbility
@@ -9,7 +10,7 @@ public class ActivateOtherRelayCogVisual : CogAbility, IGameMechanicAbility
     {
         get
         {
-            return "Gives you a boost of resources when it dies.";
+            return "Displays the visual connection between 2 connected relay cogs.";
         }
     }
 
@@ -40,7 +41,22 @@ public class ActivateOtherRelayCogVisual : CogAbility, IGameMechanicAbility
         yield return null;
         if (invokingCog.HasSameOwnerAs(TriggeringCog))
         {
-            (invokingCog as RelayCog)?.ActivateRelayEffect(TriggeringCog);
+            if (invokingCog.Equals(TriggeringCog))
+            {
+                foreach (Cog cog in (TriggeringCog.PropagationStrategy as RelayCogPropagationStrategy)
+                                                  .Neighbors
+                                                  .Where(cog => cog.HasSameOwnerAs(TriggeringCog)))
+                {
+                    if (cog.Spin != 0 && TriggeringCog.Spin != 0)
+                    {
+                        (cog as RelayCog)?.ActivateRelayEffect(TriggeringCog as RelayCog);
+                    }
+                }
+            }
+            else if (invokingCog?.Spin != 0 && TriggeringCog.Spin != 0)
+            {
+                (invokingCog as RelayCog)?.ActivateRelayEffect(TriggeringCog as RelayCog);
+            }
         }
     }
 }
