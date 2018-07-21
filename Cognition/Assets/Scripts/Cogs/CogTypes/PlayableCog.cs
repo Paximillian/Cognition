@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class PlayableCog : Cog
 {
-    private Renderer m_Renderer;
+    [SerializeField] private Renderer m_Renderer;
     
     /// <summary>
     /// All the friendly neighbours of this cog.
@@ -87,6 +87,9 @@ public class PlayableCog : Cog
     {
         base.Awake();
 
-        m_Renderer = GetComponentInChildren<Renderer>();
+        if (m_Renderer == null)
+        {
+            m_Renderer = GetComponentInChildren<Renderer>();
+        }
     }
 }
