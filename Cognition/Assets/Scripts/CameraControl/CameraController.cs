@@ -16,9 +16,11 @@ public class CameraController : MonoBehaviour
     private Vector3 m_CurrentBoundaryPositionLeft;
     private Vector3 m_ZoomOutOffsetDirection;
 
-    [SerializeField] private float m_ClosestZoom;
-    [SerializeField] private float m_FurthestZoom;
     [SerializeField] private float m_ZoomOffsetMultiplier;
+    [SerializeField]
+    private float m_ZoomSmoothFactor = 1f;
+
+    private float m_previousFrameZoomDelta = 0f;
 
     private ICameraControls m_GestureHandler;
     #endregion Variables
@@ -102,7 +104,12 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void checkZoom()
     {
-        float zoomDelta = m_GestureHandler.GetZoomDelta();
+        float zoomDelta = 
+            Mathf.Approximately(m_previousFrameZoomDelta, 0f) ? 
+            m_GestureHandler.GetZoomDelta() :
+            Mathf.Clamp(m_GestureHandler.GetZoomDelta(), 
+            m_previousFrameZoomDelta - m_ZoomSmoothFactor, 
+            m_previousFrameZoomDelta + m_ZoomSmoothFactor);
         if (zoomDelta != 0)
         {
             Vector3 centerPosition = m_GestureHandler.GetPosition();
@@ -112,7 +119,7 @@ public class CameraController : MonoBehaviour
             if (zoomDelta > 0)
             {
                 //if (boundaryPointsInSight > 0)
-                if(transform.position.y > m_ClosestZoom)
+                if(transform.position.y > HexGrid.Instance.CameraZoomInBoundary.position.y)
                 {
                     transform.position += transform.forward * zoomDelta;
                 }
@@ -121,14 +128,14 @@ public class CameraController : MonoBehaviour
             else if (zoomDelta < 0)
             {
                 //if (boundaryPointsInSight < 4)
-                if(transform.position.y < m_FurthestZoom)
+                if(transform.position.y < HexGrid.Instance.CameraZoomOutBoundary.position.y)
                 {
                     transform.position += transform.forward * zoomDelta;
                     transform.position += (m_ZoomOutOffsetDirection * m_ZoomOffsetMultiplier);
                 }
             }
         }
-
+        m_previousFrameZoomDelta = zoomDelta;
         m_ZoomOutOffsetDirection = Vector3.zero;
     }
 

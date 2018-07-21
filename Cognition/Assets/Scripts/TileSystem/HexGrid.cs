@@ -46,6 +46,14 @@ public class HexGrid : Singleton<HexGrid>
     private Transform m_CameraBoundaryBottom;
     public Transform CameraBoundaryBottom { get { return m_CameraBoundaryBottom; } }
 
+    [SerializeField]
+    private Transform m_CameraZoomInBoundary;
+    public Transform CameraZoomInBoundary { get { return m_CameraZoomInBoundary; } }
+
+    [SerializeField]
+    private Transform m_CameraZoomOutBoundary;
+    public Transform CameraZoomOutBoundary { get { return m_CameraZoomOutBoundary; } }
+
     /// <summary>
     /// A mapping between a coordinate to a tile.
     /// </summary>

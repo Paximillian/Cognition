@@ -860,6 +860,8 @@ Transform:
   - {fileID: 1256499976}
   - {fileID: 910512920}
   - {fileID: 214315557}
+  - {fileID: 1484538056}
+  - {fileID: 574836888}
   m_Father: {fileID: 0}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2002,7 +2004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 214315557}
   m_Layer: 0
-  m_Name: BottomBoundary
+  m_Name: BottomBoundry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2015,7 +2017,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 214315556}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13534576, y: -6.763344, z: -28.961327}
+  m_LocalPosition: {x: 0, y: -6.763344, z: -22.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 91773126}
@@ -4908,6 +4910,8 @@ MonoBehaviour:
   m_CameraBoundaryRight: {fileID: 1256499976}
   m_CameraBoundaryTop: {fileID: 910512920}
   m_CameraBoundaryBottom: {fileID: 214315557}
+  m_CameraZoomInBoundary: {fileID: 1484538056}
+  m_CameraZoomOutBoundary: {fileID: 574836888}
 --- !u!4 &567170278
 Transform:
   m_ObjectHideFlags: 0
@@ -5160,6 +5164,34 @@ Transform:
   m_PrefabParentObject: {fileID: 4895554573989388, guid: c17f6c2466fbdaa41a4c39f92981f549,
     type: 2}
   m_PrefabInternal: {fileID: 570985738}
+--- !u!1 &574836887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 574836888}
+  m_Layer: 0
+  m_Name: ZoomOutBoundry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &574836888
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 574836887}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 32, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 91773126}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &577906004
 Prefab:
   m_ObjectHideFlags: 0
@@ -13104,9 +13136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda2c14bd054898449a44a235f809e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ClosestZoom: 10
-  m_FurthestZoom: 40
-  m_ZoomOffsetMultiplier: 1
+  m_ZoomOffsetMultiplier: 0.5
+  m_ZoomSmoothFactor: 0.1
 --- !u!1001 &1449450887
 Prefab:
   m_ObjectHideFlags: 0
@@ -13580,6 +13611,34 @@ Transform:
   m_PrefabParentObject: {fileID: 4895554573989388, guid: c17f6c2466fbdaa41a4c39f92981f549,
     type: 2}
   m_PrefabInternal: {fileID: 1481614453}
+--- !u!1 &1484538055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1484538056}
+  m_Layer: 0
+  m_Name: ZoomInBoundry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1484538056
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1484538055}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 91773126}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1502981818
 Prefab:
   m_ObjectHideFlags: 0
