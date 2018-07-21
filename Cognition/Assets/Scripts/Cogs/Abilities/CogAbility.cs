@@ -190,8 +190,8 @@ public abstract class CogAbility : NetworkBehaviour
     {
         NetworkInstanceId invokerNetId = reader.ReadNetworkId();
         Cog invokingCog = ClientScene.FindLocalObject(invokerNetId).GetComponent<Cog>();
-
-        (obj as CogAbility).triggerVisuals(invokingCog);
+        
+        triggerVisuals(invokingCog);
     }
     #endregion NetworkMethods
 
