@@ -1308,17 +1308,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7e2dd550997444788b8331da2c058f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Cost: 20
+  m_Cost: 40
   m_Cooldown: 5
   m_buildRange: 1
   m_HoldingTile: {fileID: 0}
-  m_initialhp: 4
-  m_hp: 4
+  m_initialhp: 3
+  m_hp: 3
   m_conflictParticles: {fileID: 198949925887819904}
   m_Sprite: {fileID: 21300000, guid: 3a36c524e2752c84d9eb34208074a3fe, type: 3}
   m_spin: 0
   m_CogName: Achmed
   m_Description: 
+  m_Renderer: {fileID: 0}
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114783200862515592

@@ -2221,7 +2221,7 @@ MonoBehaviour:
   m_InterpolateMovement: 1
 --- !u!114 &114615133138620420
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -2247,18 +2247,19 @@ MonoBehaviour:
   m_Cooldown: 5
   m_buildRange: 2147483647
   m_HoldingTile: {fileID: 0}
-  m_initialhp: 4
-  m_hp: 4
+  m_initialhp: 3
+  m_hp: 3
   m_conflictParticles: {fileID: 198949925887819904}
   m_Sprite: {fileID: 21300000, guid: bb3ebd3946a2190449c199327f519371, type: 3}
   m_spin: 0
   m_CogName: Telecog
   m_Description: 
+  m_Renderer: {fileID: 0}
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114720832928875724
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
@@ -2305,7 +2306,7 @@ MonoBehaviour:
   m_LocalPlayerAuthority: 0
 --- !u!114 &114933237480215066
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1295058665275452}
