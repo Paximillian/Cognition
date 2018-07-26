@@ -186,15 +186,18 @@ public class NetworkGameManager : NetworkManager
     #region EntryPoints
     public void QuitGame()
     {
-        if (NetworkPlayer.LocalPlayer.isServer)
+        if (NetworkPlayer.LocalPlayer)
         {
-            StopHost();
+            if (NetworkPlayer.LocalPlayer.isServer)
+            {
+                StopHost();
+            }
+            else
+            {
+                StopClient();
+            }
         }
-        else
-        {
-            StopClient();
-        }
-        
+
         foreach (DontDestroyOnGameLoad persistentObject in GameObject.FindObjectsOfType<DontDestroyOnGameLoad>())
         {
             Destroy(persistentObject.gameObject);

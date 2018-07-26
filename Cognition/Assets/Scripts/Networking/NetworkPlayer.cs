@@ -27,6 +27,24 @@ public class NetworkPlayer : NetworkBehaviour
 
     private NetworkIdentity m_NetId;
 
+    private CameraController m_CameraController;
+
+    /// <summary>
+    /// The camera controlled by this player.
+    /// </summary>
+    private CameraController CameraController
+    {
+        get
+        {
+            if (m_CameraController == null)
+            {
+                m_CameraController = FindObjectOfType<CameraController>();
+            }
+
+            return m_CameraController;
+        }
+    }
+
     [SyncVar(hook = "assignedPlayerId")]
     private int m_PlayerId;
     public int PlayerId { get { return m_PlayerId; } private set { m_PlayerId = value; } }
@@ -111,6 +129,11 @@ public class NetworkPlayer : NetworkBehaviour
     {
         base.OnStartClient();
 
+        if (!isServer)
+        {
+            s_LoadedPlayers++;
+        }
+
         StartCoroutine(waitForRoleUpdate());
     }
 
@@ -135,6 +158,15 @@ public class NetworkPlayer : NetworkBehaviour
     {
         m_CountdownText = i_Text;
         CountdownLabel.Instance.Label.text = m_CountdownText;
+
+        if (m_CountdownText.Equals("Go!") || String.IsNullOrWhiteSpace(m_CountdownText))
+        {
+            CameraController?.Enable();
+        }
+        else
+        {
+            CameraController?.Disable();
+        }
     }
 
     /// <summary>

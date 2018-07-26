@@ -153,6 +153,10 @@ public abstract class Cog : NetworkBehaviour
     #region OccupyingPlayersSyncing
     [SyncVar(hook = "updateOccupyingPlayers")]
     private string m_OccupyingPlayersString;
+    /// <summary>
+    /// The string received by the client, this will force us to update the OccupyingPlayers list on the next frame if this is different than m_OccupyingPlayersString
+    /// </summary>
+    private string m_OccupyingPlayersClientString;
 
     /// <summary>
     /// Converts the player list to a list of ids and converts it to a json that will be stored in the syncvar.
@@ -163,24 +167,13 @@ public abstract class Cog : NetworkBehaviour
         uint[] idList = m_OccupyingPlayers.Select(player => player.netId.Value).ToArray();
         m_OccupyingPlayersString = JsonConvert.SerializeObject(idList);
     }
-
+    
     /// <summary>
     /// Called on clients once an update is sent, it converts the list back to a list of IDs.
     /// </summary>
     private void updateOccupyingPlayers(string idListString)
     {
-        if (!isServer)
-        {
-            if (!idListString.Equals(m_OccupyingPlayersString))
-            {
-                m_OccupyingPlayersString = idListString;
-                NetworkInstanceId[] idList = JsonConvert.DeserializeObject<uint[]>(idListString)
-                                                        .Select(id => new NetworkInstanceId(id)).
-                                                        ToArray();
-
-                StartCoroutine(findPlayersForIds(idList));
-            }
-        }
+        m_OccupyingPlayersClientString = idListString;
     }
 
     /// <summary>
@@ -196,6 +189,23 @@ public abstract class Cog : NetworkBehaviour
             yield return new WaitForEndOfFrame();
         }
         while (m_OccupyingPlayers.Contains(null));
+    }
+
+    private void updateClientOccupyingPlayersList()
+    {
+        if (!isServer)
+        {
+            if (!String.IsNullOrWhiteSpace(m_OccupyingPlayersClientString) && 
+                !m_OccupyingPlayersClientString.Equals(m_OccupyingPlayersString))
+            {
+                m_OccupyingPlayersString = m_OccupyingPlayersClientString;
+                NetworkInstanceId[] idList = JsonConvert.DeserializeObject<uint[]>(m_OccupyingPlayersString)
+                                                        .Select(id => new NetworkInstanceId(id))
+                                                        .ToArray();
+
+                StartCoroutine(findPlayersForIds(idList));
+            }
+        }
     }
     #endregion OccupyingPlayersSyncing
 
@@ -259,19 +269,24 @@ public abstract class Cog : NetworkBehaviour
     protected virtual void Start()
     {
     }
-
-    [ServerCallback]
+    
     protected virtual void Update()
     {
-        if (Spin != 0)
+        if (isServer)
         {
-            InvokeSpinAbilities();
+            if (Spin != 0)
+            {
+                InvokeSpinAbilities();
+            }
 
+            if (m_Conflicted)
+            {
+                InvokeConflictedAbilities();
+            }
         }
-
-        if (m_Conflicted)
+        else
         {
-            InvokeConflictedAbilities();
+            updateClientOccupyingPlayersList();
         }
     }
     #endregion UnityMethods

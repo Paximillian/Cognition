@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,29 @@ public class PlayerCog : PlayableCog
     protected override void Start()
     {
         base.Start();
+        
+        StartCoroutine(setMainCameraForLocalPlayer());
 
         if (isServer)
         {
             StartCoroutine(serverCheckConflictedCogsDestruction());
+        }
+    }
+
+    private IEnumerator setMainCameraForLocalPlayer()
+    {
+        while (NetworkPlayer.LocalPlayer == null || OwningPlayer == null)
+        {
+            yield return null;
+        }
+
+        if (!NetworkPlayer.LocalPlayer.Equals(OwningPlayer))
+        {
+            Destroy(GetComponentInChildren<CinemachineVirtualCamera>(true).gameObject);
+        }
+        else
+        {
+            GetComponentInChildren<CinemachineVirtualCamera>(true).m_Priority = 10;
         }
     }
 

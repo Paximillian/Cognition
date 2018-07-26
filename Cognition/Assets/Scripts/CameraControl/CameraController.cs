@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum CameraModes { Regular, SingleFinger, Joystick, ModeSwitch}
-[RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
 {
     #region Variables
-    private Camera m_Camera;
     private Camera m_mainCamera;
     private Vector3 m_CurrentBoundaryPositionTop;
     private Vector3 m_CurrentBoundaryPositionBottom;
@@ -23,12 +21,34 @@ public class CameraController : MonoBehaviour
     private float m_previousFrameZoomDelta = 0f;
 
     private ICameraControls m_GestureHandler;
+
+    /// <summary>
+    /// Can we currently control the camera?
+    /// </summary>
+    private bool m_Enabled = false;
     #endregion Variables
+
+    #region PublicMethods
+    /// <summary>
+    /// Enables the interactivity of this controller.
+    /// </summary>
+    public void Enable()
+    {
+        m_Enabled = true;
+    }
+
+    /// <summary>
+    /// Disables the interactivity of this controller.
+    /// </summary>
+    public void Disable()
+    {
+        m_Enabled = false;
+    }
+    #endregion PublicMethods
 
     #region UnityMethods
     private void Awake()
     {
-        m_Camera = GetComponent<Camera>();
         m_mainCamera = Camera.main;
 
 #if UNITY_EDITOR
@@ -50,21 +70,22 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (!m_Enabled)
+        {
+            return;
+        }
+
         if (!RadialMenuController.Instance.IsActive)
         {
-            m_CurrentBoundaryPositionTop =
-                GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryTop.position);
-            m_CurrentBoundaryPositionBottom =
-                 GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryBottom.position);
-            m_CurrentBoundaryPositionRight =
-                GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryRight.position);
-            m_CurrentBoundaryPositionLeft =
-                GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryLeft.position);
+            m_CurrentBoundaryPositionTop = GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryTop.position);
+            m_CurrentBoundaryPositionBottom = GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryBottom.position);
+            m_CurrentBoundaryPositionRight = GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryRight.position);
+            m_CurrentBoundaryPositionLeft = GetCorrectedCameraViewportPosition(HexGrid.Instance.CameraBoundaryLeft.position);
 
             checkZoom();
             checkPan();
 
-            DiscardBoundaryPositionVectors();
+            discardBoundaryPositionVectors();
         }
         else
         {
@@ -72,7 +93,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void DiscardBoundaryPositionVectors()
+    private void discardBoundaryPositionVectors()
     {
         m_CurrentBoundaryPositionTop = Vector3.zero;
         m_CurrentBoundaryPositionBottom = Vector3.zero;
