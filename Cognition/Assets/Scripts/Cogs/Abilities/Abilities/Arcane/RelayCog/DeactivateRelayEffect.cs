@@ -24,7 +24,6 @@ public class DeactivateRelayEffect : CogAbility, IGameMechanicAbility
 
     protected override void triggerVisuals(Cog invokingCog)
     {
-        Debug.Log("3 " + name + " " + Keyword);
         if (Keyword == eCogAbilityKeyword.Winddown)
         {
             (TriggeringCog as RelayCog)?.DeactivateRelayEffect(null);
