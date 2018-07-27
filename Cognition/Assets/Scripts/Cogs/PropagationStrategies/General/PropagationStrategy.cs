@@ -60,15 +60,6 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// <param name="i_AskingCog">A non-spinning cog that this cog requested a propagation for in this recently.</param>
     /// <returns>True if the asking cog should start spinning, false if not.</returns>
     public abstract float CheckSpin(Cog i_AskingCog);
-
-    /// <summary>
-    /// Checks if we conflict with the given cog.
-    /// Normally, a conflict is determined by the fact that the 2 cogs are spinning in the same direction.
-    /// </summary>
-    protected virtual bool CheckConfliction(Cog i_AskingCog)
-    {
-        return i_AskingCog.Spin != - Cog.Spin;
-    }
     #endregion AbstractMethods
 
     #region PublicMethods
@@ -99,14 +90,7 @@ public abstract class PropagationStrategy : MonoBehaviour
         if (i_AskingCog is NullCog) { return false; }
         bool isConflicted = false;
         HashSet<Cog> conflictingNeighbors = new HashSet<Cog>();
-
-        //TODO: delete commented out code after regression test
-        //bool a = CheckConfliction(i_AskingCog);
-        //bool b = (Cog.Spin != 0f && i_AskingCog.Spin != 0);
-        //bool c = ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog));
-        //if (CheckConfliction(i_AskingCog) && 
-        //    ((Cog.Spin != 0f && i_AskingCog.Spin != 0)
-        //    || ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog))))
+        
         if (CheckConfliction(i_AskingCog) &&
             ((Cog.Spin != 0f && i_AskingCog.Spin != 0) ||
             ((i_AskingCog is PlayableCog) && (Cog is PlayableCog) && !(i_AskingCog as PlayableCog).HasSameOwnerAs(Cog))))
@@ -140,6 +124,15 @@ public abstract class PropagationStrategy : MonoBehaviour
     #endregion PublicMethods
 
     #region PrivateMethods
+    /// <summary>
+    /// Checks if we conflict with the given cog.
+    /// Normally, a conflict is determined by the fact that the 2 cogs are spinning in the same direction.
+    /// </summary>
+    protected virtual bool CheckConfliction(Cog i_AskingCog)
+    {
+        return Mathf.Sign(i_AskingCog.Spin) == Mathf.Sign(Cog.Spin);
+    }
+
     /// <summary>
     /// Passes on the spin request from this tile to its neighbours.
     /// </summary>
@@ -214,7 +207,7 @@ public abstract class PropagationStrategy : MonoBehaviour
         onCreateUpdateSpin();
 
         //BFS initialization.
-        frontier.Enqueue(new Tuple<Cog, Cog>(Cog, null));
+        frontier.Enqueue(new Tuple<Cog, Cog>(playerBaseCog, null));
 
         //BFS loop
         do
