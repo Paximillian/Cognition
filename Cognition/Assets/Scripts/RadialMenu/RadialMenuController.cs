@@ -469,7 +469,7 @@ public class RadialMenuController : Singleton<RadialMenuController>
             m_isChoosingCogType = true;
             m_MenuParent.SetActive(true);
             turnOffAllItemsHightlight();
-            m_MenuParent.transform.localPosition = Camera.main.WorldToScreenPoint(m_CurrentlySelectedTile.transform.position) - new Vector3(Screen.width / 2, Screen.height / 2);
+            m_MenuParent.transform.position = Camera.main.WorldToScreenPoint(m_CurrentlySelectedTile.transform.position);
             Vector3 tilePosition = m_MenuParent.transform.position;
 
             //Fixes the menu position to fit inside the screen.

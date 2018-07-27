@@ -106,24 +106,6 @@ public class RadialMenuSegment : MonoBehaviour
     #endregion PrivateMethods
 }
 
-#if UNITY_EDITOR
-[UnityEditor.CustomEditor(typeof(RadialMenuSegment))]
-public class RadialMenuSegmentTest : UnityEditor.Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        if (GUILayout.Button("Fix"))
-        {
-            RadialMenuSegment segment = target as RadialMenuSegment;
-
-            segment.FillAmount = segment.FillAmount;
-        }
-    }
-}
-#endif
-
 public static class SegmentStateExtensions
 {
     /// <summary>
