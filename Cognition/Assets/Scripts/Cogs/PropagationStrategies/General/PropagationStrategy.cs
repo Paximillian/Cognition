@@ -130,7 +130,10 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// </summary>
     protected virtual bool CheckConfliction(Cog i_AskingCog)
     {
-        return Mathf.Sign(i_AskingCog.Spin) == Mathf.Sign(Cog.Spin);
+        return (i_AskingCog.Spin == 0 && Cog.Spin != 0) ||
+               (i_AskingCog.Spin != 0 && Cog.Spin == 0) ||
+               (Mathf.Sign(i_AskingCog.Spin) == Mathf.Sign(Cog.Spin) &&
+                    (i_AskingCog.Spin != 0 && Cog.Spin != 0));
     }
 
     /// <summary>
