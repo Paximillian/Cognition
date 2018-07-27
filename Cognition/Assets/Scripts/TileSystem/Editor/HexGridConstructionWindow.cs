@@ -619,11 +619,12 @@ public class HexGridConstructionWindow : EditorWindow
         Cog cog = null;
         if (i_Tile.ResidentCog == null)
         {
-            cog = (UnityEditor.PrefabUtility.InstantiatePrefab(i_CogPrefab.gameObject) as GameObject).GetComponent<Cog>();
+            cog = (PrefabUtility.InstantiatePrefab(i_CogPrefab.gameObject) as GameObject).GetComponent<Cog>();
             cog.transform.position = i_Tile.transform.position;
             cog.HoldingTile = i_Tile;
+            cog.transform.SetParent(i_Tile.transform);
 
-            UnityEditor.Undo.RecordObject(i_Tile, "Updated resident cog");
+            Undo.RecordObject(i_Tile, "Updated resident cog");
             i_Tile.ResidentCog = cog;
 
             cog.transform.position += Vector3.up * (i_Tile.transform.Find("tile_cog_connection").position.y - cog.transform.Find("tile_cog_connection").position.y);
