@@ -25,6 +25,16 @@ public class PlayableCog : Cog
     public override Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) => i_AskingCog == null ? false :
                                                                             (OwningPlayer.Equals((i_AskingCog as PlayableCog)?.OwningPlayer)));
 
+    public override HashSet<NetworkPlayer> OccupyingPlayers
+    {
+        get
+        {
+            return m_OccupyingPlayers;
+        }
+    }
+
+    private HashSet<NetworkPlayer> m_OccupyingPlayers = new HashSet<NetworkPlayer>();
+
     [SerializeField]
     private Material m_Player1Material, m_Player2Material;
 
@@ -47,6 +57,8 @@ public class PlayableCog : Cog
         {
             m_OwningPlayer = value;
             m_OwningPlayerNetId = value.netId;
+            m_OccupyingPlayers.Clear();
+            m_OccupyingPlayers.Add(OwningPlayer);
         }
     }
     private NetworkPlayer m_OwningPlayer;

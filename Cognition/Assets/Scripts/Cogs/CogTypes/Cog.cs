@@ -130,7 +130,7 @@ public abstract class Cog : NetworkBehaviour
     /// The players that are powering this cog.
     /// This is different than the OwningPlayer property by that this also applies to neutral cogs like the resources or the goal cogs.
     /// </summary>
-    public HashSet<NetworkPlayer> OccupyingPlayers
+    public virtual HashSet<NetworkPlayer> OccupyingPlayers
     {
         get
         {
