@@ -23,7 +23,11 @@ public class RelayCog : PlayableCog
     {
         if (!m_connectedRelays.ContainsKey(i_activatingCog))
         {
-            m_connectedRelays.Add(i_activatingCog, Instantiate(m_relayEffectPrefab, m_RelayEffectPivotPoint));
+            GameObject relayEffect = ObjectPoolManager.PullObject("RelayEffect");
+            relayEffect.transform.SetParent(m_RelayEffectPivotPoint);
+            relayEffect.transform.localPosition = Vector3.zero;
+
+            m_connectedRelays.Add(i_activatingCog, relayEffect);
 
             m_connectedRelays[i_activatingCog].transform.LookAt(
                 new Vector3(i_activatingCog.transform.position.x,
@@ -50,7 +54,8 @@ public class RelayCog : PlayableCog
     {
         if (i_activatingCog != null && m_connectedRelays.ContainsKey(i_activatingCog))
         {
-            Destroy(m_connectedRelays[i_activatingCog]);
+            m_connectedRelays[i_activatingCog].transform.SetParent(ObjectPoolManager.Instance.transform);
+            m_connectedRelays[i_activatingCog].SetActive(false);
             m_connectedRelays.Remove(i_activatingCog);
         }
         else if (i_activatingCog == null)
@@ -58,7 +63,8 @@ public class RelayCog : PlayableCog
             foreach (KeyValuePair<RelayCog, GameObject> connectedCog in m_connectedRelays)
             {
                 connectedCog.Key.DeactivateRelayEffect(this);
-                Destroy(connectedCog.Value);
+                connectedCog.Value.transform.SetParent(ObjectPoolManager.Instance.transform);
+                connectedCog.Value.SetActive(false);
             }
 
             m_connectedRelays.Clear();

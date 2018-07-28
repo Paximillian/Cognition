@@ -10,7 +10,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 121aa954e88caa54cb62058db1a67527, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -58,6 +58,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _UnitColorMask:
+        m_Texture: {fileID: 2800000, guid: dac2531c24cd348429ecab2a2868957c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _colorMask:
+        m_Texture: {fileID: 2800000, guid: dac2531c24cd348429ecab2a2868957c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -91,3 +99,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 0, b: 0, a: 1}
+    - _UnitColor: {r: 1, g: 0, b: 0, a: 0}
+    - _unitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

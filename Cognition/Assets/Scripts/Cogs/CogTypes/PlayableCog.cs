@@ -7,8 +7,15 @@ using UnityEngine.Networking;
 
 public class PlayableCog : Cog
 {
-    [SerializeField] private Renderer m_Renderer;
-    
+    private const string k_UnitColorShaderProperty = "_UnitColor";
+
+    private static Color s_LocalPlayerColor = Color.blue, s_EnemyPlayerColor = Color.red;
+
+    /// <summary>
+    /// The renderers used by this cog.
+    /// </summary>
+    private Renderer[] m_Renderers;
+
     /// <summary>
     /// All the friendly neighbours of this cog.
     /// </summary>
@@ -24,27 +31,22 @@ public class PlayableCog : Cog
     /// </summary>
     public override Func<Cog, bool> HasSameOwnerAs => ((i_AskingCog) => i_AskingCog == null ? false :
                                                                             (OwningPlayer.Equals((i_AskingCog as PlayableCog)?.OwningPlayer)));
-
-    public override HashSet<NetworkPlayer> OccupyingPlayers
-    {
-        get
-        {
-            return m_OccupyingPlayers;
-        }
-    }
-
-    private HashSet<NetworkPlayer> m_OccupyingPlayers = new HashSet<NetworkPlayer>();
-
-    [SerializeField]
-    private Material m_Player1Material, m_Player2Material;
-
+    
     [SyncVar(hook = "onAssignedPlayerId")]
     private int m_OwningPlayerId;
     public int OwningPlayerId { get { return m_OwningPlayerId; } set { m_OwningPlayerId = value; } }
     private void onAssignedPlayerId(int i_OwningPlayerId)
     {
         m_OwningPlayerId = i_OwningPlayerId;
-        m_Renderer.material = m_OwningPlayerId == 1 ? m_Player1Material : m_Player2Material;
+
+        foreach (Renderer renderer in m_Renderers)
+        {
+            if (renderer.material.HasProperty(k_UnitColorShaderProperty))
+            {
+                renderer.material.SetColor(k_UnitColorShaderProperty,
+                                           m_OwningPlayerId == NetworkPlayer.LocalPlayer.PlayerId ? s_LocalPlayerColor : s_EnemyPlayerColor);
+            }
+        }
     }
     
     /// <summary>
@@ -57,13 +59,12 @@ public class PlayableCog : Cog
         {
             m_OwningPlayer = value;
             m_OwningPlayerNetId = value.netId;
-            m_OccupyingPlayers.Clear();
-            m_OccupyingPlayers.Add(OwningPlayer);
         }
     }
     private NetworkPlayer m_OwningPlayer;
     [SyncVar(hook = "onAssignedPlayerNetId")]
     private NetworkInstanceId m_OwningPlayerNetId;
+
     private void onAssignedPlayerNetId(NetworkInstanceId i_NetId)
     {
         if (!isServer)
@@ -98,10 +99,7 @@ public class PlayableCog : Cog
     protected override void Awake()
     {
         base.Awake();
-
-        if (m_Renderer == null)
-        {
-            m_Renderer = GetComponentInChildren<Renderer>();
-        }
+        
+        m_Renderers = GetComponentsInChildren<Renderer>();
     }
 }

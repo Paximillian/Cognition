@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -79,8 +80,7 @@ public abstract class Cog : NetworkBehaviour
     [SerializeField]
     private Sprite m_Sprite;
     public Sprite Sprite { get { return m_Sprite; } private set { m_Sprite = value; } }
-
-    [SerializeField]
+    
     float m_spin = 0f;
     public float Spin
     {
@@ -243,11 +243,23 @@ public abstract class Cog : NetworkBehaviour
     {
         get
         {
-            return $"<b>{m_CogName}</b>{Environment.NewLine}{m_Description}{Environment.NewLine}" +
-                      string.Join($"{Environment.NewLine}{Environment.NewLine}",
-                                   CogAbilityManager.CogAbilities
-                                                    .Where(ability => !(ability is IGameMechanicAbility))
-                                                    .Select(ability => ability.Description));
+            StringBuilder builder = new StringBuilder();
+            string abilities = string.Join($"{Environment.NewLine}",
+                                           CogAbilityManager.CogAbilities
+                                                            .Where(ability => !(ability is IGameMechanicAbility))
+                                                            .Select(ability => ability.Description));
+
+            builder.AppendLine($"<b>{m_CogName}</b>");
+            builder.AppendLine($"{m_Description}");
+            builder.AppendLine(abilities);
+
+            while (builder.ToString().EndsWith(Environment.NewLine))
+            {
+                builder.Remove(builder.Length - Environment.NewLine.Length, Environment.NewLine.Length);
+            }
+
+            return builder.ToString();
+                      
         }
     }
     #endregion Variables

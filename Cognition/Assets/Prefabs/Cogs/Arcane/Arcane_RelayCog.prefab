@@ -2333,8 +2333,8 @@ MonoBehaviour:
   m_Sprite: {fileID: 21300000, guid: 2f421d62751f516489f8fb114139c261, type: 3}
   m_spin: 0
   m_CogName: Relay
-  m_Description: Can be built 1 tile further than your structure. Connects to other
-    nearby Relay Cogs to function remotely.
+  m_Description: Can be built 1 tile further than your structure. <br>Connects to
+    other nearby Relay Cogs to function remotely.
   m_Renderer: {fileID: 0}
   m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
   m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}

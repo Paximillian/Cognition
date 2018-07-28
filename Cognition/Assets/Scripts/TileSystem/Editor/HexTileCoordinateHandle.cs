@@ -53,7 +53,7 @@ public class HexTileCoordinateHandle : Editor
         Handles.color = Color.blue;
         HexTile[] selectedTiles = Selection.transforms
                                            .Select(transform => transform.GetComponentInParent<HexTile>())
-                                           .Where(selectedTile => selectedTile != tile)
+                                           .Where(selectedTile => selectedTile != tile && selectedTile != null)
                                            .ToArray();
 
         foreach (HexTile selectedTile in selectedTiles)
