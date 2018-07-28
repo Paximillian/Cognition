@@ -80,8 +80,7 @@ public abstract class Cog : NetworkBehaviour
     [SerializeField]
     private Sprite m_Sprite;
     public Sprite Sprite { get { return m_Sprite; } private set { m_Sprite = value; } }
-
-    [SerializeField]
+    
     float m_spin = 0f;
     public float Spin
     {
