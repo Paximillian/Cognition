@@ -187,7 +187,7 @@ public abstract class PropagationStrategy : MonoBehaviour
     {
         foreach (Cog populatedNeighbor in Neighbors)
         {
-            if (populatedNeighbor.Spin != 0f)
+            if (populatedNeighbor.Spin != 0f && populatedNeighbor.HasSameOwnerAs(Cog))
             {
                 Cog.RequestUpdateSpin(populatedNeighbor.PropagationStrategy.CheckSpin(Cog));
                 //CheckConflict(neighbor);
@@ -210,7 +210,7 @@ public abstract class PropagationStrategy : MonoBehaviour
         onCreateUpdateSpin();
 
         //BFS initialization.
-        frontier.Enqueue(new Tuple<Cog, Cog>(playerBaseCog, null));
+        frontier.Enqueue(new Tuple<Cog, Cog>(Cog, null));
 
         //BFS loop
         do
@@ -265,13 +265,29 @@ public abstract class PropagationStrategy : MonoBehaviour
     /// </summary>
     private void stopUnpropagatedCogs(NetworkPlayer i_Player)
     {
-        Cog playerBaseCog = i_Player.PlayerBaseCog;
-
         IEnumerable<Cog> StoppedCogs = i_Player.OwnedCogs.Except(i_Player.UpdatedCogs);
 
+        //Stop all cogs needed
         foreach (Cog cogToStop in StoppedCogs)
         {
             cogToStop.RequestUpdateSpin(0f);
+        }
+
+        //Check if they should now conflict
+        foreach (Cog cogToStop in StoppedCogs)
+        {
+            cogToStop.PropagationStrategy.CheckForConflicts();
+        }
+    }
+
+    /// <summary>
+    /// Checks for conflicts with surrounding neighbors. Used primarely to check for conflicts after stopping cogs because they aren't spun anymore
+    /// </summary>
+    public void CheckForConflicts()
+    {
+        foreach (Cog populatedNeighbor in Neighbors)
+        {
+            CheckConflict(populatedNeighbor);
         }
     }
     #endregion PrivateMethods
