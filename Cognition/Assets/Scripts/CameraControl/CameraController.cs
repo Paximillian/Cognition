@@ -17,8 +17,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float m_ZoomOffsetMultiplier;
     [SerializeField]
     private float m_ZoomSmoothFactor = 1f;
+    [SerializeField]
+    private AnimationCurve m_ZoomAngleShift;
 
     private float m_previousFrameZoomDelta = 0f;
+    private float m_maxZoomAngle;
+    private float m_minZoomAngle;
 
     private ICameraControls m_GestureHandler;
 
@@ -66,6 +70,12 @@ public class CameraController : MonoBehaviour
         {
             m_GestureHandler = new PCCameraControls();
         }
+    }
+
+    private void Start()
+    {
+        m_maxZoomAngle = HexGrid.Instance.CameraZoomOutBoundary.rotation.eulerAngles.x;
+        m_minZoomAngle = HexGrid.Instance.CameraZoomInBoundary.rotation.eulerAngles.x;
     }
 
     private void Update()
@@ -131,8 +141,14 @@ public class CameraController : MonoBehaviour
             Mathf.Clamp(m_GestureHandler.GetZoomDelta(), 
             m_previousFrameZoomDelta - m_ZoomSmoothFactor, 
             m_previousFrameZoomDelta + m_ZoomSmoothFactor);
+
         if (zoomDelta != 0)
         {
+            float relativeZoomAmount = Mathf.Clamp01(
+                Mathf.InverseLerp(
+                HexGrid.Instance.CameraZoomInBoundary.position.y,
+                HexGrid.Instance.CameraZoomOutBoundary.position.y,
+                transform.position.y));
             Vector3 centerPosition = m_GestureHandler.GetPosition();
             
             int boundaryPointsInSight = seenBoundaryPointCount();
@@ -155,6 +171,11 @@ public class CameraController : MonoBehaviour
                     transform.position += (m_ZoomOutOffsetDirection * m_ZoomOffsetMultiplier);
                 }
             }
+            
+            transform.localRotation = Quaternion.Euler(
+                (m_minZoomAngle + ((m_maxZoomAngle - m_minZoomAngle) * m_ZoomAngleShift.Evaluate(relativeZoomAmount))),
+                transform.rotation.eulerAngles.y,
+                transform.rotation.eulerAngles.z);
         }
         m_previousFrameZoomDelta = zoomDelta;
         m_ZoomOutOffsetDirection = Vector3.zero;
