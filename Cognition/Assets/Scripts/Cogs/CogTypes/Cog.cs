@@ -31,7 +31,7 @@ public abstract class Cog : NetworkBehaviour
     public bool IsConflicted { get { return m_Conflicted; } }
 
     [SerializeField]
-    [Range(1, 100)]
+    [Range(0, 100)]
     private int m_Cost = 5;
     public int Cost { get { return m_Cost; } }
 
@@ -299,6 +299,14 @@ public abstract class Cog : NetworkBehaviour
         else
         {
             updateClientOccupyingPlayersList();
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (!Application.isPlaying)
+        {
+            m_hp = m_initialhp;
         }
     }
     #endregion UnityMethods
