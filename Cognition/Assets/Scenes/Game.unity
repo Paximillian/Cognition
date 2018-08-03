@@ -7105,17 +7105,21 @@ MonoBehaviour:
     - {fileID: 1150764503134496, guid: 96f7716cf17760f47945895fe27eeee4, type: 2}
   - InnerList:
     - {fileID: 1030508728519610, guid: d8893b12db5f5b94790a69357f24c623, type: 2}
+  - InnerList:
+    - {fileID: 1329745775259680, guid: 6f0ef799030f43945a9fbca494a66546, type: 2}
   ObjectPoolNames:
   - ResourceGain
   - GoalGain
   - BuildNotification
   - RelayEffect
+  - Akhmed_Explosion
   ObjectPoolStartAmounts:
   - InnerList: 0a000000
   - InnerList: 0a000000
   - InnerList: 02000000
   - InnerList: 0a000000
-  SubListSizes: 01000000010000000100000001000000
+  - InnerList: 02000000
+  SubListSizes: 0100000001000000010000000100000001000000
 --- !u!4 &740553663
 Transform:
   m_ObjectHideFlags: 0
