@@ -31,7 +31,7 @@ public abstract class Cog : NetworkBehaviour
     public bool IsConflicted { get { return m_Conflicted; } }
 
     [SerializeField]
-    [Range(1, 100)]
+    [Range(0, 100)]
     private int m_Cost = 5;
     public int Cost { get { return m_Cost; } }
 
@@ -52,7 +52,29 @@ public abstract class Cog : NetworkBehaviour
     [SerializeField]
     [ReadOnly]
     private HexTile m_HoldingTile;
-    public HexTile HoldingTile { get { return m_HoldingTile; } set { m_HoldingTile = value; } }
+    public HexTile HoldingTile
+    {
+        get
+        {
+            if (m_HoldingTile == null)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, Vector3.down, out hit, 1, LayerMask.GetMask("HexTile")))
+                {
+                    HexTile tile = hit.collider.GetComponent<HexTile>();
+                    tile.ResidentCog = this;
+                    this.HoldingTile = tile;
+                }
+                else
+                {
+                    Debug.LogError($"Couldn't find hosting tile for {name}");
+                }
+            }
+
+            return m_HoldingTile;
+        }
+        set { m_HoldingTile = value; }
+    }
 
     [SerializeField]
     private double m_initialhp = 10f;
@@ -301,6 +323,14 @@ public abstract class Cog : NetworkBehaviour
             updateClientOccupyingPlayersList();
         }
     }
+
+    private void OnValidate()
+    {
+        if (!Application.isPlaying)
+        {
+            m_hp = m_initialhp;
+        }
+    }
     #endregion UnityMethods
 
     #region UNETMethods
@@ -447,6 +477,8 @@ public abstract class Cog : NetworkBehaviour
     [Server]
     public void ResetCog()
     {
+        HoldingTile.ResidentCog = null;
+        HoldingTile = null;
         IsInitialized = false;
         HP = m_initialhp;
         StopConflicted();

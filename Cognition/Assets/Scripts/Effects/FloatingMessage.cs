@@ -5,7 +5,7 @@ using UnityEngine;
 public class FloatingMessage : MonoBehaviour
 {
     [SerializeField]
-    private Material m_Player1Material, m_Player2Material;
+    private Material m_LocalPlayerMaterial, m_EnemyPlayerMaterial;
 
     [SerializeField]
     private float m_FloatVelocity;
@@ -40,6 +40,6 @@ public class FloatingMessage : MonoBehaviour
 
     public void SetInvokingPlayerId(int i_InvokerId)
     {
-        Sprite.material = i_InvokerId == 1 ? m_Player1Material : m_Player2Material;
+        Sprite.material = i_InvokerId == NetworkPlayer.LocalPlayer.PlayerId ? m_LocalPlayerMaterial : m_EnemyPlayerMaterial;
     }
 }

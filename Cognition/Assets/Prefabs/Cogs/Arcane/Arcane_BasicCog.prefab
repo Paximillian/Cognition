@@ -915,6 +915,7 @@ GameObject:
   - component: {fileID: 114682399974290284}
   - component: {fileID: 114121789120376204}
   - component: {fileID: 114204175916807846}
+  - component: {fileID: 114943799877049610}
   m_Layer: 0
   m_Name: Arcane_BasicCog
   m_TagString: Untagged
@@ -3861,12 +3862,8 @@ MonoBehaviour:
   m_hp: 3
   m_conflictParticles: {fileID: 198733987451010898}
   m_Sprite: {fileID: 21300000, guid: 75c2929f03d6ac94bb781f61b93f5870, type: 3}
-  m_spin: 0
   m_CogName: Basic
   m_Description: 
-  m_Renderer: {fileID: 23400588234683268}
-  m_Player1Material: {fileID: 2100000, guid: 78a2a0f51efa4e54bb785e9c5082760f, type: 2}
-  m_Player2Material: {fileID: 2100000, guid: b3d6586187885e548bae4c3d2935461d, type: 2}
 --- !u!114 &114239301480245250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3912,6 +3909,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Keyword: 5
   m_TargetType: 0
+--- !u!114 &114943799877049610
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1670331429034538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 815edcff577a243418ad6c321c08a2ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Keyword: 1
+  m_TargetType: 0
+  m_DeathEffectPrefab: {fileID: 1301679418514724, guid: d3d122d36ce29db4ca6e1f5614057c56,
+    type: 2}
 --- !u!198 &198068506699367686
 ParticleSystem:
   m_ObjectHideFlags: 1

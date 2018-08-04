@@ -480,9 +480,18 @@ public class RadialMenuController : Singleton<RadialMenuController>
 
             while (corners.Any(corner => !normalizedRectRange.Contains(corner)))
             {
-                if (corners.Any(corner => corner.x < 0)) { m_MenuParent.transform.position += Vector3.right * 10; }
+                if (corners.Any(corner => corner.x < 0))
+                {
+                    m_MenuParent.transform.position += Vector3.right * 10;
+                    if (corners.Any(corner => corner.x > 1)) { break; }
+                }
                 if (corners.Any(corner => corner.x > 1)) { m_MenuParent.transform.position += Vector3.left * 10; }
-                if (corners.Any(corner => corner.y < 0)) { m_MenuParent.transform.position += Vector3.up * 10; }
+
+                if (corners.Any(corner => corner.y < 0))
+                {
+                    m_MenuParent.transform.position += Vector3.up * 10;
+                    if (corners.Any(corner => corner.y > 1)) { break; }
+                }
                 if (corners.Any(corner => corner.y > 1)) { m_MenuParent.transform.position += Vector3.down * 10; }
 
                 (m_MenuParent.transform as RectTransform).GetWorldCorners(corners);

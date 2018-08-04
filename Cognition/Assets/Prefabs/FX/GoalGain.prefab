@@ -168,8 +168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4655072f974749244b7e1c3a9b3de98e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Player1Material: {fileID: 2100000, guid: 7dadcc87e81b8ca4c9153311de851dc8, type: 2}
-  m_Player2Material: {fileID: 2100000, guid: 3031052afa2c43145b89916a4253159c, type: 2}
+  m_LocalPlayerMaterial: {fileID: 2100000, guid: 7dadcc87e81b8ca4c9153311de851dc8,
+    type: 2}
+  m_EnemyPlayerMaterial: {fileID: 2100000, guid: 3031052afa2c43145b89916a4253159c,
+    type: 2}
   m_FloatVelocity: 0.025
   m_FloatDuration: 1.25
 --- !u!114 &114736269752571744
