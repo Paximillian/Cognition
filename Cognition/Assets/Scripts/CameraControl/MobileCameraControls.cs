@@ -23,6 +23,12 @@ public class MobileCameraControls : ICameraControls
                            Input.touches.Average(touch => touch.position.y));
     }
 
+    public Vector2 GetNormalizedPosition()
+    {
+        return new Vector2(Input.touches.Average(touch => touch.position.x)/Screen.width,
+                           Input.touches.Average(touch => touch.position.y)/Screen.height);
+    }
+
     public Vector2 GetPanDelta()
     {
         Vector2 delta = Vector2.zero;

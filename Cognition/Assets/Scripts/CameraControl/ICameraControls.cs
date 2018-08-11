@@ -15,6 +15,11 @@ public interface ICameraControls
     Vector2 GetPosition();
 
     /// <summary>
+    /// Gets the position of the pointer in screen space normalized between 0 and 1.
+    /// </summary>
+    Vector2 GetNormalizedPosition();
+
+    /// <summary>
     /// Gets the relative change in pointer position since the last frame.
     /// </summary>
     /// <returns></returns>

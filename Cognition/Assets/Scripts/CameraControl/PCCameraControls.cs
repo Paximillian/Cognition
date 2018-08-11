@@ -14,6 +14,12 @@ public class PCCameraControls : ICameraControls
         return Input.mousePosition;
     }
 
+    public Vector2 GetNormalizedPosition()
+    {
+        //return Input.mousePosition;
+        return new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height);
+    }
+
     public Vector2 GetPanDelta()
     {
         Vector2 delta = Vector2.zero;

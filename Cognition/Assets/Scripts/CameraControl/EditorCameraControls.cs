@@ -28,6 +28,11 @@ public class EditorCameraControls : ICameraControls
         return m_Controllers.Sum(controller => controller.GetPosition());
     }
 
+    public Vector2 GetNormalizedPosition()
+    {
+        return m_Controllers.Sum(controller => controller.GetNormalizedPosition());
+    }
+
     public float GetZoomDelta()
     {
         return m_Controllers.Sum(controller => controller.GetZoomDelta());
