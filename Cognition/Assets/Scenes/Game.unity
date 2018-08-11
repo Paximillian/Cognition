@@ -1987,6 +1987,7 @@ MonoBehaviour:
   m_ZoomOffsetMultiplier: 0.5
   m_ZoomSmoothFactor: 0.1
   m_zoomMouvementMultiplier: 1
+  m_zoomEdgeStrechFactor: 1
   m_ZoomAngleShift:
     serializedVersion: 2
     m_Curve:
@@ -6594,7 +6595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 45, y: -71.31287}
+  m_AnchoredPosition: {x: 45.00006, y: -71.31287}
   m_SizeDelta: {x: 316.30005, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &711561705
@@ -13738,6 +13739,7 @@ MonoBehaviour:
   m_ZoomOffsetMultiplier: 0.5
   m_ZoomSmoothFactor: 0.1
   m_zoomMouvementMultiplier: 1
+  m_zoomEdgeStrechFactor: 1
   m_ZoomAngleShift:
     serializedVersion: 2
     m_Curve:
@@ -17355,7 +17357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1812809832
 RectTransform:
   m_ObjectHideFlags: 0

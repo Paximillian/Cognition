@@ -15,7 +15,10 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     bool m_DrivingCog = false;
     public bool DrivingCog { get { return m_DrivingCog; } set { m_DrivingCog = value; } }
 
-    [HideInInspector]
+    [SerializeField]
+    private bool m_ShowHealthWhenFullHealth = true;
+
+    [ReadOnly]
     [SerializeField]
     private Cog m_ResidentCog;
     public Cog ResidentCog
@@ -26,6 +29,11 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
             if (m_ResidentCog = value)
             {
                 m_ResidentCogSceneId = value.GetComponent<NetworkIdentity>()?.netId ?? new NetworkInstanceId(0);
+                HealthPercent = m_ShowHealthWhenFullHealth ? 1 : 0;
+            }
+            else
+            {
+                HealthPercent = 0;
             }
         }
     }
@@ -69,6 +77,22 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     /// The coordinates of this tile on the grid.
     /// </summary>
     public Vector2Int Coordinates { get; set; }
+
+    /// <summary>
+    /// The renderer that displays the health of the tile.
+    /// </summary>
+    private Renderer m_TileHeatlhRenderer;
+
+    /// <summary>
+    /// Used to display the health of the cog sitting on this tile.
+    /// </summary>
+    public double HealthPercent
+    {
+        set
+        {
+            m_TileHeatlhRenderer.material.SetFloat("_health", (float)value);
+        }
+    }
 
     /// <summary>
     /// To properly calculate the distance, we need to use the z coordinate as well, which we're emitting with our hex system.
@@ -169,6 +193,8 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     private void Awake()
     {
         m_NetId = GetComponent<NetworkIdentity>();
+        m_TileHeatlhRenderer = transform.GetComponentsInChildren<Renderer>().First(renderer => renderer.name.ToLower().Contains("health"));
+        HealthPercent = 0;
     }
     #endregion UnityMethods
 
@@ -207,6 +233,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
             ResidentCog?.UpdateSpin(ResidentCog.Spin = 0);
         }
 
+        HealthPercent = 0;
         ResidentCog = null;
     }
     #endregion UNETMethods

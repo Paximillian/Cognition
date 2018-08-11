@@ -58,14 +58,7 @@ public abstract class Cog : NetworkBehaviour
         {
             if (m_HoldingTile == null)
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, Vector3.down, out hit, 1, LayerMask.GetMask("HexTile")))
-                {
-                    HexTile tile = hit.collider.GetComponent<HexTile>();
-                    tile.ResidentCog = this;
-                    this.HoldingTile = tile;
-                }
-                else
+                if (!findHoldingTile())
                 {
                     Debug.LogError($"Couldn't find hosting tile for {name}");
                 }
@@ -89,10 +82,10 @@ public abstract class Cog : NetworkBehaviour
     {
         m_hp = i_Hp;
 
-        //TODO: Change to appropriate implementation when Amir's damage shader is ready.
-        foreach (Renderer rend in GetComponentsInChildren<Renderer>())
+        //We use the field and not the property on purpose, to avoid looking for the tile before the cog had been properly placed.
+        if (m_HoldingTile)
         {
-            rend.material.SetFloat("_DamageAmount", Mathf.Clamp((float)(1 - m_hp / m_initialhp), 0, 1));
+            m_HoldingTile.HealthPercent = m_hp / m_initialhp;
         }
     }
 
@@ -322,6 +315,14 @@ public abstract class Cog : NetworkBehaviour
         {
             updateClientOccupyingPlayersList();
         }
+
+        if (HP > 0.1f)
+        {
+            if (m_HoldingTile == null && !(this is StartPositionCog))
+            {
+                findHoldingTile();
+            }
+        }
     }
 
     private void OnValidate()
@@ -346,6 +347,8 @@ public abstract class Cog : NetworkBehaviour
     [Client]
     protected virtual void ClientKillCog()
     {
+        HoldingTile.ResidentCog = null;
+        HoldingTile = null;
         gameObject.SetActive(false);
     }
 
@@ -451,6 +454,23 @@ public abstract class Cog : NetworkBehaviour
     }
     #endregion CogEventHooks
 
+    #region PrivateMethods
+    private bool findHoldingTile()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1, LayerMask.GetMask("HexTile")))
+        {
+            HexTile tile = hit.collider.GetComponent<HexTile>();
+            tile.ResidentCog = this;
+            this.HoldingTile = tile;
+            return true;
+        }
+
+        return false;
+    }
+    #endregion PrivateMethods
+
     #region PublicMethods
     [Server]
     public void Heal(int healAmount)
@@ -480,7 +500,7 @@ public abstract class Cog : NetworkBehaviour
         HoldingTile.ResidentCog = null;
         HoldingTile = null;
         IsInitialized = false;
-        HP = m_initialhp;
+        m_hp = m_initialhp;
         StopConflicted();
 
         UpdateSpin(Spin = 0f);
