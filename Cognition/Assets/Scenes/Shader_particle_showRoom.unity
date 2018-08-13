@@ -156,6 +156,10 @@ Prefab:
       propertyPath: m_Name
       value: Mec_Tile (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1044730246903894, guid: c17f6c2466fbdaa41a4c39f92981f549, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c17f6c2466fbdaa41a4c39f92981f549, type: 2}
   m_IsPrefabParent: 0
@@ -4300,7 +4304,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1631871386
+  randomSeed: 2007987820
   InitialModule:
     serializedVersion: 3
     enabled: 1
