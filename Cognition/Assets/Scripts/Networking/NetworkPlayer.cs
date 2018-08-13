@@ -298,7 +298,7 @@ public class NetworkPlayer : NetworkBehaviour
 
         return i_Tile.PopulatedNeighborsInRadius(i_CogPrefab.BuildRange) //Allow building if one of these:
             .Where(cog => ((((cog as PlayableCog)?.OwningPlayer.Equals(this) ?? false) //1) Is a cog this player owns
-             && ((cog as PlayableCog)?.BuildRange != int.MaxValue)) //and it's not a global range cog
+             && !(cog.Spin == 0)) //and it's spinning used to be here: ((cog as PlayableCog)?.BuildRange == int.MaxValue) && 
             || ((cog as NeutralCog)?.OccupyingPlayers.Contains(this) ?? false)) //2) Is a neutral cog this player controls
             //&& (cog.BuildRange != Mathf.Infinity || cog.Spin != 0f) //For global summon cogs TODO: examine infinity properly
             //3) Is a neutral cog that has an adjacent moving cog owned by this player (for client) !CURRENTLY DISABLED DON@T DELETE BEFORE TESTING

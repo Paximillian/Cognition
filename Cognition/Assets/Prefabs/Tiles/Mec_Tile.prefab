@@ -42,7 +42,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1048560098919342
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DrivingCog: 0
+  m_ShowHealthWhenFullHealth: 0
   m_ResidentCog: {fileID: 0}
   m_NeighborXPos: {fileID: 0}
   m_NeighborXNeg: {fileID: 0}
