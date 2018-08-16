@@ -687,7 +687,7 @@ MonoBehaviour:
   m_ZoomOffsetMultiplier: 0.5
   m_ZoomSmoothFactor: 0.1
   m_zoomMouvementMultiplier: 0.1
-  m_zoomEdgeStrechFactor: 1.5
+  m_zoomEdgeStrechFactor: 2
   m_ZoomAngleShift:
     serializedVersion: 2
     m_Curve:
