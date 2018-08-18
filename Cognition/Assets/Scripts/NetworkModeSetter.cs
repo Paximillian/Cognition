@@ -14,6 +14,16 @@ public class NetworkModeSetter : MonoBehaviour {
         GetComponent<Button>().onClick?.Invoke();
     }
 
+    public void SetSize(int size)
+    {
+        buttonText.text = (NetworkManager.singleton.matchSize = (uint)size).ToString();
+    }
+
+    public void SetDebug(bool debug)
+    {
+        buttonText.text = ((NetworkManager.singleton as NetworkGameManager).DebugMode = debug).ToString();
+    }
+
     public void ToggleSize()
     {
         buttonText.text = (NetworkManager.singleton.matchSize = (3 - NetworkManager.singleton.matchSize)).ToString();
