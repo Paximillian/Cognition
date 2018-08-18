@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
@@ -81,7 +82,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     /// <summary>
     /// The renderer that displays the health of the tile.
     /// </summary>
-    private Renderer m_TileHeatlhRenderer;
+    private Image m_TileHealthSprite;
 
     /// <summary>
     /// Used to display the health of the cog sitting on this tile.
@@ -90,7 +91,8 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     {
         set
         {
-            m_TileHeatlhRenderer.material.SetFloat("_health", (float)value);
+            m_TileHealthSprite.fillAmount = (float)value / 2;
+            m_TileHealthSprite.color = Color.Lerp(new Color(255f/255f, 0f/255f, 0f/255f), new Color(165f/255f, 197f/255f, 0f/255f), (float)value);
         }
     }
 
@@ -193,7 +195,7 @@ public class HexTile : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler,
     private void Awake()
     {
         m_NetId = GetComponent<NetworkIdentity>();
-        m_TileHeatlhRenderer = transform.GetComponentsInChildren<Renderer>().First(renderer => renderer.name.ToLower().Contains("health"));
+        m_TileHealthSprite = transform.GetComponentsInChildren<Image>().First();
         HealthPercent = 0;
     }
     #endregion UnityMethods
