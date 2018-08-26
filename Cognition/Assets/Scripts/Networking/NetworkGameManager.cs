@@ -286,15 +286,20 @@ public class NetworkGameManager : NetworkManager
 
         if (matchInfo != null)
         {
-            yield return matchMaker.SetMatchAttributes(matchInfo.networkId, false, 0, Matchmaker_OnAttributeSet);
-            yield return matchMaker.DropConnection(matchInfo.networkId, NodeID.Invalid, 0, Matchmaker_OnConnectionDropped);
-
-            StopHost();
-
-            matchInfo = null;
+            yield return matchMaker.DestroyMatch(matchInfo.networkId, 0, Matchmaker_OnMatchDestroyed);
         }
 
         m_OnMatchSearchFailed?.Invoke();
+    }
+
+    private void Matchmaker_OnMatchDestroyed(bool success, string extendedInfo)
+    {
+        base.OnDestroyMatch(success, extendedInfo);
+
+        StopMatchMaker();
+        StopHost();
+        
+        matchInfo = null;
     }
 
     /// <summary>
@@ -302,6 +307,8 @@ public class NetworkGameManager : NetworkManager
     /// </summary>
     private void Matchmaker_OnMatchListReady(bool i_Success, string i_ExtendedInfo, List<MatchInfoSnapshot> i_ResponseData)
     {
+        base.OnMatchList(i_Success, i_ExtendedInfo, i_ResponseData);
+
         if (i_Success)
         {
             StartCoroutine(findSuitableMatch(i_ResponseData));
@@ -392,13 +399,12 @@ public class NetworkGameManager : NetworkManager
     /// </summary>
     private void Matchmaker_OnMatchCreated(bool success, string extendedInfo, MatchInfo responseData)
     {
+        base.OnMatchCreate(success, extendedInfo, responseData);
+
         if (success)
         {
             MatchInfo hostInfo = responseData;
-            NetworkServer.Listen(hostInfo, networkPort);
             m_HostedMatchId = (ulong)hostInfo.networkId;
-
-            StartHost(hostInfo);
         }
         else
         {
