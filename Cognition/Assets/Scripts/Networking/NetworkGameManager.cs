@@ -376,7 +376,7 @@ public class NetworkGameManager : NetworkManager
     private void createMatch()
     {
         m_IsHostingMatch = true;
-        matchMaker.CreateMatch(m_DebugMode ? LocalIP : "", 2, true, "", "", "", 0, 0, Matchmaker_OnMatchCreated);
+        matchMaker.CreateMatch(m_DebugMode ? LocalIP : Guid.NewGuid().ToString(), 2, true, "", "", "", 0, 0, Matchmaker_OnMatchCreated);
     }
 
     /// <summary>
